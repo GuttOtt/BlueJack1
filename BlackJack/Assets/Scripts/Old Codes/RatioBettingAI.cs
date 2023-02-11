@@ -5,21 +5,21 @@ using UnityEngine;
 public class RatioBettingAI : MonoBehaviour, IBettingClient {
     [SerializeField] private BettingManager manager;
 	[SerializeField] private Betting betting;
+	[SerializeField] private OpponentDialogue dialogue;
 
 	public void StartBetting() {
-		Debug.Log("흠...");
+		dialogue.ConsideringText();
 
 		StartCoroutine(BettingDelay());
 	}
 
 	private IEnumerator BettingDelay() {
-		yield return new WaitForSeconds(1f);
+		yield return new WaitForSeconds(2f);
 		DecideBetAction();
 		EndBetting();
 	}
 
 	public void EndBetting() {
-		Debug.Log("자네 턴일세.");
 		manager.ChangeTurn();
 	}
 
@@ -28,17 +28,19 @@ public class RatioBettingAI : MonoBehaviour, IBettingClient {
 
 		if (r == 0) {
 			if (betting.RaiseRatio(2f)) {
+				dialogue.RaiseText();
 				manager.CountRaise();
 				return;
 			}
 		}
 		if (r <= 1) {
 			if (betting.Call()) {
+				dialogue.CallText();
 				manager.CountCall();
 				return;
 			}
-		}
-		Debug.Log("AI Folds");
+		}//
+		dialogue.FoldText();
 		manager.EndByFold(this.betting);
 	}
 }

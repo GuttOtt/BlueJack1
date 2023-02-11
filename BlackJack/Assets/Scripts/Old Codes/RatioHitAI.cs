@@ -5,11 +5,13 @@ using UnityEngine;
 public class RatioHitAI : MonoBehaviour, IHitClient {
 	[SerializeField] private Deck deck;	
     [SerializeField] private Hand hand;
+    [SerializeField] private OpponentDialogue dialogue;
     private bool isStayed;
 
     private void Awake() {
         hand = GetComponent<Hand>();
         deck = GetComponent<Deck>();
+        isStayed = false;
     }
 
     public void StartTurn() {
@@ -21,13 +23,17 @@ public class RatioHitAI : MonoBehaviour, IHitClient {
     }
 
     public bool DecideHit() {
-        if (isStayed)
+        if (isStayed){
+            dialogue.StayText();
             return true;
+        }
 
         if (hand.GetTotal() > 18) {
+            dialogue.StayText();
             isStayed = true;
         }
         else {
+            dialogue.HitText();
             deck.Hit();
         }
 

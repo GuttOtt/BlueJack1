@@ -43,8 +43,8 @@ public class BettingManager : MonoBehaviour {
 		return false;
 	}
 
-	private void EndBettingPhase() {
-		Debug.Log("EndBettingPhase");
+	private IEnumerator EndBettingPhase() {
+		yield return new WaitForSeconds(2f);
 		GetComponent<HitManager>().StartHitPhase();
 	}
 
@@ -55,7 +55,7 @@ public class BettingManager : MonoBehaviour {
 
 	public void ChangeTurn() {
 		if (callCount == 2) 
-			EndBettingPhase();
+			StartCoroutine(EndBettingPhase());
 		else {
 			otherGambler.StartBetting();
 			presentGambler = otherGambler;
