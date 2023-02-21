@@ -17,12 +17,17 @@ public class BetPhase: MonoBehaviour, IPhaseState {
 		turnSystem = GetComponent<TurnSystem>();
 		player = turnSystem.GetPlayer;
 		opponent = turnSystem.GetOpponent;
-		Initialize();
+		NewRoundInitialize();
 	}
 
 	public void Handle() {
-		Initialize();
-		presentTurn.StartBetting();
+		if (raiseCount == 3) {
+			EndPhase();
+			return;
+		}
+
+		callCount = 0;
+		presentTurn.StartBetting();//Hand 로부터 계산
 	}
 
 	public void TakeCall() {
@@ -49,7 +54,7 @@ public class BetPhase: MonoBehaviour, IPhaseState {
 
 	private void ChangeTurn() {
 		if (callCount == 2) {
-			turnSystem.ToHitPhase();
+			EndPhase();
 		}
 		else {
 			presentTurn.Wait();
@@ -58,9 +63,28 @@ public class BetPhase: MonoBehaviour, IPhaseState {
 		}
 	}
 
-	private void Initialize() {
+	public void NewRoundInitialize() {
 		callCount = 0;
 		raiseCount = 0;
 		presentTurn = player;//카드 비교 후 결정하는 것으로 변경
+	}
+
+	private bool IsLastBet() {
+		if (GetComponent<HitPhase>().IsAllStayed()) {
+			return true;
+		}
+
+		return false;
+	}
+
+	private void EndPhase() {
+		if (IsLastBet()) {
+			NewRoundInitialize();
+			turnSystem.ToEndPhase();
+		}
+		else {
+			callCount = 0;
+			turnSystem.ToHitPhase();
+		}
 	}
 }

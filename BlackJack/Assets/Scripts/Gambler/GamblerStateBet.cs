@@ -6,14 +6,14 @@ public class GamblerStateBet: MonoBehaviour, IGamblerState {
 	private Gambler gambler;
 	private IBetInputSystem betInput;
 	private BetPhase betPhase;
-	private Wallet wallet;
+	private Wallet connectedWallet;
 	[SerializeField] private Wallet potWallet;
 	[SerializeField] private GamblerStateBet opponent;
 
 	public void Awake() {
 		betPhase = FindObjectOfType<BetPhase>();
 		gambler = GetComponent<Gambler>();
-		wallet = GetComponent<Wallet>();
+		connectedWallet = GetComponent<Wallet>();
 		betInput = (IBetInputSystem) GetComponent<IBetInputSystem>();
 
 		BetDele call = Call;
@@ -28,17 +28,30 @@ public class GamblerStateBet: MonoBehaviour, IGamblerState {
 	}
 
 	private bool Call() {
-		//돈 처리
-		Debug.Log("Call");
-		betPhase.TakeCall();
-		return true;
+		Money moneyToCall = potWallet.CallMoney(opponent.potWallet);
+		if (Bet(moneyToCall)) {
+			EndBetting();
+			betPhase.TakeCall();
+			return true;
+		}
+		else {
+			Debug.Log("콜 할 돈이 부족합니다");
+			return false;
+		}
 	}
 
 	private bool Raise() {
-		if (betPhase.IsAbleToRaise()) {
-			//돈 처리
-			betPhase.TakeRaise();
-			return true;
+		Money moneyToRaise = potWallet.MoneyToRaise(opponent.potWallet, 2f);
+		if (betPhase.IsAbleToRaise() && opponent.connectedWallet.AffordTo(moneyToRaise)) {
+			if (Bet(moneyToRaise)) {
+				EndBetting();
+				betPhase.TakeRaise();
+				return true;
+			}
+			else {
+				Debug.Log("레이즈 할 돈이 부족합니다");
+				return false;
+			}
 		}
 		else {
 			Debug.Log("더이상 레이즈 할 수 없습니다");
@@ -47,10 +60,18 @@ public class GamblerStateBet: MonoBehaviour, IGamblerState {
 	}
 
 	private bool Fold() {
-		Debug.Log("Fold");
-		betPhase.TakeFold(gambler);
 		EndBetting();
+		betPhase.TakeFold(gambler);
 		return true;
+	}
+	
+	private bool Bet(Money money) {
+		if (connectedWallet.TryWithdrawTo(money, potWallet)) {
+			return true;
+		}
+		else {
+			return false;
+		}
 	}
 
 	private void EndBetting() {
