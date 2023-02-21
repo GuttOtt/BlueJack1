@@ -646,6 +646,8 @@ MonoBehaviour:
   player: {fileID: 1416533211}
   opponent: {fileID: 926768543}
   phaseText: {fileID: 1835584652}
+  wayOfEnd: 0
+  loser: {fileID: 0}
 --- !u!4 &492364533
 Transform:
   m_ObjectHideFlags: 0
@@ -1455,6 +1457,8 @@ MonoBehaviour:
   opponent: {fileID: 1416533211}
   potWallet: {fileID: 1241556734}
   isStayed: 0
+  basePot:
+    amount: 0
 --- !u!4 &926768544
 Transform:
   m_ObjectHideFlags: 0
@@ -2303,6 +2307,8 @@ MonoBehaviour:
   opponent: {fileID: 926768543}
   potWallet: {fileID: 909389959}
   isStayed: 0
+  basePot:
+    amount: 0
 --- !u!4 &1416533212
 Transform:
   m_ObjectHideFlags: 0
