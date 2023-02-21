@@ -21,6 +21,10 @@ public class TurnSystem : MonoBehaviour {
 		get {return opponent; }
 	}
 
+	public enum WayOfEnd { ShowDown, Burst, Fold }
+	public WayOfEnd wayOfEnd = WayOfEnd.ShowDown;
+	public Gambler loser;
+
 	private void Awake() {
 		startPhase = GetComponent<StartPhase>();
 		betPhase = GetComponent<BetPhase>();
@@ -48,14 +52,19 @@ public class TurnSystem : MonoBehaviour {
 		context.Transit(hitPhase);
 		ChangePhaseText("Hit Phase");
 	}
+	
 
+	//EndPhase를 방식에 따라 3 Class로 구분하기? (FoldPhase, ShowdownPhase, BurstPhase...)
 	public void ToEndPhase() {
+		wayOfEnd = WayOfEnd.ShowDown;
 		context.Transit(endPhase);
 		ChangePhaseText("End Phase");
 	}
 
-	public void ToEndPhase(Gambler loser) {
-		context.FoldTransit(loser);
+	public void ToEndPhase(WayOfEnd way, Gambler loser) {
+		wayOfEnd = way;
+		this.loser = loser;
+		context.Transit(endPhase);
 		ChangePhaseText("End Phase");
 	}
 
@@ -89,16 +98,7 @@ public class TurnSystemContext: MonoBehaviour {
 	}
 
 	public void Transit(IPhaseState state) {
-		if (turnSystem.NoMoreAction()) {
-			StartCoroutine(TransitCoroutine(endPhase));
-			return;
-		}
-
 		StartCoroutine(TransitCoroutine(state));
-	}
-
-	public void FoldTransit(Gambler folder) {
-		StartCoroutine(FoldTransitCoroutine(folder));
 	}
 
 	private IEnumerator TransitCoroutine(IPhaseState state) {
@@ -106,12 +106,5 @@ public class TurnSystemContext: MonoBehaviour {
 
 		currentState = state;
 		currentState.Handle();
-	}
-
-	private IEnumerator FoldTransitCoroutine(Gambler folder) {
-		yield return new WaitForSeconds(1.5f);
-
-		currentState = endPhase;
-		endPhase.EndRound(folder);
 	}
 }

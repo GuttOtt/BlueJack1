@@ -49,7 +49,7 @@ public class BetPhase: MonoBehaviour, IPhaseState {
 	}
 
 	public void TakeFold(Gambler folder) {
-		turnSystem.ToEndPhase(folder);
+		turnSystem.ToEndPhase(TurnSystem.WayOfEnd.Fold, folder);
 	}
 
 	private void ChangeTurn() {

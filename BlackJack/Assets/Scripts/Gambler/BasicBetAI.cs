@@ -36,7 +36,7 @@ public class BasicBetAI : MonoBehaviour, IBetInputSystem {
 			dialogue.Raise();
 			return;
 		}
-		if (1 <= r && call()) {
+		if (0 <= r && call()) {
 			dialogue.Call();
 			return;
 		}

@@ -17,8 +17,17 @@ public class EndPhase: MonoBehaviour, IPhaseState {
 	}
 
 	public void Handle() {
-		Gambler loser = GetLoser();
-		EndRoundByShowDown();
+		switch (turnSystem.wayOfEnd) {
+			case TurnSystem.WayOfEnd.Fold:
+				EndRoundByFold(turnSystem.loser);
+				break;
+			case TurnSystem.WayOfEnd.Burst:
+				EndRoundByBurst(turnSystem.loser);
+				break;
+			case TurnSystem.WayOfEnd.ShowDown:
+				EndRoundByShowDown();
+				break;
+		}
 	}
 
 	public void EndRoundByFold(Gambler folder) {
@@ -62,12 +71,14 @@ public class EndPhase: MonoBehaviour, IPhaseState {
 
 	private Gambler GetLoser() {
 		Hand playerHand = player.GetComponent<Hand>();
-		Hand opponentHand = player.GetComponent<Hand>();
+		Hand opponentHand = opponent.GetComponent<Hand>();
 
 		if (playerHand.GetTotal() < opponentHand.GetTotal()) {
+			Debug.Log("Loser: "+player);
 			return player;
 		}
 		else {
+			Debug.Log("Loser: "+opponent);
 			return opponent;
 		}
 	}

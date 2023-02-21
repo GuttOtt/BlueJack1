@@ -40,7 +40,7 @@ public class HitPhase: MonoBehaviour, IPhaseState {
 	}
 
 	public void EndTurnByBurst(Gambler burster) {
-		turnSystem.ToEndPhase(burster);
+		turnSystem.ToEndPhase(TurnSystem.WayOfEnd.Burst, burster);
 	}
 
 	private bool IsAllDone() {
