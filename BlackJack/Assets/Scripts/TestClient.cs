@@ -20,7 +20,6 @@ public class TestClient : MonoBehaviour {
 
 		for (int i = 0; i < 7; i++) {
 			AddIconCard(player, testIcons[0]);
-			AddIconCard(player, testIcons[1]);
 		}
 
 		turnSystem.ToStartPhase();
@@ -41,7 +40,7 @@ public class TestClient : MonoBehaviour {
 	private void AddIconCard(Gambler gambler, CardIcon iconPrefab) {
 		Deck deck = gambler.GetComponent<Deck>();
 
-		Card card = cg.CreateCard(Random.Range(1, 8), (Suit) Random.Range(0, 4), iconPrefab);
+		Card card = cg.CreateCard(Random.Range(7, 8), (Suit) Random.Range(0, 4), iconPrefab);
 		deck.AddCard(card);
 		card.owner = gambler;
 

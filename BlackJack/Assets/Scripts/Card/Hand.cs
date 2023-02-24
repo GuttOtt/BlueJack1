@@ -1,5 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
+using System.Linq;
 using UnityEngine;
 using UnityEngine.UI;
 
@@ -8,23 +9,30 @@ public class Hand : MonoBehaviour {
 	[SerializeField] private GameObject hiddenParent;
 	[SerializeField] private bool isPlayerHand;
 	private Discards discards;
-	private List<Card> cards = new List<Card>(); 
+	private List<Card> cards {
+		get {
+			List<Card> cards = new List<Card>();
+			cards.AddRange(field);
+			cards.AddRange(hiddens);
+			return cards;
+		}
+	}
 	private List<Card> hiddens = new List<Card>();
+	private List<Card> field = new List<Card>();
 
 	private void Awake() {
 		discards = GetComponent<Discards>();
 	}
 
 	public void AddCard(Card card) {
-		cards.Add(card);
+		field.Add(card);
 		card.transform.SetParent(handParent.transform);
-		card.MoveTo(handParent.transform.position + Vector3.right * (cards.Count - hiddens.Count -1) * 2);
+		card.MoveTo(handParent.transform.position + Vector3.right * (field.Count) * 2);
 		card.IsFront = true;
 		card.ActivateIcon(EffectCondition.OnHit);
 	}
 
 	public void AddHidden(Card card) {
-		cards.Add(card);
 		hiddens.Add(card);
 		card.transform.SetParent(hiddenParent.transform);
 		card.MoveTo(hiddenParent.transform.position + Vector3.right * (hiddens.Count -1) * 2);
@@ -52,16 +60,23 @@ public class Hand : MonoBehaviour {
 	}
 
 	public void DiscardAll() {
-		for (int i = cards.Count - 1; i >= 0; i--) {
-			Card card = cards[i];
+		for (int i = field.Count - 1; i >= 0; i--) {
+			Card card = field[i];
+			Discard(card);
+		}
+		
+		for (int i = hiddens.Count - 1; i >= 0; i--) {
+			Card card = hiddens[i];
 			Discard(card);
 		}
 	}
 
 	public void Discard(Card card) {
 		discards.AddCard(card);
-		cards.Remove(card);
-		if (hiddens.Contains(card)) {
+		if (field.Contains(card)) {
+			field.Remove(card);
+		}
+		else if (hiddens.Contains(card)) {
 			hiddens.Remove(card);
 		}
 	}
@@ -76,5 +91,34 @@ public class Hand : MonoBehaviour {
 		foreach (Card card in cards) {
 			card.ActivateIcon(condition);
 		}
+	}
+
+	public void ActivateAllField(EffectCondition condition) {
+		foreach (Card card in field) {
+			card.ActivateIcon(condition);
+		}
+	}
+
+	public void ActivateAllHidden(EffectCondition condition) {
+		foreach (Card card in hiddens) {
+			card.ActivateIcon(condition);
+		}
+	}
+
+	public Card GetRandomField() {
+		return field[Random.Range(0, field.Count)];
+	}
+
+	//field 에서 인자를 제외한 나머지 중 랜덤
+	public Card GetRandomField(Card card) {
+		List<Card> fieldExcept = field.ToList();
+		fieldExcept.Remove(card);
+		if (fieldExcept.Count == 0)
+			return card;
+		return fieldExcept[Random.Range(0, fieldExcept.Count)];
+	}
+
+	public int GetNumberOfField() {
+		return field.Count;
 	}
 }

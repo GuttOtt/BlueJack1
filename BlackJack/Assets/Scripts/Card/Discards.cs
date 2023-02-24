@@ -16,6 +16,7 @@ public class Discards : MonoBehaviour {
 		card.transform.SetParent(discardsParent.transform);
 		card.MoveTo(discardsParent.transform.position + cards.Count * Vector3.back);
 		card.IsFront = true;
+		card.ActivateIcon(EffectCondition.OnDiscard);
 	}
 
 	public void AllToDeck() {
@@ -25,5 +26,10 @@ public class Discards : MonoBehaviour {
 			cards.RemoveAt(i);
 			deck.Shuffle();
 		}
+	}
+
+	public void Exclude(Card card) {
+		cards.Remove(card);
+		Destroy(card.gameObject);
 	}
 }

@@ -47,7 +47,9 @@ public class EndPhase: MonoBehaviour, IPhaseState {
 		player.ShowDown();
 		opponent.ShowDown();
 
-		EndRound(GetLoser());
+		Gambler loser = GetLoser();
+		basePotMoney = loser.PotMoney;
+		EndRound(loser);
 	}
 
 	public void EndRound(Gambler loser) {
@@ -62,10 +64,8 @@ public class EndPhase: MonoBehaviour, IPhaseState {
 	}
 
 	private IEnumerator EndRoundDelay() {
-		Debug.Log("EndRoundDelay");
 		yield return new WaitForSeconds(2f);
 		
-		Debug.Log("EndRoundDelay2");
 		turnSystem.ToStartPhase();
 	}
 

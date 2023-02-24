@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 
 public class Gambler : MonoBehaviour {
-	[SerializeField] private Gambler opponent;
+	[SerializeField] public Gambler opponent;
 	private IGamblerState betState, hitState, waitState;
 	private GamblerContext context;
 	private Hand hand;
@@ -43,30 +43,26 @@ public class Gambler : MonoBehaviour {
 		if (!wallet.TryWithdrawTo(ante, potWallet)) {
 			return false;
 		}
-		
-		hand.DiscardAll();
 
-		deck.ClosedHit();
-		deck.ClosedHit();
-		deck.OpenHit();
+		StartCoroutine(StartRoundCoroutine());
 
 		return true;
 	}
 
+	public IEnumerator StartRoundCoroutine() {
+		hand.DiscardAll();
+
+		yield return new WaitForSeconds(1.1f);
+
+		deck.ClosedHit();
+		deck.ClosedHit();
+		deck.OpenHit();
+	}
+
+
 	public void StartHitting() {
 		context.Transit(hitState);
 	}
-	/*
-	public void LosePot(Wallet roundPot) {
-		basePot = potWallet.Times(1f);
-		hand.ActivateAllIcon(EffectCondition.OnLose);
-		potWallet.WithdrawAllTo(roundPot);
-	}
-
-	public void WinPot(Wallet roundPot) {
-		roundPot.WithdrawAllTo(wallet);
-		potWallet.WithdrawAllTo(wallet);
-	}*/
 
 	public void NewRoundInitialize() {
 		isStayed = false;
@@ -81,6 +77,18 @@ public class Gambler : MonoBehaviour {
 		Money saveMoney = basePot.Times(percent);
 		potWallet.TryWithdrawTo(saveMoney, wallet);
 		Debug.Log("Saved " + saveMoney.AmountToInt());
+	}
+
+	public void TakeMore(float percent) {
+		Money takeMoney = basePot.Times(percent);
+		opponent.wallet.TryWithdrawTo(takeMoney, this.wallet);
+		Debug.Log("Took +" + takeMoney.AmountToInt() + " more");
+	}
+
+	public void BetMore(float percent) {
+		Money betMoney = potWallet.Times(percent);
+		wallet.TryWithdrawTo(betMoney, potWallet);
+		Debug.Log(this + " Bet " + betMoney.AmountToInt() + "more");
 	}
 
 	//End Round Processes. All should move to new class, GamblerStateEnd.

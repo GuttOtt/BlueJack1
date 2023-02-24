@@ -876,8 +876,7 @@ MonoBehaviour:
   opponent: {fileID: 926768543}
   turnSystem: {fileID: 492364532}
   testIcons:
-  - {fileID: 7375858420327905185, guid: 0bf755075ecea1e41a319ce0c144fc44, type: 3}
-  - {fileID: 5632897400113257334, guid: c67e7ddadfb320c46afea9fa631b2185, type: 3}
+  - {fileID: 3579718018744580151, guid: 612203da90fdb6645991f50430943331, type: 3}
   noneIcon: {fileID: 5789209689852664396, guid: fc58a801130ff364b80c621254e2ab26, type: 3}
 --- !u!1 &634782467
 GameObject:
@@ -1872,7 +1871,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1029075506}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: -5, y: 0, z: 0}
+  m_LocalPosition: {x: -6, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -2229,7 +2228,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1299576865}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: -5, y: 0, z: 0}
+  m_LocalPosition: {x: -6, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []

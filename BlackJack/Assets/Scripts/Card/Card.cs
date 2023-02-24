@@ -54,10 +54,21 @@ public class Card: MonoBehaviour {
 		return number;
 	}
 
-	private void MakeNumberObj() {
-		Sprite sprite = null;
+	public Suit GetSuit() {
+		return suit;
+	}
 
+	private void MakeNumberObj() {
+		if (numberObj) {
+			Destroy(numberObj);
+		}
+		numberObj = new GameObject("CardNumber");
+		
+		Sprite sprite = null;
 		switch (number) {
+			case 0:
+				sprite = Resources.Load<Sprite>("Sprites/CardNumber0");
+				break;
 			case 1:
 				sprite = Resources.Load<Sprite>("Sprites/CardNumber1");
 				break;
@@ -91,6 +102,11 @@ public class Card: MonoBehaviour {
 	}
 
 	private void MakeSuitObj() {
+		if (suitObj) {
+			Destroy(suitObj);
+		}
+		suitObj = new GameObject("CardSuit");
+
 		Sprite sprite = null;
 		switch (suit) {
 			case Suit.Spade :
@@ -141,6 +157,17 @@ public class Card: MonoBehaviour {
 
 	public void ActivateIcon(EffectCondition condition) {
 		icon.TryToActivate(condition);
+	}
+
+	public void ChangeSuit(Suit suit) {
+		this.suit = suit;
+		MakeSuitObj();
+		MakeNumberObj();
+	}
+
+	public void ChangeNumber(int number) {
+		this.number = number;
+		MakeNumberObj();
 	}
 }
 

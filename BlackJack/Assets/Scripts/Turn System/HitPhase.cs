@@ -35,7 +35,10 @@ public class HitPhase: MonoBehaviour, IPhaseState {
 			presentTurn.StartHitting();
 		}
 		else {
-			turnSystem.ToBetPhase();
+			if (IsAllStayed())
+				turnSystem.ToEndPhase();
+			else
+				turnSystem.ToBetPhase();
 		}
 	}
 
