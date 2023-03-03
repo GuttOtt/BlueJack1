@@ -41,7 +41,7 @@ public class BasicBetAI : MonoBehaviour, IBetInputSystem {
 			return;
 		}
 		fold();
-			dialogue.Fold();
+		dialogue.Fold();
 	}
 
 	public void EndGettingInput() {
