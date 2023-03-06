@@ -42,7 +42,7 @@ public class BetPhase: MonoBehaviour, IPhaseState {
 	}
 
 	public bool IsAbleToRaise() {
-		if (raiseCount < 3) 
+		if (raiseCount < PlaySceneManager.moneySettings.maxRaiseCount) 
 			return true;
 		else
 			return false;

@@ -6,7 +6,7 @@ public class StealEffect : MonoBehaviour, ICardEffect {
 	[SerializeField] private float percent;
 
 	public void Activate() {
-		Money ante = (FindObjectOfType(typeof(StartPhase)) as StartPhase).ante;
+		Money ante = PlaySceneManager.moneySettings.ante;
 		Money stealAmount = ante.Times(percent);
 
 		Gambler owner = transform.parent.GetComponent<Card>().owner;

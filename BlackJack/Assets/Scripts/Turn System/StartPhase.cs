@@ -7,13 +7,11 @@ public class StartPhase: MonoBehaviour, IPhaseState {
 	private Gambler player;
 	private Gambler opponent;
 	private int roundCount;
-	public Money ante;
 
 	private void Awake() {
 		turnSystem = GetComponent<TurnSystem>();
 		player = turnSystem.PlayerGambler;
 		opponent = turnSystem.OpponentGambler;
-		ante = Money.wons(10);
 		roundCount = 0;
 	}
 
@@ -26,7 +24,7 @@ public class StartPhase: MonoBehaviour, IPhaseState {
 	}
 
 	private bool MakeStart(Gambler gambler) {
-		if (!gambler.StartRound(ante)) {
+		if (!gambler.StartRound(PlaySceneManager.moneySettings.ante)) {
 			Debug.Log("Can't pay ante");
 			return false;
 		}

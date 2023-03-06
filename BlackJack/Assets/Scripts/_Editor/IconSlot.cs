@@ -5,7 +5,7 @@ using UnityEngine.UI;
 
 public class IconSlot: MonoBehaviour {
 	private Button button;
-	private Image image;
+	[SerializeField] private Image image;
 	private CardIcon iconPrefab;
 	private CardEditor cardEditor;
 
@@ -24,6 +24,7 @@ public class IconSlot: MonoBehaviour {
 	}
 
 	public void SetIcon(CardIcon iconPrefab) {
+		Debug.Log(iconPrefab.GetComponent<SpriteRenderer>().sprite);
 		this.iconPrefab = iconPrefab;
 		image.sprite = iconPrefab.GetComponent<SpriteRenderer>().sprite;
 	}

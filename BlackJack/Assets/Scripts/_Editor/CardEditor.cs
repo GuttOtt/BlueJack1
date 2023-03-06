@@ -11,12 +11,13 @@ public class CardEditor : MonoBehaviour {
 	[SerializeField] private CardIcon[] cardIconPrefabs;
 	[SerializeField] private Button closeButton, completeButton;
 	[SerializeField] private CopyCardImage copyImg;
+	[SerializeField] private Button leftButton, rightButton;
 	private EditingCard card;
 	private CardData data;
 	private int iconSlotIndex;
 
 	
-	private void Awake() {
+	private void Start() {
 		closeButton.onClick.AddListener(delegate {ClosePanel();});
 		completeButton.onClick.AddListener(CompleteEditing);
 		
@@ -32,11 +33,11 @@ public class CardEditor : MonoBehaviour {
 
 		cardIconPrefabs = Resources.LoadAll<CardIcon>("CardIcons");
 
+		leftButton.onClick.AddListener( () => MoveIconSlot(-1) );
+		rightButton.onClick.AddListener( () => MoveIconSlot(1) );
+
 		iconSlotIndex = 0;
-		for (int i = 0; i < 5; i++) {
-			iconSlots[i].Initialize(this);
-			iconSlots[i].SetIcon(cardIconPrefabs[i]); 
-		}
+		SetIconSlot();
 
 		ClosePanel();
 	}
@@ -83,5 +84,20 @@ public class CardEditor : MonoBehaviour {
 	public void ChangeIcon(CardIcon iconPrefab) {
 		data.ChangeIcon(iconPrefab);
 		data.PasteTo(copyImg);
+	}
+
+	private void MoveIconSlot(int direction) {
+		if (iconSlotIndex + direction < 0 || iconSlotIndex + 4 + direction > cardIconPrefabs.Length -1 )
+			return;
+
+		iconSlotIndex += direction;
+		SetIconSlot();
+	}
+
+	private void SetIconSlot() {
+		for (int i = 0; i < 5; i++) {
+			iconSlots[i].Initialize(this);
+			iconSlots[i].SetIcon(cardIconPrefabs[iconSlotIndex + i]); 
+		}
 	}
 }

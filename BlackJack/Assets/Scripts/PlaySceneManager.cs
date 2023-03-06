@@ -5,14 +5,16 @@ using UnityEngine;
 public class PlaySceneManager : MonoBehaviour {
 	[SerializeField] private Gambler player, opponent;
 	[SerializeField] private TurnSystem turnSystem;
+	public static MoneySettings moneySettings;
 
-	private void Awake() {
-		SandboxManager.Instance.SetDeck(player.GetComponent<Deck>(), true);
-		SandboxManager.Instance.SetDeck(opponent.GetComponent<Deck>(), false);
+	private void Start() {
+		SandboxManager.Instance.DeckSetting(player.GetComponent<Deck>(), true);
+		SandboxManager.Instance.DeckSetting(opponent.GetComponent<Deck>(), false);
+		
+		moneySettings = SandboxManager.Instance.GetMoneySettings();
+		player.GetComponent<Wallet>().Deposit(moneySettings.playerStartMoney);
+		opponent.GetComponent<Wallet>().Deposit(moneySettings.opponentStartMoney);
 
-		//SandboxManager.Instance.SetMoney(player.GetComponent<Wallet>(), true);
-		//SandboxManager.Instance.SetMoney(opponent.GetComponent<Wallet>(), false);
-
-		//turnSystem.ToStartPhase();
+		turnSystem.ToStartPhase();
 	}
 }

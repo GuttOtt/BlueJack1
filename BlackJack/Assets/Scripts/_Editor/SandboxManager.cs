@@ -10,24 +10,21 @@ public class SandboxManager : Singleton<SandboxManager> {
 	private List<CardData> playerDeck;
 	private List<CardData> opponentDeck;
 	private List<CardData> presentEditing;
-	public Money playerStartMoney = Money.zero;
-	private Money opponentStartMoney = Money.zero;
-	public Money ante = Money.zero;
-	public float raiseRatio = 2f;
+	private MoneySettings moneySettings;
 
 	private void Start() {
 		startButton.onClick.AddListener(delegate { StartEditing(playerDeck); });
+		presentEditing = playerDeck;
 	}
 
 	public void EndDeckEditing(List<CardData> deckData) {
-		presentEditing = deckData.ToList();
-
 		if (presentEditing == playerDeck) {
+			playerDeck = deckData.ToList();
 			StartEditing(opponentDeck);
 		}
 		else {
-			//ToMoneyEditing();
-			ToPlayScene();
+			opponentDeck = deckData.ToList();
+			StartMoneyEditing();
 		}
 	}
 
@@ -36,24 +33,30 @@ public class SandboxManager : Singleton<SandboxManager> {
 		SceneManager.LoadScene("Deck Editing Scene");
 	}
 
-	private void ToMoneyEditing() {
+	private void StartMoneyEditing() {
 		SceneManager.LoadScene("Money Editing Scene");
+	}
+
+	public void EndMoneyEditing(MoneySettings moneySettings) {
+		this.moneySettings = moneySettings;
+		ToPlayScene();
 	}
 
 	private void ToPlayScene() {
 		SceneManager.LoadScene("Play Scene");
 	}
 
-	public void SetDeck(Deck deck, bool isPlayers) {
+	public void DeckSetting(Deck deck, bool isPlayers) {
 		List<CardData> deckData = isPlayers ? playerDeck : opponentDeck;
 		foreach (CardData data in deckData) {
 			Card card = data.InstantiateAsCard();
+			card.owner = deck.GetComponent<Gambler>();
 			deck.AddCard(card);
 		}
+		deck.Shuffle();
 	}
 
-	public void SetMoney(Wallet wallet, bool isPlayers) {
-		Money startMoney = isPlayers ? playerStartMoney : opponentStartMoney;
-		wallet.Deposit(startMoney);
+	public MoneySettings GetMoneySettings() {
+		return moneySettings;
 	}
 }

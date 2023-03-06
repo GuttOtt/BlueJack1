@@ -10,7 +10,7 @@ public class GamblerStateBet: MonoBehaviour, IGamblerState {
 	[SerializeField] private Wallet potWallet;
 	[SerializeField] private GamblerStateBet opponent;
 
-	public void Awake() {
+	private void Awake() {
 		betPhase = FindObjectOfType<BetPhase>();
 		gambler = GetComponent<Gambler>();
 		connectedWallet = GetComponent<Wallet>();
@@ -41,7 +41,7 @@ public class GamblerStateBet: MonoBehaviour, IGamblerState {
 	}
 
 	private bool Raise() {
-		Money moneyToRaise = potWallet.MoneyToRaise(opponent.potWallet, 2f);
+		Money moneyToRaise = potWallet.MoneyToRaise(opponent.potWallet, PlaySceneManager.moneySettings.raiseRatio);
 		if (betPhase.IsAbleToRaise() && opponent.connectedWallet.AffordTo(moneyToRaise)) {
 			if (Bet(moneyToRaise)) {
 				GetComponent<Hand>().ActivateAllField(EffectCondition.OnRaise);

@@ -100,6 +100,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   owner: {fileID: 0}
   condition: 1
+  activateAnimation: {fileID: 0}
 --- !u!114 &3543198290956256182
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -112,4 +113,4 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 2ecc993b4f375aa448f96b51653c91ad, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  percent: 0.1
+  percent: 0.3
