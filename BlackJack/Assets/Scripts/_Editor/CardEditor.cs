@@ -8,7 +8,7 @@ public class CardEditor : MonoBehaviour {
 	[SerializeField] private Button[] numButtons = new Button[7];
 	[SerializeField] private Button[] suitButtons = new Button[4];
 	[SerializeField] private IconSlot[] iconSlots = new IconSlot[5];
-	[SerializeField] private List<CardIcon> cardIconPrefabs = new List<CardIcon>(); 
+	[SerializeField] private CardIcon[] cardIconPrefabs;
 	[SerializeField] private Button closeButton, completeButton;
 	[SerializeField] private CopyCardImage copyImg;
 	private EditingCard card;
@@ -30,9 +30,11 @@ public class CardEditor : MonoBehaviour {
 			suitButtons[i].onClick.AddListener(delegate {ChangeSuit((Suit) temp);} );
 		}
 
+		cardIconPrefabs = Resources.LoadAll<CardIcon>("CardIcons");
+
 		iconSlotIndex = 0;
 		for (int i = 0; i < 5; i++) {
-			iconSlots[i].Initialize(data, copyImg);
+			iconSlots[i].Initialize(this);
 			iconSlots[i].SetIcon(cardIconPrefabs[i]); 
 		}
 
@@ -78,7 +80,7 @@ public class CardEditor : MonoBehaviour {
 		data.PasteTo(copyImg);
 	}
 
-	private void ChangeIcon(CardIcon iconPrefab) {
+	public void ChangeIcon(CardIcon iconPrefab) {
 		data.ChangeIcon(iconPrefab);
 		data.PasteTo(copyImg);
 	}

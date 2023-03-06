@@ -27,6 +27,15 @@ public class CardData {
 		img.Draw(number, suit, iconPrefab);
 	}
 
+	public Card InstantiateAsCard() {
+		GameObject obj = new GameObject("Card");
+		Card card = obj.AddComponent<Card>() as Card;
+		card.AddIcon(iconPrefab);
+		card.Initialize(number, suit);
+
+		return card;
+	}
+
 	public void ChangeNumber(int number) {
 		this.number = number;
 	}

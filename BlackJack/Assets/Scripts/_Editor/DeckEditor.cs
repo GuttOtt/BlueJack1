@@ -68,4 +68,14 @@ public class DeckEditor : MonoBehaviour {
 			selectedCard.GetComponent<SpriteRenderer>().color = new Color(0.5f, 0.5f, 1f);
 		}
 	}
+
+	private void CompleteEditing() {
+		List<CardData> deckData = new List<CardData>();
+		foreach (EditingCard card in deck) {
+			deckData.Add(card.GetData());
+		}
+
+		//SandboxManager·Î deckData Àü¼Û
+		//SandboxManager.EndDeckEditing(deckData);
+	}
 }

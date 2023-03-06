@@ -7,19 +7,20 @@ public class IconSlot: MonoBehaviour {
 	private Button button;
 	private Image image;
 	private CardIcon iconPrefab;
-	private CardData data;
-	private CopyCardImage copyImg;
+	private CardEditor cardEditor;
 
 	private void Awake() {
 		button = GetComponent<Button>();
+		button.onClick.AddListener(Clicked);
+
 		GameObject obj = new GameObject("Icon Image");
 		obj.transform.SetParent(this.transform, false);
 		image = obj.AddComponent<Image>() as Image;
+		image.raycastTarget = false;
 	}
-
+	
 	private void Clicked() {
-		data.ChangeIcon(iconPrefab);
-		data.PasteTo(copyImg);
+		cardEditor.ChangeIcon(iconPrefab);
 	}
 
 	public void SetIcon(CardIcon iconPrefab) {
@@ -27,8 +28,7 @@ public class IconSlot: MonoBehaviour {
 		image.sprite = iconPrefab.GetComponent<SpriteRenderer>().sprite;
 	}
 
-	public void Initialize(CardData data, CopyCardImage copyImg) {
-		this.data = data;
-		this.copyImg = copyImg;
+	public void Initialize(CardEditor cardEditor) {
+		this.cardEditor = cardEditor;
 	}
 }

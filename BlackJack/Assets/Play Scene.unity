@@ -869,15 +869,12 @@ MonoBehaviour:
   m_GameObject: {fileID: 627277465}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 11570669637f6ae48bc94536e9225a3f, type: 3}
+  m_Script: {fileID: 11500000, guid: 15265c944fe3581438ab37c319554cee, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
   player: {fileID: 1416533211}
   opponent: {fileID: 926768543}
   turnSystem: {fileID: 492364532}
-  testIcons:
-  - {fileID: 3579718018744580151, guid: 612203da90fdb6645991f50430943331, type: 3}
-  noneIcon: {fileID: 5789209689852664396, guid: fc58a801130ff364b80c621254e2ab26, type: 3}
 --- !u!1 &634782467
 GameObject:
   m_ObjectHideFlags: 0
@@ -1410,7 +1407,7 @@ GameObject:
   - component: {fileID: 926768553}
   m_Layer: 0
   m_Name: Opponent
-  m_TagString: Untagged
+  m_TagString: Opponent
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -2257,7 +2254,7 @@ GameObject:
   - component: {fileID: 1416533220}
   m_Layer: 0
   m_Name: Player
-  m_TagString: Untagged
+  m_TagString: Player
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
