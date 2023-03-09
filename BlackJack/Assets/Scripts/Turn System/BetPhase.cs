@@ -4,7 +4,6 @@ using UnityEngine;
 
 public class BetPhase: MonoBehaviour, IPhaseState {
 	private TurnSystem turnSystem;
-	private PlaySceneManager playSceneManager;
 	private int callCount = 0;
 	private int raiseCount = 0;
 	private Gambler player;
