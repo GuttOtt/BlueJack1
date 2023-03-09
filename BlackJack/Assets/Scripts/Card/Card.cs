@@ -150,6 +150,10 @@ public class Card: MonoBehaviour {
 	}
 
 	public void AddIcon(CardIcon iconPrefab) {
+		if (icon != null) {
+			Destroy(icon);
+		}
+
 		icon = Instantiate(iconPrefab, this.transform);
 		icon.transform.localPosition = Vector3.zero + Vector3.back * 0.1f;
 		icon.Initialize(this);

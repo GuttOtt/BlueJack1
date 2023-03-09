@@ -5,7 +5,16 @@ EditorBuildSettings:
   m_ObjectHideFlags: 0
   serializedVersion: 2
   m_Scenes:
-  - enabled: 1
+  - enabled: 0
     path: Assets/Test Scene.unity
     guid: 6b2095045c00da94a84fe1eb6b22a58b
+  - enabled: 1
+    path: Assets/Start Scene.unity
+    guid: f6d3ce7aa55b5134a98330610d9dc9ff
+  - enabled: 1
+    path: Assets/Deck Editing Scene.unity
+    guid: 7877aa18bedf3304d8654124b64c251f
+  - enabled: 1
+    path: Assets/Play Scene.unity
+    guid: ea9ebcec3b3f20d40a49cec00d5a8aab
   m_configObjects: {}
