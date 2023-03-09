@@ -21,7 +21,7 @@ public class BetPhase: MonoBehaviour, IPhaseState {
 	}
 
 	public void Handle() {
-		if (raiseCount == 3) {
+		if (raiseCount == PlaySceneManager.moneySettings.maxRaiseCount) {
 			PhaseEnd();
 			return;
 		}

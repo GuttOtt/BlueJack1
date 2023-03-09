@@ -254,11 +254,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   startButton: {fileID: 1259437342}
-  playerStartMoney:
-    amount: 0
-  ante:
-    amount: 0
-  raiseRatio: 2
 --- !u!4 &502587652
 Transform:
   m_ObjectHideFlags: 0
