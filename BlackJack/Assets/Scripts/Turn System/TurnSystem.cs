@@ -10,9 +10,7 @@ public class TurnSystem : MonoBehaviour {
 	public Gambler GetPlayer { get => player; }
 	public Gambler GetOpponent { get => opponent; }
 	private TurnSystemContext context;
-	private IPhaseState startPhase, betPhase, hitPhase, endPhase;
-	public IPhaseState _endPhase { get => endPhase; }
-
+	private IPhaseState startPhase, betPhase, hitPhase, endPhase, foldPhase, showDownPhase, burstPhase;
 	public Gambler PlayerGambler {
 		get { return player; }
 	}
@@ -21,15 +19,14 @@ public class TurnSystem : MonoBehaviour {
 		get {return opponent; }
 	}
 
-	public enum WayOfEnd { ShowDown, Burst, Fold }
-	public WayOfEnd wayOfEnd = WayOfEnd.ShowDown;
-	public Gambler loser;
-
 	private void Awake() {
 		startPhase = GetComponent<StartPhase>();
 		betPhase = GetComponent<BetPhase>();
 		hitPhase = GetComponent<HitPhase>();
 		endPhase = GetComponent<EndPhase>();
+		foldPhase = GetComponent<FoldPhase>();
+		showDownPhase = GetComponent<ShowDownPhase>();
+		burstPhase = GetComponent<BurstPhase>();
 
 		context = gameObject.AddComponent<TurnSystemContext>();
 	}
@@ -55,17 +52,17 @@ public class TurnSystem : MonoBehaviour {
 	
 
 	//EndPhase를 방식에 따라 3 Class로 구분하기? (FoldPhase, ShowdownPhase, BurstPhase...)
-	public void ToEndPhase() {
-		wayOfEnd = WayOfEnd.ShowDown;
-		context.Transit(endPhase);
-		ChangePhaseText("End Phase");
+
+	public void ToFoldPhase(Gambler loser) {
+		context.Transit(foldPhase);
 	}
 
-	public void ToEndPhase(WayOfEnd way, Gambler loser) {
-		wayOfEnd = way;
-		this.loser = loser;
-		context.Transit(endPhase);
-		ChangePhaseText("End Phase");
+	public void ToBurstPhase(Gambler loser) {
+		context.Transit(burstPhase);
+	}
+
+	public void ToShowDownPhase() {
+		context.Transit(showDownPhase);
 	}
 
 	public bool NoMoreAction() {
@@ -90,11 +87,9 @@ public interface IPhaseState {
 public class TurnSystemContext: MonoBehaviour {
 	IPhaseState currentState;
 	TurnSystem turnSystem;
-	EndPhase endPhase;
 
 	private void Awake() {
 		turnSystem = GetComponent<TurnSystem>();
-		endPhase = GetComponent<EndPhase>();
 	}
 
 	public void Transit(IPhaseState state) {

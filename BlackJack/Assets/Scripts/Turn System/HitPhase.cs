@@ -30,20 +30,27 @@ public class HitPhase: MonoBehaviour, IPhaseState {
 	public void EndTurn() {
 		isDone[presentTurn] = true;
 
-		if (!IsAllDone()) {
-			presentTurn = nextTurn;
-			presentTurn.StartHitting();
+		if (IsAllStayed()) {
+			turnSystem.ToShowDownPhase();
 		}
 		else {
-			if (IsAllStayed())
-				turnSystem.ToEndPhase();
-			else
-				turnSystem.ToBetPhase();
+			if (IsAllDone()) {
+				if (GetComponent<BetPhase>().IsAbleToRaise()){
+					turnSystem.ToBetPhase();
+				}
+				else {
+					turnSystem.ToHitPhase();
+				}
+			}
+			else {
+				presentTurn = nextTurn;
+				presentTurn.StartHitting();
+			}
 		}
 	}
 
 	public void EndTurnByBurst(Gambler burster) {
-		turnSystem.ToEndPhase(TurnSystem.WayOfEnd.Burst, burster);
+		turnSystem.ToBurstPhase(burster);
 	}
 
 	private bool IsAllDone() {

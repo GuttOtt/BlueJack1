@@ -22,7 +22,7 @@ public class BetPhase: MonoBehaviour, IPhaseState {
 
 	public void Handle() {
 		if (raiseCount == 3) {
-			EndPhase();
+			PhaseEnd();
 			return;
 		}
 
@@ -49,12 +49,12 @@ public class BetPhase: MonoBehaviour, IPhaseState {
 	}
 
 	public void TakeFold(Gambler folder) {
-		turnSystem.ToEndPhase(TurnSystem.WayOfEnd.Fold, folder);
+		turnSystem.ToFoldPhase(folder);
 	}
 
 	private void ChangeTurn() {
 		if (callCount == 2) {
-			EndPhase();
+			PhaseEnd();
 		}
 		else {
 			presentTurn.Wait();
@@ -77,14 +77,8 @@ public class BetPhase: MonoBehaviour, IPhaseState {
 		return false;
 	}
 
-	private void EndPhase() {
-		if (IsLastBet()) {
-			NewRoundInitialize();
-			turnSystem.ToEndPhase();
-		}
-		else {
-			callCount = 0;
-			turnSystem.ToHitPhase();
-		}
+	private void PhaseEnd() {
+		callCount = 0;
+		turnSystem.ToHitPhase();
 	}
 }
