@@ -24,9 +24,9 @@ public class TurnSystem : MonoBehaviour {
 		betPhase = GetComponent<BetPhase>();
 		hitPhase = GetComponent<HitPhase>();
 		endPhase = GetComponent<EndPhase>();
-		foldPhase = GetComponent<FoldPhase>();
-		showDownPhase = GetComponent<ShowDownPhase>();
-		burstPhase = GetComponent<BurstPhase>();
+		foldPhase = gameObject.AddComponent<FoldPhase>();
+		showDownPhase = gameObject.AddComponent<ShowDownPhase>();
+		burstPhase = gameObject.AddComponent<BurstPhase>();
 
 		context = gameObject.AddComponent<TurnSystemContext>();
 	}
@@ -54,10 +54,12 @@ public class TurnSystem : MonoBehaviour {
 	//EndPhase를 방식에 따라 3 Class로 구분하기? (FoldPhase, ShowdownPhase, BurstPhase...)
 
 	public void ToFoldPhase(Gambler loser) {
+		GetComponent<FoldPhase>().SetLoser(loser);
 		context.Transit(foldPhase);
 	}
 
 	public void ToBurstPhase(Gambler loser) {
+		GetComponent<BurstPhase>().SetLoser(loser);
 		context.Transit(burstPhase);
 	}
 

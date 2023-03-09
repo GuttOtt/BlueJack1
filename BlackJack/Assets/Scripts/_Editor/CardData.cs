@@ -28,12 +28,7 @@ public class CardData {
 	}
 
 	public Card InstantiateAsCard() {
-		GameObject obj = new GameObject("Card");
-		Card card = obj.AddComponent<Card>() as Card;
-		card.AddIcon(iconPrefab);
-		card.Initialize(number, suit);
-
-		return card;
+		return CardGenerator.CreateCard(number, suit, iconPrefab);
 	}
 
 	public void ChangeNumber(int number) {

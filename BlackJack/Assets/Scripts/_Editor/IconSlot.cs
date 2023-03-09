@@ -24,7 +24,6 @@ public class IconSlot: MonoBehaviour {
 	}
 
 	public void SetIcon(CardIcon iconPrefab) {
-		Debug.Log(iconPrefab.GetComponent<SpriteRenderer>().sprite);
 		this.iconPrefab = iconPrefab;
 		image.sprite = iconPrefab.GetComponent<SpriteRenderer>().sprite;
 	}

@@ -39,7 +39,6 @@ public class Gambler : MonoBehaviour {
 	}
 
 	public bool StartRound(Money ante) {
-		Debug.Log(this + "StartRound " + Time.time);
 		if (!wallet.TryWithdrawTo(ante, potWallet)) {
 			return false;
 		}

@@ -32,7 +32,6 @@ public class EditingCard : MonoBehaviour {
 	}
 
 	public void ChangeNumber(int number) {
-		Debug.Log(number);
 		this.number = number;
 		drawing.Draw(number, suit);
 	}

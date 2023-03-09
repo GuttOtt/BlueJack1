@@ -8,7 +8,6 @@ public class WalletGraphic : MonoBehaviour {
 
 	private void Awake() {
 		text = GetComponent<Text>() as Text;
-		Debug.Log(text);
 		//text.text =  "";
 	}
 
