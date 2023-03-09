@@ -4,11 +4,9 @@ using UnityEngine;
 
 public class EndPhase: MonoBehaviour, IPhaseState {
 	private TurnSystem turnSystem;
-	protected Gambler player;
-	protected Gambler opponent;
-	[SerializeField] private Wallet roundPot;
-	protected Money basePotMoney;
-	protected Gambler loser;
+	private Gambler player;
+	private Gambler opponent;
+	private Wallet roundPot;
 
 	private void Awake() {
 		turnSystem = GetComponent<TurnSystem>();
@@ -17,17 +15,13 @@ public class EndPhase: MonoBehaviour, IPhaseState {
 		roundPot = gameObject.GetComponent<Wallet>();
 	}
 
-	public virtual void Handle() {
-
-	}
-	
-	public void SetLoser(Gambler loser){
-		this.loser = loser;
+	public void Handle() {
+		EndRound(turnSystem.loser);
 	}
 
 	public void EndRound(Gambler loser) {
-		loser.LoseProcess(basePotMoney, roundPot);
-		GetOther(loser).WinProcess(basePotMoney, roundPot);
+		loser.LoseProcess(turnSystem.basePotMoney, roundPot);
+		GetOther(loser).WinProcess(turnSystem.basePotMoney, roundPot);
 
 		player.NewRoundInitialize();
 		opponent.NewRoundInitialize();

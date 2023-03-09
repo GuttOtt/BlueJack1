@@ -2,14 +2,24 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class ShowDownPhase : EndPhase {
-	public override void Handle() {
+public class ShowDownPhase : MonoBehaviour, IPhaseState {
+	private TurnSystem turnSystem;
+	private Gambler player;
+	private Gambler opponent;
+
+	private void Awake() {
+		turnSystem = GetComponent<TurnSystem>();
+		player = turnSystem.GetPlayer;
+		opponent = turnSystem.GetOpponent;
+	}
+
+	public void Handle() {
 		player.ShowDown();
 		opponent.ShowDown();
 
-		Gambler loser = GetLoser();
-		basePotMoney = loser.PotMoney;
-		EndRound(loser);
+		turnSystem.loser = GetLoser();
+		turnSystem.basePotMoney = turnSystem.loser.PotMoney;
+		turnSystem.ToEndPhase();
 	}
 
 	private Gambler GetLoser() {
