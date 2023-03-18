@@ -14,6 +14,8 @@ public class PlaySceneManager : MonoBehaviour {
 		moneySettings = SandboxManager.Instance.GetMoneySettings();
 		player.GetComponent<Wallet>().Deposit(moneySettings.playerStartMoney);
 		opponent.GetComponent<Wallet>().Deposit(moneySettings.opponentStartMoney);
+		player.GetComponent<MoneyGraphic>().SetMoney(moneySettings.playerStartMoney);
+		opponent.GetComponent<MoneyGraphic>().SetMoney(moneySettings.opponentStartMoney);
 
 		turnSystem.ToStartPhase();
 	}

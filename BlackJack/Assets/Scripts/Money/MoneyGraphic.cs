@@ -7,11 +7,16 @@ public class MoneyGraphic : MonoBehaviour {
 	private SpriteRenderer spr;
 	private Money money;
 	[SerializeField] private Text text;
+	[SerializeField] private Vector3 moneyPosition;
 
 	private void Awake() {
-		spr = GetComponent<SpriteRenderer>();
+		GameObject obj = new GameObject("MoneyGraphic");
+		obj.transform.parent = this.transform;
+		obj.transform.position = moneyPosition;
+		spr = obj.AddComponent<SpriteRenderer>();
+
 		money = Money.zero;
-		text.transform.position = Camera.main.WorldToScreenPoint(transform.position);
+		text.transform.position = Camera.main.WorldToScreenPoint(moneyPosition);
 	}
 
 	public void SetMoney(Money money) {
@@ -22,11 +27,12 @@ public class MoneyGraphic : MonoBehaviour {
 	public void Send(Money money, MoneyGraphic dest) {
 		this.money = this.money.Minus(money);
 		UpdateGraphic();
-		MovingMoney.Instantiate(money, dest);
+		MovingMoney.Instantiate(money, moneyPosition, dest);
 	}
 
 	public void UpdateGraphic() {
 		spr.sprite = MGContainer.MoneyToGraphic(money);
+		text.text = money.AmountToInt().ToString();
 	}
 
 	public void Deposit(Money money) {
