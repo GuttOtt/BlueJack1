@@ -10,8 +10,8 @@ public class StartPhase: MonoBehaviour, IPhaseState {
 
 	private void Awake() {
 		turnSystem = GetComponent<TurnSystem>();
-		player = turnSystem.PlayerGambler;
-		opponent = turnSystem.OpponentGambler;
+		player = turnSystem.GetPlayer;
+		opponent = turnSystem.GetOpponent;
 		roundCount = 0;
 	}
 
