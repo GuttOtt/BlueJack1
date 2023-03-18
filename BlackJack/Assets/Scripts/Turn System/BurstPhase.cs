@@ -8,6 +8,6 @@ public class BurstPhase : EndPhase {
 		basePotMoney = burster.PotMoney;
 		burster.BurstProcess(basePotMoney);
 		burster.OpenHiddens();
-		EndRound(burster);
+		StartCoroutine(EndRound(burster));
 	}
 }

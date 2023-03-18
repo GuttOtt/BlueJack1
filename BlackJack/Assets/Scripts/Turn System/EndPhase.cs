@@ -25,20 +25,16 @@ public class EndPhase: MonoBehaviour, IPhaseState {
 		this.loser = loser;
 	}
 
-	public void EndRound(Gambler loser) {
-		loser.LoseProcess(basePotMoney, roundPot);
-		GetOther(loser).WinProcess(basePotMoney, roundPot);
+	public IEnumerator EndRound(Gambler loser) {
+		yield return StartCoroutine( loser.LoseProcess(basePotMoney, roundPot) );
+		yield return StartCoroutine( GetOther(loser).WinProcess(basePotMoney, roundPot) );
 
 		player.NewRoundInitialize();
 		opponent.NewRoundInitialize();
 		gameObject.GetComponent<BetPhase>().NewRoundInitialize();
-
-		StartCoroutine(EndRoundDelay());
-	}
-
-	private IEnumerator EndRoundDelay() {
-		yield return new WaitForSeconds(2f);
 		
+		yield return new WaitForSeconds(1f);
+
 		turnSystem.ToStartPhase();
 	}
 

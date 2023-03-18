@@ -7,6 +7,6 @@ public class FoldPhase : EndPhase {
 		Gambler folder = this.loser;
 		basePotMoney = folder.PotMoney;
 		folder.FoldProcess(basePotMoney);
-		EndRound(folder);
+		StartCoroutine(EndRound(folder));
 	}
 }

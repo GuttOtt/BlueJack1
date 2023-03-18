@@ -9,7 +9,7 @@ public class ShowDownPhase : EndPhase {
 
 		Gambler loser = GetLoser();
 		basePotMoney = loser.PotMoney;
-		EndRound(loser);
+		StartCoroutine(EndRound(loser));
 	}
 
 	private Gambler GetLoser() {

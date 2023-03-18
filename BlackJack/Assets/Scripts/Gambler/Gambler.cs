@@ -101,17 +101,19 @@ public class Gambler : MonoBehaviour {
 		hand.ActivateAllIcon(EffectCondition.OnBurst);
 	}
 
-	public void WinProcess(Money basePot, Wallet roundPot) {
+	public IEnumerator WinProcess(Money basePot, Wallet roundPot) {
 		this.basePot = basePot;
-		hand.ActivateAllIcon(EffectCondition.OnWin);
+		yield return StartCoroutine(hand.ActivateAllIcon(EffectCondition.OnWin));
 		roundPot.WithdrawAllTo(wallet);
 		potWallet.WithdrawAllTo(wallet);
+		yield return new WaitForSeconds(1f);
 	}
 
-	public void LoseProcess(Money basePot, Wallet roundPot) {
+	public IEnumerator LoseProcess(Money basePot, Wallet roundPot) {
 		this.basePot = basePot;
-		hand.ActivateAllIcon(EffectCondition.OnLose);
+		yield return StartCoroutine(hand.ActivateAllIcon(EffectCondition.OnLose));
 		potWallet.WithdrawAllTo(roundPot);
+		yield return new WaitForSeconds(1f);
 	}
 
 	public void ShowDown() {

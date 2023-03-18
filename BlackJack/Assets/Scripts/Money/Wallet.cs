@@ -93,6 +93,10 @@ public class Money {
         return this.amount >= other.amount? true : false;
     }
 
+    public bool IsEqualWith(Money other) {
+        return this.amount == other.amount? true : false;
+    }
+
     public int AmountToInt() {
         return amount;
     }

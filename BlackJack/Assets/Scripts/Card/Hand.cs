@@ -87,21 +87,24 @@ public class Hand : MonoBehaviour {
 		}
 	}
 
-	public void ActivateAllIcon(EffectCondition condition) {
+	public IEnumerator ActivateAllIcon(EffectCondition condition) {
 		foreach (Card card in cards) {
-			card.ActivateIcon(condition);
+			if (card.ActivateIcon(condition))
+				yield return new WaitForSeconds(0.5f);
 		}
 	}
 
-	public void ActivateAllField(EffectCondition condition) {
+	public IEnumerator ActivateAllField(EffectCondition condition) {
 		foreach (Card card in field) {
-			card.ActivateIcon(condition);
+			if (card.ActivateIcon(condition))
+				yield return new WaitForSeconds(0.5f);
 		}
 	}
 
-	public void ActivateAllHidden(EffectCondition condition) {
+	public IEnumerator ActivateAllHidden(EffectCondition condition) {
 		foreach (Card card in hiddens) {
-			card.ActivateIcon(condition);
+			if (card.ActivateIcon(condition))
+				yield return new WaitForSeconds(0.5f);
 		}
 	}
 
