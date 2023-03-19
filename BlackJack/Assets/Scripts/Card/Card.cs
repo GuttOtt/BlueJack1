@@ -5,6 +5,7 @@ using UnityEngine;
 public class Card: MonoBehaviour {
 	public Gambler owner;
 	private CardIcon icon;
+	private CardIcon iconPrefab;
 	private int number;
 	private Suit suit;
 	private GameObject numberObj;
@@ -16,14 +17,22 @@ public class Card: MonoBehaviour {
 		set {
 			if (value) {
 				DrawFront();
+				isFront = true;
 			}
 			else {
 				DrawBack();
+				isFront = false;
 			}
 		}
 	}
 	private Vector3 movePosition = Vector3.zero;
 	private float moveSpeed = 0;
+	public int IconID { get => icon.ID; }
+
+	private void Awake() {
+		BoxCollider2D col = gameObject.AddComponent<BoxCollider2D>();
+		col.size = new Vector2(2f, 110/40f);
+	}
 
 	private void Update() {
 		if (movePosition != null) {
@@ -154,6 +163,7 @@ public class Card: MonoBehaviour {
 			Destroy(icon);
 		}
 
+		this.iconPrefab = iconPrefab;
 		icon = Instantiate(iconPrefab, this.transform);
 		icon.transform.localPosition = Vector3.zero + Vector3.back * 0.1f;
 		icon.Initialize(this);
@@ -175,6 +185,10 @@ public class Card: MonoBehaviour {
 	public void ChangeNumber(int number) {
 		this.number = number;
 		MakeNumberObj();
+	}
+
+	public CardData GetData() {
+		return new CardData(number, suit, iconPrefab);
 	}
 }
 

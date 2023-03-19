@@ -12,7 +12,7 @@ public class DeckEditor : MonoBehaviour {
 	private EditingCard selectedCard;
 
 	private void Awake() {
-		cardEditor = GetComponent<CardEditor>();
+		cardEditor = GetComponent<CardEditor>(); 
 		addButton.onClick.AddListener(AddNewCard);
 		r1To7Button.onClick.AddListener(AddRandom1To7);
 		r1To77Button.onClick.AddListener(AddRandom1To77);

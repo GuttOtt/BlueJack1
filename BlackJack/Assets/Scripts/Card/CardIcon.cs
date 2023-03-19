@@ -13,6 +13,8 @@ public class CardIcon : MonoBehaviour {
 	private ICardEffect effect;
 	[SerializeField] EffectCondition condition;
 	[SerializeField] GameObject activateAnimation;
+	[SerializeField] private int id;
+	public int ID { get => id; }
 
 	private void Awake() {
 		spr = GetComponent<SpriteRenderer>();
@@ -32,7 +34,6 @@ public class CardIcon : MonoBehaviour {
 	}
 
 	private void ActivateAnimation() {
-		Debug.Log("Animation");
 		Instantiate(activateAnimation, transform);
 	}
 

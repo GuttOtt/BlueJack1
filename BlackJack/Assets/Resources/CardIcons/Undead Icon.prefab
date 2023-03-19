@@ -49,6 +49,7 @@ MonoBehaviour:
   owner: {fileID: 0}
   condition: 5
   activateAnimation: {fileID: 2129466798422591636, guid: 16a01088662df474d9bf529cc9628f3b, type: 3}
+  id: 9
 --- !u!114 &8658803316424529438
 MonoBehaviour:
   m_ObjectHideFlags: 0
