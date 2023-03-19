@@ -8,6 +8,8 @@ public class PlaySceneManager : MonoBehaviour {
 	public static MoneySettings moneySettings;
 
 	private void Start() {
+		MGContainer.Initialize();
+
 		SandboxManager.Instance.DeckSetting(player.GetComponent<Deck>(), true);
 		SandboxManager.Instance.DeckSetting(opponent.GetComponent<Deck>(), false);
 		

@@ -159,8 +159,11 @@ public class Card: MonoBehaviour {
 		icon.Initialize(this);
 	}
 
-	public void ActivateIcon(EffectCondition condition) {
+	public bool ActivateIcon(EffectCondition condition) {
+		if (!icon.IsSatisfiedBy(condition))
+			return false;
 		icon.TryToActivate(condition);
+		return true;
 	}
 
 	public void ChangeSuit(Suit suit) {

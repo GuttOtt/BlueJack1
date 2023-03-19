@@ -8,8 +8,8 @@ public class FoldPhase : MonoBehaviour, IPhaseState {
 	private void Awake() {
 		turnSystem = GetComponent<TurnSystem>();
 	}
-
-    public void Handle() {
+	
+  public void Handle() {		
 		Gambler folder = turnSystem.loser;
 		turnSystem.basePotMoney = folder.PotMoney;
 		folder.FoldProcess(turnSystem.basePotMoney);

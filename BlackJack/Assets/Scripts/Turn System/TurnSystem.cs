@@ -7,12 +7,13 @@ public class TurnSystem : MonoBehaviour {
 	[SerializeField] private Gambler player;
 	[SerializeField] private Gambler opponent;
 	[SerializeField] private Text phaseText;
-	[SerializeField] private Wallet roundPot;
 	private TurnSystemContext context;
+	private IPhaseState startPhase, betPhase, hitPhase, endPhase, foldPhase, showDownPhase, burstPhase;
+	
+
 	public Gambler GetPlayer { get => player; }
 	public Gambler GetOpponent { get => opponent; }
 	public Gambler loser;
-	private IPhaseState startPhase, betPhase, hitPhase, endPhase, foldPhase, showDownPhase, burstPhase;
 	public Money basePotMoney;
 
 	private void Awake() {
@@ -48,7 +49,7 @@ public class TurnSystem : MonoBehaviour {
 	}
 	
 
-	//EndPhase¸¦ ¹æ½Ä¿¡ µû¶ó 3 Class·Î ±¸ºĞÇÏ±â? (FoldPhase, ShowdownPhase, BurstPhase...)
+	//EndPhaseë¥¼ ë°©ì‹ì— ë”°ë¼ 3 Classë¡œ êµ¬ë¶„í•˜ê¸°? (FoldPhase, ShowdownPhase, BurstPhase...)
 
 	public void ToFoldPhase(Gambler loser) {
 		this.loser = loser;

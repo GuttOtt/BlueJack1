@@ -10,7 +10,7 @@ public class MovingMoney : MonoBehaviour {
 
 	private void Update() {
 		if (destination) {
-			Vector3 pos = destination.transform.position;
+			Vector3 pos = destination.MoneyPosition;
 			float distance = (pos - transform.position).magnitude;
 
 			if (distance < 0.1f) {
@@ -27,7 +27,7 @@ public class MovingMoney : MonoBehaviour {
 		moving.money = money;
 		moving.destination = dest;
 		moving.transform.position = origin;
-		moving.moveSpeed = (dest.transform.position - moving.transform.position).magnitude * Time.deltaTime;
+		moving.moveSpeed = (dest.MoneyPosition - moving.transform.position).magnitude * Time.deltaTime * 3f;
 		obj.AddComponent<SpriteRenderer>().sprite = MGContainer.MoneyToGraphic(money);
 		
 		return moving;
