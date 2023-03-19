@@ -24,8 +24,6 @@ public class TurnSystem : MonoBehaviour {
 		foldPhase = gameObject.AddComponent<FoldPhase>();
 		showDownPhase = gameObject.AddComponent<ShowDownPhase>();
 		burstPhase = gameObject.AddComponent<BurstPhase>();
-		roundPot = GetComponent<Wallet>();
-
 		context = gameObject.AddComponent<TurnSystemContext>();
 	}
 

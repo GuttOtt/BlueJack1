@@ -91,14 +91,14 @@ public class Gambler : MonoBehaviour {
 	}
 
 	//End Round Processes. All should move to new class, GamblerStateEnd.
-	public void FoldProcess(Money basePot) {
+	public IEnumerator FoldProcess(Money basePot) {
 		this.basePot = basePot;
-		hand.ActivateAllIcon(EffectCondition.OnFold);
+		yield return StartCoroutine(hand.ActivateAllField(EffectCondition.OnFold));
 	}
 
-	public void BurstProcess(Money basePot) {
+	public IEnumerator BurstProcess(Money basePot) {
 		this.basePot = basePot;
-		hand.ActivateAllIcon(EffectCondition.OnBurst);
+		yield return StartCoroutine(hand.ActivateAllField(EffectCondition.OnBurst));
 	}
 
 	public IEnumerator WinProcess(Money basePot, Wallet roundPot) {

@@ -100,4 +100,8 @@ public class CardEditor : MonoBehaviour {
 			iconSlots[i].SetIcon(cardIconPrefabs[iconSlotIndex + i]); 
 		}
 	}
+
+	public CardIcon GetRandomIcon() {
+		return cardIconPrefabs[Random.Range(0, cardIconPrefabs.Length)];
+	}
 }

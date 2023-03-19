@@ -17,6 +17,7 @@ public class StartPhase: MonoBehaviour, IPhaseState {
 
 	public void Handle() {
 		roundCount++;
+		GetComponent<BetPhase>().NewRoundInitialize();
 
 		if (MakeStart(player) && MakeStart(opponent)) {
 			turnSystem.ToBetPhase();

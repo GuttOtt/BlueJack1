@@ -5,7 +5,7 @@ using UnityEngine.UI;
 
 public class DeckEditor : MonoBehaviour {
 	[SerializeField] private List<EditingCard> deck;
-	[SerializeField] private Button addButton, deleteButton, editButton, completeButton, r1To7Button, r1To77Button;
+	[SerializeField] private Button addButton, deleteButton, editButton, completeButton, r1To7Button, r1To77Button, randomIconButton;
 	[SerializeField] private float cardWidth, cardHeight;
 	[SerializeField] private Vector2 cardOrigin;
 	private CardEditor cardEditor;
@@ -16,6 +16,7 @@ public class DeckEditor : MonoBehaviour {
 		addButton.onClick.AddListener(AddNewCard);
 		r1To7Button.onClick.AddListener(AddRandom1To7);
 		r1To77Button.onClick.AddListener(AddRandom1To77);
+		randomIconButton.onClick.AddListener(SetAllToRandomIcon);
 		deleteButton.onClick.AddListener(DeleteSelectedCard);
 		editButton.onClick.AddListener(delegate {cardEditor.StartEditing(selectedCard);});
 		completeButton.onClick.AddListener(CompleteEditing);
@@ -98,5 +99,11 @@ public class DeckEditor : MonoBehaviour {
 		card.Initialize(7, (Suit) Random.Range(0, 4));
 		deck.Add(card);
 		Arrange();
+	}
+
+	private void SetAllToRandomIcon() {
+		foreach (EditingCard card in deck) {
+			card.ChangeIcon(cardEditor.GetRandomIcon());
+		}
 	}
 }

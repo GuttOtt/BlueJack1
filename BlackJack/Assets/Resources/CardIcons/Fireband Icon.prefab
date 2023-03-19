@@ -47,8 +47,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   owner: {fileID: 0}
-  condition: 1
-  activateAnimation: {fileID: 0}
+  condition: 11
+  activateAnimation: {fileID: 2129466798422591636, guid: 16a01088662df474d9bf529cc9628f3b, type: 3}
 --- !u!114 &1658520812139880833
 MonoBehaviour:
   m_ObjectHideFlags: 0

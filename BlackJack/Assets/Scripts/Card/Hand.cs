@@ -29,7 +29,7 @@ public class Hand : MonoBehaviour {
 		card.transform.SetParent(handParent.transform);
 		card.MoveTo(handParent.transform.position + Vector3.right * (field.Count) * 2);
 		card.IsFront = true;
-		card.ActivateIcon(EffectCondition.OnHit);
+		card.ActivateIcon(EffectCondition.OnOpen);
 	}
 
 	public void AddHidden(Card card) {
@@ -82,6 +82,18 @@ public class Hand : MonoBehaviour {
 	}
 
 	public void OpenHiddens() {
+		ShowHiddens();
+		ActivateAllHidden(EffectCondition.OnOpen);
+		ActivateAllHidden(EffectCondition.OnShowDown);
+		foreach (Card card in hiddens) {
+			field.Add(card);
+		}
+		hiddens.Clear();
+	}
+
+	//Open과는 달리, 카드의 효과를 발동하지 않고 상대에게 보여주기만 함.
+	//Burst를 했다면, Hidden 카드는 Open이 아닌 Show가 된다.
+	public void ShowHiddens() {
 		foreach (Card card in hiddens) {
 			card.IsFront = true;
 		}
