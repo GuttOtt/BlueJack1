@@ -17,13 +17,14 @@ public class TurnSystem : MonoBehaviour {
 	public Money basePotMoney;
 
 	private void Awake() {
-		startPhase = GetComponent<StartPhase>();
-		betPhase = GetComponent<BetPhase>();
-		hitPhase = GetComponent<HitPhase>();
-		endPhase = GetComponent<EndPhase>();
+		startPhase = gameObject.AddComponent<StartPhase>();
+		betPhase = gameObject.AddComponent<BetPhase>();
+		hitPhase = gameObject.AddComponent<HitPhase>();
+		endPhase = gameObject.AddComponent<EndPhase>();
 		foldPhase = gameObject.AddComponent<FoldPhase>();
 		showDownPhase = gameObject.AddComponent<ShowDownPhase>();
 		burstPhase = gameObject.AddComponent<BurstPhase>();
+		roundPot = GetComponent<Wallet>();
 
 		context = gameObject.AddComponent<TurnSystemContext>();
 	}
@@ -48,7 +49,7 @@ public class TurnSystem : MonoBehaviour {
 	}
 	
 
-	//EndPhase¸¦ ¹æ½Ä¿¡ µû¶ó 3 Class·Î ±¸ºĞÇÏ±â? (FoldPhase, ShowdownPhase, BurstPhase...)
+	//EndPhaseë¥¼ ë°©ì‹ì— ë”°ë¼ 3 Classë¡œ êµ¬ë¶„í•˜ê¸°? (FoldPhase, ShowdownPhase, BurstPhase...)
 
 	public void ToFoldPhase(Gambler loser) {
 		this.loser = loser;

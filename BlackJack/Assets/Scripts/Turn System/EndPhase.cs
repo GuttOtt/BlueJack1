@@ -4,8 +4,8 @@ using UnityEngine;
 
 public class EndPhase: MonoBehaviour, IPhaseState {
 	private TurnSystem turnSystem;
-	protected Gambler player;
-	protected Gambler opponent;
+	private Gambler player;
+	private Gambler opponent;
 	private Wallet roundPot;
 
 	private void Awake() {
@@ -15,7 +15,7 @@ public class EndPhase: MonoBehaviour, IPhaseState {
 		roundPot = gameObject.GetComponent<Wallet>();
 	}
 
-	public virtual void Handle() {
+	public void Handle() {
 		StartCoroutine(EndRound());
 	}
 
