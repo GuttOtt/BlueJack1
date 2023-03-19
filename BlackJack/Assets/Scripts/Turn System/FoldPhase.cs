@@ -2,11 +2,17 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class FoldPhase : EndPhase {
-    public override void Handle() {
-		Gambler folder = this.loser;
-		basePotMoney = folder.PotMoney;
-		folder.FoldProcess(basePotMoney);
-		StartCoroutine(EndRound(folder));
+public class FoldPhase : MonoBehaviour, IPhaseState {
+	private TurnSystem turnSystem;
+
+	private void Awake() {
+		turnSystem = GetComponent<TurnSystem>();
+	}
+	
+    public void Handle() {		
+		Gambler folder = turnSystem.loser;
+		turnSystem.basePotMoney = folder.PotMoney;
+		folder.FoldProcess(turnSystem.basePotMoney);
+		turnSystem.ToEndPhase();
 	}
 }
