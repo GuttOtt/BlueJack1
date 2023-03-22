@@ -44,7 +44,7 @@ public class GamblerStateBet: MonoBehaviour, IGamblerState {
 		Money moneyToRaise = potWallet.MoneyToRaise(opponent.potWallet, PlaySceneManager.moneySettings.raiseRatio);
 		if (betPhase.IsAbleToRaise() && opponent.connectedWallet.AffordTo(moneyToRaise)) {
 			if (Bet(moneyToRaise)) {
-				GetComponent<Hand>().ActivateAllField(EffectCondition.OnRaise);
+				StartCoroutine(GetComponent<Hand>().ActivateAllField(EffectCondition.OnRaise));
 				EndBetting();
 				betPhase.TakeRaise();
 				return true;
@@ -61,7 +61,7 @@ public class GamblerStateBet: MonoBehaviour, IGamblerState {
 	}
 
 	private bool Fold() {
-		GetComponent<Hand>().ActivateAllField(EffectCondition.OnFold);
+		StartCoroutine(GetComponent<Hand>().ActivateAllField(EffectCondition.OnFold));
 		EndBetting();
 		betPhase.TakeFold(gambler);
 		return true;

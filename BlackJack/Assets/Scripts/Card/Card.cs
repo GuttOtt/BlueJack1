@@ -40,6 +40,14 @@ public class Card: MonoBehaviour {
 		}
 	}
 
+	private void OnMouseEnter() {
+		if (isFront) CardDescriptionManager.DrawDescription(GetData());
+	}
+
+	private void OnMouseExit() {
+		CardDescriptionManager.ClosePanel();
+	}
+
 	public void Initialize(int number, Suit suit) {
 		this.number = number;
 		this.suit = suit;
@@ -74,32 +82,7 @@ public class Card: MonoBehaviour {
 		numberObj = new GameObject("CardNumber");
 		
 		Sprite sprite = null;
-		switch (number) {
-			case 0:
-				sprite = Resources.Load<Sprite>("Sprites/CardNumber0");
-				break;
-			case 1:
-				sprite = Resources.Load<Sprite>("Sprites/CardNumber1");
-				break;
-			case 2:
-				sprite = Resources.Load<Sprite>("Sprites/CardNumber2");
-				break;
-			case 3:
-				sprite = Resources.Load<Sprite>("Sprites/CardNumber3");
-				break;
-			case 4:
-				sprite = Resources.Load<Sprite>("Sprites/CardNumber4");
-				break;
-			case 5:
-				sprite = Resources.Load<Sprite>("Sprites/CardNumber5");
-				break;
-			case 6:
-				sprite = Resources.Load<Sprite>("Sprites/CardNumber6");
-				break;
-			case 7:
-				sprite = Resources.Load<Sprite>("Sprites/CardNumber7");
-				break;
-		}
+		sprite = CardSpriteContainer.NumberToSprite(number);
 
 		SpriteRenderer spr = numberObj.AddComponent<SpriteRenderer>();
 		spr.sprite = sprite;
@@ -117,20 +100,7 @@ public class Card: MonoBehaviour {
 		suitObj = new GameObject("CardSuit");
 
 		Sprite sprite = null;
-		switch (suit) {
-			case Suit.Spade :
-				sprite = Resources.Load<Sprite>("Sprites/CardSuitSpade");
-				break;
-			case Suit.Diamond :
-				sprite = Resources.Load<Sprite>("Sprites/CardSuitDiamond");
-				break;
-			case Suit.Heart :
-				sprite = Resources.Load<Sprite>("Sprites/CardSuitHeart");
-				break;
-			case Suit.Club :
-				sprite = Resources.Load<Sprite>("Sprites/CardSuitClub");
-				break;
-		}
+		sprite = CardSpriteContainer.SuitToSprite(suit);
 		
 		SpriteRenderer spr = suitObj.AddComponent<SpriteRenderer>();
 		spr.sprite = sprite;

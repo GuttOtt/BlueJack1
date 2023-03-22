@@ -3,14 +3,17 @@ using System.Collections.Generic;
 using UnityEngine;
 
 public class CardData {
-	[SerializeField] private int number;
-	[SerializeField] private Suit suit;
-	[SerializeField] private CardIcon iconPrefab;
+	[SerializeField] private int _number;
+	[SerializeField] private Suit _suit;
+	[SerializeField] private CardIcon _iconPrefab;
+	public int number { get => _number; }
+	public Suit suit { get => _suit; }
+	public CardIcon iconPrefab { get => _iconPrefab; }
 
 	public CardData(int number, Suit suit, CardIcon iconPrefab) {
-		this.number = number;
-		this.suit = suit;
-		this.iconPrefab = iconPrefab;
+		_number = number;
+		_suit = suit;
+		_iconPrefab = iconPrefab;
 	}
 
 	public void PasteTo(EditingCard card) {
@@ -19,12 +22,8 @@ public class CardData {
 		card.ChangeIcon(iconPrefab);
 	}
 
-	public void PasteTo(Card card) {
-
-	}
-
 	public void PasteTo(CopyCardImage img) {
-		img.Draw(number, suit, iconPrefab);
+		img.Draw(this);
 	}
 
 	public Card InstantiateAsCard() {
@@ -32,14 +31,14 @@ public class CardData {
 	}
 
 	public void ChangeNumber(int number) {
-		this.number = number;
+		_number = number;
 	}
 
 	public void ChangeSuit(Suit suit) {
-		this.suit = suit;
+		_suit = suit;
 	}
 
 	public void ChangeIcon(CardIcon iconPrefab) {
-		this.iconPrefab = iconPrefab;
+		_iconPrefab = iconPrefab;
 	}
 }

@@ -1,17 +1,23 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.UI;
 using System.Linq;
 
 public class Deck : MonoBehaviour {
+	[SerializeField] private GameObject deckParent;
+	[SerializeField] private GameObject remainsPanel;
+	[SerializeField] private CopyCardImage copyPrefab;
 	private List<Card> cards = new List<Card>();	
 	private Hand hand;
 	private Discards discards;
-	[SerializeField] private GameObject deckParent;
 
 	private void Awake() {
 		hand = transform.GetComponent<Hand>();
 		discards = transform.GetComponent<Discards>();
+
+		DeckCover deckCover = deckParent.AddComponent<DeckCover>();
+		deckCover.SetDeck(this);
 	}
 
 	private Card Draw() {
@@ -39,12 +45,19 @@ public class Deck : MonoBehaviour {
 		cards.Add(card);
 		card.IsFront = false;
 		card.transform.SetParent(deckParent.transform);
-		card.MoveTo(deckParent.transform.position);
+		card.MoveTo(deckParent.transform.position + Vector3.forward * (cards.Count+1));
 	}
+
 	public void Shuffle() {
 		cards.Shuffle();
 	}
 
-	
+	public void DrawDeckList() {
+		List<CardData> data = new List<CardData>();
+		foreach(Card card in cards) {
+			data.Add(card.GetData());
+		}
+		DeckListUI.DrawDeckList(data);
+	}
 }
 
