@@ -101,7 +101,7 @@ MonoBehaviour:
   owner: {fileID: 0}
   condition: 3
   activateAnimation: {fileID: 2129466798422591636, guid: 16a01088662df474d9bf529cc9628f3b, type: 3}
-  id: 15
+  id: 16
 --- !u!114 &1112029996030146866
 MonoBehaviour:
   m_ObjectHideFlags: 0

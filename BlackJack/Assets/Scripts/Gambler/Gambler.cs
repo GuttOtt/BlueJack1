@@ -103,7 +103,7 @@ public class Gambler : MonoBehaviour {
 
 	public IEnumerator WinProcess(Money basePot, Wallet roundPot) {
 		this.basePot = basePot;
-		yield return StartCoroutine(hand.ActivateAllIcon(EffectCondition.OnWin));
+		yield return StartCoroutine(hand.ActivateAllField(EffectCondition.OnWin));
 		roundPot.WithdrawAllTo(wallet);
 		potWallet.WithdrawAllTo(wallet);
 		yield return new WaitForSeconds(1f);
@@ -111,7 +111,7 @@ public class Gambler : MonoBehaviour {
 
 	public IEnumerator LoseProcess(Money basePot, Wallet roundPot) {
 		this.basePot = basePot;
-		yield return StartCoroutine(hand.ActivateAllIcon(EffectCondition.OnLose));
+		yield return StartCoroutine(hand.ActivateAllField(EffectCondition.OnLose));
 		potWallet.WithdrawAllTo(roundPot);
 		yield return new WaitForSeconds(1f);
 	}
