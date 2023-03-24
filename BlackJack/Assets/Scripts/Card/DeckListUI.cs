@@ -9,14 +9,17 @@ public class DeckListUI : Singleton<DeckListUI> {
 	private GameObject _panel;
 	private CopyCardImage _imagePrefab;//Includes CardImageControl Component.
 	private List<CopyCardImage> _cards = new List<CopyCardImage>();
+	private static bool isTurnedOn = false;
 	private static GameObject panel { get => Instance._panel; set => Instance._panel = value; }
 	private static CopyCardImage imagePrefab { get => Instance._imagePrefab; set => Instance._imagePrefab = value; }
 	private static List<CopyCardImage> cards { get => Instance._cards; set => Instance._cards = value; }
 	private static Vector2 gap { get => Instance._gap; }
+	public static bool IsTurnedOn { get => isTurnedOn; }
 
 	protected void Start() {
 		imagePrefab = Resources.Load<CopyCardImage>("Copy Card Image Prefab");
 		panel = Instance.transform.Find("Panel").gameObject;
+		panel.transform.Find("Close Button").GetComponent<Button>().onClick.AddListener(ClosePanel);
 		ClosePanel();
 	}
 
@@ -31,6 +34,7 @@ public class DeckListUI : Singleton<DeckListUI> {
 
 		Instance.SortAscending();
 		Instance.Arrange();
+		isTurnedOn = true;
 	}
 
 	private void Arrange() {
@@ -73,5 +77,6 @@ public class DeckListUI : Singleton<DeckListUI> {
 			Destroy(card.gameObject);
 		}
 		cards.Clear();
+		isTurnedOn = false;
 	}
 }

@@ -7,17 +7,14 @@ public class DeckCover : MonoBehaviour {
 
 	private void Awake() {
 		gameObject.AddComponent<BoxCollider2D>();
+		
 	}
 
 	public void SetDeck(Deck deck) {
 		this.deck = deck;
 	}
 
-	private void OnMouseEnter() {
+	private void OnMouseDown() {
 		deck.DrawDeckList();
-	}
-
-	private void OnMouseExit() {
-		DeckListUI.ClosePanel();
 	}
 }

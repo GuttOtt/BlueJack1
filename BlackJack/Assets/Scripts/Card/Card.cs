@@ -28,6 +28,7 @@ public class Card: MonoBehaviour {
 	private Vector3 movePosition = Vector3.zero;
 	private float moveSpeed = 0;
 	public int IconID { get => icon.ID; }
+	private bool isOnCursor = false;
 
 	private void Awake() {
 		BoxCollider2D col = gameObject.AddComponent<BoxCollider2D>();
@@ -41,10 +42,12 @@ public class Card: MonoBehaviour {
 	}
 
 	private void OnMouseEnter() {
-		if (isFront) CardDescriptionManager.DrawDescription(GetData());
+		if (!isFront || DeckListUI.IsTurnedOn) return;
+		CardDescriptionManager.DrawDescription(GetData());
 	}
 
 	private void OnMouseExit() {
+		if (DeckListUI.IsTurnedOn) return;
 		CardDescriptionManager.ClosePanel();
 	}
 
