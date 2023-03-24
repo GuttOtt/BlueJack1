@@ -5,15 +5,17 @@ using UnityEngine;
 using UnityEngine.UI;
 
 public class DeckListUI : Singleton<DeckListUI> {
-	[SerializeField] private Image _panel;
-	[SerializeField] private CopyCardImage _imagePrefab;//Includes CardImageControl Component.
+	private GameObject _panel;
+	private CopyCardImage _imagePrefab;//Includes CardImageControl Component.
 	private List<CopyCardImage> _cards = new List<CopyCardImage>();
-	private static Image panel { get => Instance._panel; set => Instance._panel = value; }
+	private static GameObject panel { get => Instance._panel; set => Instance._panel = value; }
 	private static CopyCardImage imagePrefab { get => Instance._imagePrefab; set => Instance._imagePrefab = value; }
 	private static List<CopyCardImage> cards { get => Instance._cards; set => Instance._cards = value; }
 
-	protected override void Awake() {
+	protected void Start() {
 		imagePrefab = Resources.Load<CopyCardImage>("Copy Card Image Prefab");
+		panel = Instance.transform.Find("Panel").gameObject;
+		ClosePanel();
 	}
 
 	public static void DrawDeckList(List<CardData> deckData) {
