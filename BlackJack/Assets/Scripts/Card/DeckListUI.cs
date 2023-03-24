@@ -5,12 +5,14 @@ using UnityEngine;
 using UnityEngine.UI;
 
 public class DeckListUI : Singleton<DeckListUI> {
+	[SerializeField] private Vector2 _gap;
 	private GameObject _panel;
 	private CopyCardImage _imagePrefab;//Includes CardImageControl Component.
 	private List<CopyCardImage> _cards = new List<CopyCardImage>();
 	private static GameObject panel { get => Instance._panel; set => Instance._panel = value; }
 	private static CopyCardImage imagePrefab { get => Instance._imagePrefab; set => Instance._imagePrefab = value; }
 	private static List<CopyCardImage> cards { get => Instance._cards; set => Instance._cards = value; }
+	private static Vector2 gap { get => Instance._gap; }
 
 	protected void Start() {
 		imagePrefab = Resources.Load<CopyCardImage>("Copy Card Image Prefab");
@@ -32,33 +34,37 @@ public class DeckListUI : Singleton<DeckListUI> {
 	}
 
 	private void Arrange() {
-		for (int i = 0; i < cards.Count; i++) {
-			int x = i % 8;
-			int y = i / 8;
+		Rect rect = imagePrefab.GetComponent<RectTransform>().rect;
+		float cardWidth = rect.width;
+		float cardHeight = rect.height;
 
-			cards[i].transform.localPosition = new Vector2(x * 90f, -y * 110f) + new Vector2(-400f, 300f) + new Vector2(45f + 5f, -55f - 5f);
+		for (int i = 0; i < cards.Count; i++) {
+			int x = i % 7;
+			int y = i / 7;
+
+			cards[i].transform.localPosition = new Vector2((cardWidth + gap.x) * x, -(cardHeight + gap.y) * y);
 		}
 	}
 
 	private void SortAscending() {
-		CopyCardImage[] arranged = cards.ToArray();
+		CopyCardImage[] sorted = cards.ToArray();
 
 		//Selection Sort
-		for (int i = 0; i < arranged.Length - 1; i++) {
+		for (int i = 0; i < sorted.Length - 1; i++) {
 			int index = i;
-			for (int j = i + 1; j < arranged.Length; j++) {
-				if (arranged[j].GetData().number < arranged[index].GetData().number) {
+			for (int j = i + 1; j < sorted.Length; j++) {
+				if (sorted[j].GetData().number < sorted[index].GetData().number) {
 					index = j;
 				}
 			}
 			if (index != i) {
-				CopyCardImage temp = arranged[i];
-				arranged[i] = arranged[index];
-				arranged[index] = temp;
+				CopyCardImage temp = sorted[i];
+				sorted[i] = sorted[index];
+				sorted[index] = temp;
 			}
 		}
 
-		cards = arranged.ToList();
+		cards = sorted.ToList();
 	}
 
 	public static void ClosePanel() {
