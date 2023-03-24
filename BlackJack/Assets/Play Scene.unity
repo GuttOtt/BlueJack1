@@ -294,7 +294,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!224 &200286695
 RectTransform:
   m_ObjectHideFlags: 0
@@ -492,7 +492,7 @@ GameObject:
   - component: {fileID: 317430659}
   - component: {fileID: 317430658}
   m_Layer: 5
-  m_Name: Copy Card Image
+  m_Name: Card Image
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -990,10 +990,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: d92e794b28da80f488aa4441ddbb3fcb, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  panel: {fileID: 200286694}
-  cardImage: {fileID: 317430658}
-  cardNameText: {fileID: 2034483158}
-  cardDescriptionText: {fileID: 1293497801}
 --- !u!4 &562329486
 Transform:
   m_ObjectHideFlags: 0
@@ -2451,7 +2447,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!224 &1320295518
 RectTransform:
   m_ObjectHideFlags: 0

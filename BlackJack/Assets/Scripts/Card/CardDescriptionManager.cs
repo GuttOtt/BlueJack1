@@ -3,18 +3,15 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
+using UnityEngine.SceneManagement;
 
 public class CardDescriptionManager : Singleton<CardDescriptionManager> {
-	[SerializeField] private GameObject panel;
-	[SerializeField] private CopyCardImage cardImage;
-	[SerializeField] private Text cardNameText, cardDescriptionText;
+	private GameObject panel;
+	private CopyCardImage cardImage;
+	private Text cardNameText, cardDescriptionText;
 
 	protected override void Awake() {
-		panel.SetActive(false);
-	}
-
-	private void Update() {
-
+		SceneManager.sceneLoaded += OnSceneLoaded;
 	}
 
 	public static void DrawDescription(CardData data) {
@@ -26,5 +23,21 @@ public class CardDescriptionManager : Singleton<CardDescriptionManager> {
 
 	public static void ClosePanel() {
 		Instance.panel.SetActive(false);
+	}
+
+	private static void OnSceneLoaded(Scene scene, LoadSceneMode mode) {
+		FindUIComponents();
+		Instance.panel.SetActive(false);
+	}
+
+	private static void FindUIComponents() {
+		Instance.panel = GameObject.Find("Card Description Panel");
+		Instance.cardImage = Instance.panel.transform.
+							Find("Card Image").GetComponent<CopyCardImage>();
+		Instance.cardNameText = Instance.panel.transform.
+								Find("Card Name Text").GetComponent<Text>();
+		Instance.cardDescriptionText = Instance.panel.transform.
+							Find("Card Description Text").GetComponent<Text>();
+		Debug.Log("FindUIComponents");
 	}
 }
