@@ -29,7 +29,7 @@ public class Hand : MonoBehaviour {
 		card.transform.SetParent(handParent.transform);
 		card.MoveTo(handParent.transform.position + Vector3.right * (field.Count) * 2);
 		card.IsFront = true;
-		card.ActivateIcon(EffectCondition.OnOpen);
+		card.ActivateIcon(EffectSituation.OnOpen);
 	}
 
 	public void AddHidden(Card card) {
@@ -83,8 +83,8 @@ public class Hand : MonoBehaviour {
 
 	public void OpenHiddens() {
 		ShowHiddens();
-		ActivateAllHidden(EffectCondition.OnOpen);
-		ActivateAllHidden(EffectCondition.OnShowDown);
+		ActivateAllHidden(EffectSituation.OnOpen);
+		ActivateAllHidden(EffectSituation.OnShowDown);
 		foreach (Card card in hiddens) {
 			field.Add(card);
 		}
@@ -99,23 +99,23 @@ public class Hand : MonoBehaviour {
 		}
 	}
 
-	public IEnumerator ActivateAllIcon(EffectCondition condition) {
+	public IEnumerator ActivateAllIcon(EffectSituation situation) {
 		foreach (Card card in cards) {
-			if (card.ActivateIcon(condition))
+			if (card.ActivateIcon(situation))
 				yield return new WaitForSeconds(0.5f);
 		}
 	}
 
-	public IEnumerator ActivateAllField(EffectCondition condition) {
+	public IEnumerator ActivateAllField(EffectSituation situation) {
 		foreach (Card card in field) {
-			if (card.ActivateIcon(condition))
+			if (card.ActivateIcon(situation))
 				yield return new WaitForSeconds(0.5f);
 		}
 	}
 
-	public IEnumerator ActivateAllHidden(EffectCondition condition) {
+	public IEnumerator ActivateAllHidden(EffectSituation situation) {
 		foreach (Card card in hiddens) {
-			if (card.ActivateIcon(condition))
+			if (card.ActivateIcon(situation))
 				yield return new WaitForSeconds(0.5f);
 		}
 	}

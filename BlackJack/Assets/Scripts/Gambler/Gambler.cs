@@ -93,17 +93,17 @@ public class Gambler : MonoBehaviour {
 	//End Round Processes. All should move to new class, GamblerStateEnd.
 	public IEnumerator FoldProcess(Money basePot) {
 		this.basePot = basePot;
-		yield return StartCoroutine(hand.ActivateAllField(EffectCondition.OnFold));
+		yield return StartCoroutine(hand.ActivateAllField(EffectSituation.OnFold));
 	}
 
 	public IEnumerator BurstProcess(Money basePot) {
 		this.basePot = basePot;
-		yield return StartCoroutine(hand.ActivateAllField(EffectCondition.OnBurst));
+		yield return StartCoroutine(hand.ActivateAllField(EffectSituation.OnBurst));
 	}
 
 	public IEnumerator WinProcess(Money basePot, Wallet roundPot) {
 		this.basePot = basePot;
-		yield return StartCoroutine(hand.ActivateAllField(EffectCondition.OnWin));
+		yield return StartCoroutine(hand.ActivateAllField(EffectSituation.OnWin));
 		roundPot.WithdrawAllTo(wallet);
 		potWallet.WithdrawAllTo(wallet);
 		yield return new WaitForSeconds(1f);
@@ -111,14 +111,14 @@ public class Gambler : MonoBehaviour {
 
 	public IEnumerator LoseProcess(Money basePot, Wallet roundPot) {
 		this.basePot = basePot;
-		yield return StartCoroutine(hand.ActivateAllField(EffectCondition.OnLose));
+		yield return StartCoroutine(hand.ActivateAllField(EffectSituation.OnLose));
 		potWallet.WithdrawAllTo(roundPot);
 		yield return new WaitForSeconds(1f);
 	}
 
 	public void ShowDown() {
 		OpenHiddens();
-		hand.ActivateAllIcon(EffectCondition.OnShowDown);
+		hand.ActivateAllIcon(EffectSituation.OnShowDown);
 	}
 
 	public void OpenHiddens() {

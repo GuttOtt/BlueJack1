@@ -16,7 +16,7 @@ public class Discards : MonoBehaviour {
 		card.transform.SetParent(discardsParent.transform);
 		card.MoveTo(discardsParent.transform.position + cards.Count * Vector3.back);
 		card.IsFront = true;
-		card.ActivateIcon(EffectCondition.OnDiscard);
+		card.ActivateIcon(EffectSituation.OnDiscard);
 	}
 
 	public void AllToDeck() {

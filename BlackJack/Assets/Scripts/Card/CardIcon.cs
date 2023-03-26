@@ -2,8 +2,8 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public enum EffectCondition {
-	None, OnHit, OnEveryHit, OnWin, OnLose, OnFold, OnBurst, OnRaise, OnBlackJack, OnShowDown, OnDiscard, OnOpen
+public enum EffectSituation {
+	None, OnOpen, OnEveryHit, OnWin, OnLose, OnFold, OnBurst, OnRaise, OnBlackJack, OnShowDown, OnDiscard
 }
 
 public class CardIcon : MonoBehaviour {
@@ -11,7 +11,7 @@ public class CardIcon : MonoBehaviour {
 	public Gambler owner;
 	private SpriteRenderer spr;
 	private ICardEffect effect;
-	[SerializeField] EffectCondition condition;
+	[SerializeField] EffectSituation situation;
 	[SerializeField] GameObject activateAnimation;
 	[SerializeField] private int id;
 	public int ID { get => id; }
@@ -21,8 +21,8 @@ public class CardIcon : MonoBehaviour {
 		effect = GetComponent<ICardEffect>();
 	}
 
-	public void TryToActivate(EffectCondition condition) {
-		if (IsSatisfiedBy(condition)) {
+	public void TryToActivate(EffectSituation situation) {
+		if (IsSatisfiedBy(situation)) {
 			StartCoroutine(ActivateCoroutine());
 		}
 	}
@@ -37,8 +37,8 @@ public class CardIcon : MonoBehaviour {
 		Instantiate(activateAnimation, transform);
 	}
 
-	public bool IsSatisfiedBy(EffectCondition condition) {
-		if (this.condition == condition) return true;
+	public bool IsSatisfiedBy(EffectSituation situation) {
+		if (this.situation == situation) return true;
 		return false;
 	}
 

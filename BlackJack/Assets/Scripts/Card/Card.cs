@@ -28,7 +28,6 @@ public class Card: MonoBehaviour {
 	private Vector3 movePosition = Vector3.zero;
 	private float moveSpeed = 0;
 	public int IconID { get => icon.ID; }
-	private bool isOnCursor = false;
 
 	private void Awake() {
 		BoxCollider2D col = gameObject.AddComponent<BoxCollider2D>();
@@ -142,10 +141,10 @@ public class Card: MonoBehaviour {
 		icon.Initialize(this);
 	}
 
-	public bool ActivateIcon(EffectCondition condition) {
-		if (!icon.IsSatisfiedBy(condition))
+	public bool ActivateIcon(EffectSituation situation) {
+		if (!icon.IsSatisfiedBy(situation))
 			return false;
-		icon.TryToActivate(condition);
+		icon.TryToActivate(situation);
 		return true;
 	}
 
