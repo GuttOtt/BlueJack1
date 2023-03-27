@@ -4,9 +4,33 @@ using UnityEngine;
 using UnityEngine.UI;
 using UnityEngine.EventSystems;
 
-public class CopyCardImage : MonoBehaviour, IPointerEnterHandler, IPointerExitHandler {
+public class CopyCardImage : MonoBehaviour {
 	[SerializeField] private Image numberImg, suitImg, iconImg;
 	private CardData data;
+
+	private void Awake() {
+		if (!numberImg) {
+			numberImg = CreateSubImage("Number Image");
+		}
+		if (!suitImg) {
+			suitImg = CreateSubImage("Suit Image");
+		}
+		if (!iconImg) {
+			iconImg = CreateSubImage("Icon Image");
+		}
+	}
+
+	private Image CreateSubImage(string name) {
+		Rect rect = GetComponent<RectTransform>().rect;
+		Vector2 size = new Vector2(rect.width, rect.height);
+		GameObject obj = new GameObject(name);
+		RectTransform objRect = obj.AddComponent<RectTransform>();
+		objRect.SetParent(this.transform);
+		objRect.sizeDelta = size;
+		objRect.localPosition = Vector2.zero;
+		
+		return obj.AddComponent<Image>();
+	}
 
 	private void OnMouseEnter() {
 		Debug.Log("OnMouseEnter");
@@ -24,13 +48,5 @@ public class CopyCardImage : MonoBehaviour, IPointerEnterHandler, IPointerExitHa
 	
 	public CardData GetData() {
 		return data;
-	}
-
-	public void OnPointerEnter(PointerEventData eventData) {
-		CardDescriptionManager.DrawDescription(data);
-	}
-
-	public void OnPointerExit(PointerEventData eventData) {
-		CardDescriptionManager.ClosePanel();
 	}
 }

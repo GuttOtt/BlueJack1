@@ -4,11 +4,7 @@ using System.Collections.Generic;
 using UnityEngine;
 
 public class CardIconCSV : Singleton<CardIconCSV> {
-	public static List<Dictionary<string, object>> data;
-
-	private void Start() {
-		data = CSVReader.Read("CardIconCSV");
-	}
+	public static List<Dictionary<string, object>> data = CSVReader.Read("CardIconCSV");
 
 	public static string GetNameByID(int id) {
 		for (int i = 0; i < data.Count; i++) {

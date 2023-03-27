@@ -9,6 +9,7 @@ public class CardData {
 	public int number { get => _number; }
 	public Suit suit { get => _suit; }
 	public CardIcon iconPrefab { get => _iconPrefab; }
+	public int ID { get => _iconPrefab.ID; }
 
 	public CardData(int number, Suit suit, CardIcon iconPrefab) {
 		_number = number;
