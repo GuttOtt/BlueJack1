@@ -9,6 +9,12 @@ public class CopyCardImage : MonoBehaviour {
 	private CardData data;
 
 	private void Awake() {
+		Image img = GetComponent<Image>();
+		if (!img)
+			img = gameObject.AddComponent<Image>();
+
+		img.sprite = Resources.Load<Sprite>("Sprites/BlankCard");
+
 		if (!numberImg) {
 			numberImg = CreateSubImage("Number Image");
 		}

@@ -52,8 +52,8 @@ public class DeckBuildingManager : MonoBehaviour {
 	}
 
 	public void EndDeckBuilding() {
-		foreach (CardChoices choices in choicesList) {
-			DeleteCardChoices(choices);
+		for (int i = choicesList.Count - 1; i >= 0; i--) {
+			DeleteCardChoices(choicesList[i]);
 		}
 
 		gameObject.SetActive(false);
