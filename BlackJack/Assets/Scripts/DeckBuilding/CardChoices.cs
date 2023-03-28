@@ -38,7 +38,7 @@ public class CardChoices : MonoBehaviour {
 	}
 
 	private void Select(CardData data) {
-		//GameManager.playerDeck.Add(data);
+		GameManager.AddToPlayerDeck(data);
 		Debug.Log(data.iconPrefab);
 		onSelect();
 		if (gameObject) Destroy(gameObject);

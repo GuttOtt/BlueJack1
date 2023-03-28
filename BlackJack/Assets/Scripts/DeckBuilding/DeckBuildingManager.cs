@@ -46,6 +46,8 @@ public class DeckBuildingManager : MonoBehaviour {
 
 	public void DeleteCardChoices(CardChoices choices) {
 		choicesList.Remove(choices);
+		Destroy(choices.gameObject);
+		cardChoiceUI.ClosePanel();
 		Arrange();
 	}
 
