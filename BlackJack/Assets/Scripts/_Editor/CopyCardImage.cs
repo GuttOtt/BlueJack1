@@ -7,6 +7,8 @@ using UnityEngine.EventSystems;
 public class CopyCardImage : MonoBehaviour {
 	[SerializeField] private Image numberImg, suitImg, iconImg;
 	private CardData data;
+	public string Name { get => CardIconCSV.GetNameByID(data.ID); }
+	public string Desc { get => CardIconCSV.GetDescByID(data.ID); }
 
 	private void Awake() {
 		Image img = GetComponent<Image>();

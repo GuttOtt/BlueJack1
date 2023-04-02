@@ -11,7 +11,6 @@ public class DeleteCardNPC : MonoBehaviour, INPC, IPointerClickHandler {
     }
 
     public void OnPointerClick(PointerEventData eventData){
-        Debug.Log("Clicked");
         Interact();
     }
 

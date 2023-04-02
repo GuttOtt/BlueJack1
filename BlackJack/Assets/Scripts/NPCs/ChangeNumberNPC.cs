@@ -1,18 +1,20 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.EventSystems;
 
-public class ChangeNumberNPC : MonoBehaviour
-{
-    // Start is called before the first frame update
-    void Start()
-    {
-        
+public class ChangeNumberNPC : MonoBehaviour, INPC, IPointerClickHandler {
+    private DeckManipulationUI manipulationUI;
+
+    private void Awake() {
+        manipulationUI = FindObjectOfType<DeckManipulationUI>() as DeckManipulationUI;
     }
 
-    // Update is called once per frame
-    void Update()
-    {
-        
+    public void OnPointerClick(PointerEventData eventData) {
+        Interact();
+    }
+
+    public void Interact() {
+        manipulationUI.StartChangeNumber();
     }
 }

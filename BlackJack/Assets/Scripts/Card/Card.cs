@@ -28,6 +28,16 @@ public class Card: MonoBehaviour {
 	private Vector3 movePosition = Vector3.zero;
 	private float moveSpeed = 0;
 	public int IconID { get => icon.ID; }
+	public string Name {
+		get {
+			return CardIconCSV.GetNameByID(iconPrefab.ID);
+		}
+	}
+	public string Desc {
+		get {
+			return CardIconCSV.GetDescByID(iconPrefab.ID);
+		}
+	}
 
 	private void Awake() {
 		BoxCollider2D col = gameObject.AddComponent<BoxCollider2D>();

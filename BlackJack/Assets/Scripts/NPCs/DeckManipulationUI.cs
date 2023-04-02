@@ -7,28 +7,26 @@ using UnityEngine.UI;
 public class DeckManipulationUI : MonoBehaviour {
 	[SerializeField] private ClickableCardImage cardPrefab;
 	[SerializeField] private Vector2 gap;
+	[SerializeField] private SelectedCardPanel selectedCardPanel;
 	private List<ClickableCardImage> cards = new List<ClickableCardImage>();
 	private ICardManipulation delete, changeNumber, changeSuit, none;
 	private ICardManipulation currentManipulation;
 	private GameObject deckListPanel;
-	//private SelectedCardPanel selectedCardPanel;
 	private ClickableCardImage selectedCard;
 
 	private void Awake() {
-		delete = gameObject.AddComponent<DeleteManipulation>();
-		changeNumber = gameObject.AddComponent<ChangeNumberManipulation>();
-		changeSuit = gameObject.AddComponent<ChangeSuitManipulation>();
+		delete = GetComponent<DeleteManipulation>();
+		changeNumber = GetComponent<NumberManipulation>();
+		changeSuit = GetComponent<SuitManipulation>();
 		none = gameObject.AddComponent<NoneManipulation>();
 
 		deckListPanel = transform.Find("Panel").gameObject;
-		deckListPanel.SetActive(false);
 	}
 
-	private void Manipulate() {
-		currentManipulation.Manipulate(selectedCard.Data);
-		UpdateDeckList();
-		//Coroutine Delay
-		EndManipulation();
+	private void Start() {
+		deckListPanel.SetActive(false);
+		selectedCardPanel.ClosePanel();
+
 	}
 
 	private void ClearDeckList() {
@@ -41,14 +39,8 @@ public class DeckManipulationUI : MonoBehaviour {
 
 	private void Select(ClickableCardImage card) {
 		selectedCard = card;
-		OpenSelectedCardPanel(card.Data);
-	}
-
-	private void OpenSelectedCardPanel(CardData data) {
-		//selectedCardPanel.gameObject.SetActive(true);
-		//selectedCardPanel.SetCardData(data);
-		//selectedCardPanel.SetButtonAction(0, delegate { Manipulate(); });
-
+		selectedCardPanel.OpenPanel(card.Data);
+		currentManipulation.StartManipulation(card.Data);
 	}
 
 	public void StartChangeNumber() {
@@ -71,8 +63,9 @@ public class DeckManipulationUI : MonoBehaviour {
 
 	public void EndManipulation() {
 		currentManipulation = none;
+		selectedCardPanel.ClosePanel();
 		deckListPanel.SetActive(false);
-		//selectedCardPanel.Close();
+		//NextButton?
 	}
 
 	public void UpdateDeckList() {
@@ -84,6 +77,7 @@ public class DeckManipulationUI : MonoBehaviour {
 			ClickableCardImage newCard = Instantiate(cardPrefab, deckListPanel.transform);
 			newCard.Draw(data);
 			newCard.onClick = null;
+			newCard.onClick += () => Select(newCard);
 			cards.Add(newCard);
 		}
 
@@ -107,30 +101,11 @@ public class DeckManipulationUI : MonoBehaviour {
 }
 
 public interface ICardManipulation {
-	void Manipulate(CardData data);
-}
-
-public class DeleteManipulation: MonoBehaviour, ICardManipulation {
-	public void Manipulate(CardData data) {
-		GameManager.RemovePlayerDeck(data);
-		GetComponent<DeckManipulationUI>().UpdateDeckList();
-	}
-}
-
-public class ChangeNumberManipulation: MonoBehaviour, ICardManipulation {
-	public void Manipulate(CardData data) {
-		data.ChangeNumber(Random.Range(1, 8));
-	}
-}
-
-public class ChangeSuitManipulation: MonoBehaviour, ICardManipulation {
-	public void Manipulate(CardData data) {
-		data.ChangeSuit( (Suit) Random.Range(0, 4));
-	}
+	void StartManipulation(CardData data);
 }
 
 public class NoneManipulation: MonoBehaviour, ICardManipulation {
-	public void Manipulate(CardData data) {
+	public void StartManipulation(CardData data) {
 		//Empty method.
 	}
 }

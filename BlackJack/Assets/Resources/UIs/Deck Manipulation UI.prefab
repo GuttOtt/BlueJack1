@@ -13,6 +13,9 @@ GameObject:
   - component: {fileID: 3557950848458404981}
   - component: {fileID: 3557950848458404980}
   - component: {fileID: 3557950848458404983}
+  - component: {fileID: 2131243854837442615}
+  - component: {fileID: 4066250426233015445}
+  - component: {fileID: 9214951725318560350}
   m_Layer: 5
   m_Name: Deck Manipulation UI
   m_TagString: Untagged
@@ -116,6 +119,59 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   cardPrefab: {fileID: 8516222927622304980, guid: 47cb1765eeb4e5c448298db6afd3d031, type: 3}
   gap: {x: 5, y: 5}
+--- !u!114 &2131243854837442615
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3557950848458404982}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 84d9e17fd82c82a4e8d361bf9e56d0ee, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  suitButtons:
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  panel: {fileID: 0}
+--- !u!114 &4066250426233015445
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3557950848458404982}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: f9cef98334f32464fa01a35143603bef, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  numberButtons:
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  panel: {fileID: 0}
+--- !u!114 &9214951725318560350
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3557950848458404982}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: b4e31d45f7c52e34da827a434e9345b5, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  deleteButton: {fileID: 0}
+  panel: {fileID: 0}
 --- !u!1 &5698970613295333556
 GameObject:
   m_ObjectHideFlags: 0
