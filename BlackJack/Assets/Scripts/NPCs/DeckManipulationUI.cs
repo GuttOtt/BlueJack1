@@ -95,7 +95,8 @@ public class DeckManipulationUI : MonoBehaviour {
 			int x = i % 7;
 			int y = i / 7;
 
-			cards[i].transform.localPosition = new Vector2((cardWidth + gap.x) * x, -(cardHeight + gap.y) * y);
+			cards[i].GetComponent<RectTransform>().localPosition = new Vector2((cardWidth + gap.x) * x, -(cardHeight + gap.y) * y)
+																	+ new Vector2(cardWidth / 2f, -cardHeight / 2f) + gap;
 		}
 	}
 }
