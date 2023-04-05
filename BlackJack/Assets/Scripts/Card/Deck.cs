@@ -6,8 +6,6 @@ using System.Linq;
 
 public class Deck : MonoBehaviour {
 	[SerializeField] private GameObject deckParent;
-	[SerializeField] private GameObject remainsPanel;
-	[SerializeField] private CopyCardImage copyPrefab;
 	private List<Card> cards = new List<Card>();	
 	private Hand hand;
 	private Discards discards;

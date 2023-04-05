@@ -47,6 +47,7 @@ public class Card: MonoBehaviour {
 	private void Update() {
 		if (movePosition != null) {
 			transform.position = Vector3.MoveTowards(transform.position, movePosition, moveSpeed);
+			transform.localRotation = Quaternion.Euler(0, 0, 0);
 		}
 	}
 

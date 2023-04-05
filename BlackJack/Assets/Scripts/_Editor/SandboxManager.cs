@@ -43,7 +43,7 @@ public class SandboxManager : Singleton<SandboxManager> {
 	}
 
 	private void ToPlayScene() {
-		SceneManager.LoadScene("Play Scene");
+		SceneManager.LoadScene("BlackJack Scene");
 	}
 
 	public void DeckSetting(Deck deck, bool isPlayers) {
