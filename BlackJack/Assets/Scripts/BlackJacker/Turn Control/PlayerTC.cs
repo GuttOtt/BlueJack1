@@ -6,37 +6,39 @@ using UnityEngine.UI;
 public enum HitDecision { Hit, Stay, None };
 
 public class PlayerTC : MonoBehaviour, ITurnControl {
-	[SerializeField] private Button hitButton, stayButton;
-	[SerializeField] private GameObject hitDecisionButtons;
 	private BlackJacker blackjacker;
-	private HitDecision hitDecision = HitDecision.None;
+	private IHitInput hitInput;
 	private bool isStayed = false;
+	private HitDecision hitDecision;
+	private ISnapControl snapControl;
 	public bool IsStayed { get => isStayed; }
 	public bool IsBursted { get => blackjacker.IsBursted; }
 	
 	private void Awake() {
 		blackjacker = GetComponent<BlackJacker>();
+		hitInput = GetComponent<IHitInput>();
+		snapControl = GetComponent<ISnapControl>();
+		hitDecision = HitDecision.None;
 	}
 
 	private IEnumerator StartPhaseCR() {
 		blackjacker.StartSetting();
 		isStayed = false;
-		hitDecision = HitDecision.None;
 
-		TurnEventBus.Publish(TurnEventType.PLAYER_END);
+		PublishEnd();
 
 		yield return null;
 	}
 
 	private IEnumerator TurnPhaseCR() {
 		if (isStayed) {
-			TurnEventBus.Publish(TurnEventType.PLAYER_END);
+			PublishEnd();
 			yield break;
 		}
 
-		hitDecisionButtons.SetActive(true);
+		yield return StartCoroutine(hitInput.GetInput(this));
+		yield return new WaitWhile( () => snapControl.IsConsidering() );
 
-		yield return new WaitUntil( () => hitDecision != HitDecision.None);
 		if (hitDecision == HitDecision.Stay) {
 			isStayed = true;
 		}
@@ -44,13 +46,29 @@ public class PlayerTC : MonoBehaviour, ITurnControl {
 			isStayed = false;
 		}
 
-		hitDecisionButtons.SetActive(false);
-
-		TurnEventBus.Publish(TurnEventType.PLAYER_END);
+		PublishEnd();
 	}
 
 	private IEnumerator IntervalPhaseCR() {
+		if (!isStayed) {
+			blackjacker.Hit();
+		}
+		else {
+			//Stay 그래픽 처리
+		}
+
+		PublishEnd();
+		
 		yield return null;
+	}
+
+	private void PublishEnd() {
+		if (gameObject.CompareTag("Player")) {
+			TurnEventBus.Publish(TurnEventType.PLAYER_END);
+		}
+		else if (gameObject.CompareTag("Opponent")) {
+			TurnEventBus.Publish(TurnEventType.ENEMY_END);
+		}
 	}
 
 	public void StartPhase() {
@@ -62,7 +80,7 @@ public class PlayerTC : MonoBehaviour, ITurnControl {
 	}
 	
 	public void IntervalPhase() {
-
+		StartCoroutine(IntervalPhaseCR());
 	}
 
 	public void EndPhase() {

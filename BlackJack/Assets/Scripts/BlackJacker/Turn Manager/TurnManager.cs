@@ -3,15 +3,16 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 
-public class TurnManager : MonoBehaviour { 
-	private IPhase start, turn, interval, burst, fold, showdown, victory;
+public class TurnManager : Singleton<TurnManager> { 
+	public IPhase start, turn, interval, burst, fold, showdown, victory, stayed;
 	private PhaseContext context;
+	public IPhase currentPhase { get => context.CurrentPhase; }
 	public PlayerTC player;
-	public EnemyTC enemy;
+	public PlayerTC enemy;
 	public bool PlayerDone, EnemyDone;
 	public bool BothDone { get => PlayerDone && EnemyDone ? true : false; }
 
-	private void Awake() {
+	protected override void Awake() {
 		context = gameObject.AddComponent<PhaseContext>();
 
 		start = gameObject.AddComponent<_StartPhase>();
@@ -48,7 +49,8 @@ public class TurnManager : MonoBehaviour {
 	}
 
 	public void ToIntervalPhase() {
-
+		context.Transition(interval);
+		Debug.Log("IntervalPhase");
 	}
 
 	public void ToBurstPhase(ITurnControl burster) {
@@ -66,16 +68,21 @@ public class TurnManager : MonoBehaviour {
 	public void ToStayedPhase() {
 
 	}
+
+	public void ResetDone() {
+		PlayerDone = false;
+		EnemyDone = false;
+	}
 }
 
 public class PhaseContext : MonoBehaviour {
 	public IPhase CurrentPhase { get; set; }
 
-	private readonly TurnManager _turnManager;
+	private TurnManager _turnManager;
 	private Coroutine coroutine;
 
-	public PhaseContext(TurnManager turnManager) {
-		_turnManager = turnManager;
+	private void Awake() {
+		_turnManager = GetComponent<TurnManager>();
 	}
 
 	public void Transition() {
@@ -87,6 +94,9 @@ public class PhaseContext : MonoBehaviour {
 	public void Transition(IPhase phase) {
 		if (coroutine != null)
 			StopCoroutine(coroutine);
+
+		_turnManager.ResetDone();
+
 		CurrentPhase = phase;
 		coroutine = StartCoroutine(CurrentPhase.Phase());
 	}

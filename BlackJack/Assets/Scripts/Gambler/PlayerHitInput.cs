@@ -3,6 +3,8 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 
+namespace Old {
+
 public class PlayerHitInput : MonoBehaviour, IHitInputSystem{
 	[SerializeField] private Button hitButton, stayButton;
 	private List<Button> allButton;
@@ -30,4 +32,6 @@ public class PlayerHitInput : MonoBehaviour, IHitInputSystem{
 			btn.gameObject.SetActive(false);
 		}
 	}
+}
+
 }

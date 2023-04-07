@@ -9,4 +9,6 @@ public interface ITurnControl {
 	void EndPhase();
 	void Fold();
 	void Snap();
+	void TakeHit();
+	void TakeStay();
 }

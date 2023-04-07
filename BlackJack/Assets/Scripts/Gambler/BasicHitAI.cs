@@ -2,6 +2,8 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
+namespace Old {
+
 public class BasicHitAI : MonoBehaviour, IHitInputSystem {
 	private Hand hand;
 	private HitDele hit;
@@ -32,4 +34,5 @@ public class BasicHitAI : MonoBehaviour, IHitInputSystem {
 	public void EndGettingInput() {
 
 	}
+}
 }

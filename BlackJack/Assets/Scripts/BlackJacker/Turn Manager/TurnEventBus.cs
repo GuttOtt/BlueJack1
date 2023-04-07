@@ -4,7 +4,7 @@ using UnityEngine;
 using UnityEngine.Events;
 
 public enum TurnEventType {
-	PLAYER_END, ENEMY_END, PLAYER_SNAP, ENEMY_SNAP
+	PLAYER_END, ENEMY_END, PLAYER_SNAP, ENEMY_SNAP, PLAYER_FOLD, ENEMY_FOLD
 }
 
 public class TurnEventBus {
@@ -39,4 +39,6 @@ public class TurnEventBus {
 			thisEvent.Invoke();
 		}
 	}
+
+	//Clear Method
 }
