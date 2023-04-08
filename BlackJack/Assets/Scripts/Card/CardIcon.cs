@@ -3,7 +3,8 @@ using System.Collections.Generic;
 using UnityEngine;
 
 public enum EffectSituation {
-	None, OnOpen, OnEveryHit, OnWin, OnLose, OnFold, OnBurst, OnRaise, OnBlackJack, OnShowDown, OnDiscard
+	None, OnOpen, OnEveryHit, OnWin, OnLose, OnFold, OnBurst,
+	OnRaise, OnBlackJack, OnShowDown, OnDiscard, OnHiddenOpen
 }
 
 public class CardIcon : MonoBehaviour {

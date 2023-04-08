@@ -1,5 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
+using System.Runtime.CompilerServices;
 using UnityEngine;
 using UnityEngine.UI;
 
@@ -11,6 +12,10 @@ public class TurnManager : Singleton<TurnManager> {
 	public PlayerTC enemy;
 	public bool PlayerDone, EnemyDone;
 	public bool BothDone { get => PlayerDone && EnemyDone ? true : false; }
+	public PlayerTC loser;
+	public PlayerTC winner {
+		get => loser == null ? null : loser == player ? enemy : player;
+	}
 
 	protected override void Awake() {
 		context = gameObject.AddComponent<PhaseContext>();
@@ -53,20 +58,34 @@ public class TurnManager : Singleton<TurnManager> {
 		Debug.Log("IntervalPhase");
 	}
 
-	public void ToBurstPhase(ITurnControl burster) {
-
-	}
-
-	public void ToShowDownPhase() {
-
-	}
-
-	public void ToFoldPhase() {
-
-	}
-
 	public void ToStayedPhase() {
+		context.Transition(stayed);
+		Debug.Log("StayedPhase");
+	}
+	
+	public void ToShowDownPhase() {
+		context.Transition(showdown);
+		Debug.Log("ShowDownPhase");
+	}
 
+	public void ToBurstPhase(PlayerTC burster) {
+		context.Transition(showdown);
+		Debug.Log("ShowDownPhase");
+	}
+
+	public void ToFoldPhase(PlayerTC folder) {
+		context.Transition(showdown);
+		Debug.Log("ShowDownPhase");
+	}
+
+	public void ToVictoryPhase(PlayerTC loser) {
+		this.loser = loser;
+		context.Transition(victory);
+	}
+
+	public void ToVictoryPhase() {
+		this.loser = null;
+		context.Transition(victory);
 	}
 
 	public void ResetDone() {
@@ -140,7 +159,6 @@ public class _TurnPhase : MonoBehaviour, IPhase {
 	}
 }
 
-
 public class _IntervalPhase : MonoBehaviour, IPhase {
 	private TurnManager turnManager;
 
@@ -162,44 +180,98 @@ public class _IntervalPhase : MonoBehaviour, IPhase {
 		}
 		else if (turnManager.player.IsStayed) {
 			if (turnManager.enemy.IsStayed) {
-				//turnManager.ToShowDownPhase();
+				turnManager.ToShowDownPhase();
 			}
 			else {
-				//turnManager.ToStayedPhase();
+				turnManager.ToStayedPhase();
 			}
 		}
 		else {
 			turnManager.ToTurnPhase();
 		}
 	}
-}
+}r
 
 public class _BurstPhase : MonoBehaviour, IPhase {
+	private TurnManager turnManager;
+
+	private void Awake() {
+		turnManager = GetComponent<TurnManager>();
+	}
+
 	public IEnumerator Phase() {
-		yield return null;
+		PlayerTC burster = turnManager.loser;
+		yield return StartCoroutine(burster.BurstProcess());
+		turnManager.ToVictoryPhase(burster);
 	}
 }
 
 public class _FoldPhase : MonoBehaviour, IPhase {
-	public IEnumerator Phase() {
-		yield return null;
+	private TurnManager turnManager;
+
+    private void Awake() {
+		turnManager = GetComponent<TurnManager>();
+    }
+
+    public IEnumerator Phase() {
+		PlayerTC folder = turnManager.loser;
+		yield return StartCoroutine(folder.FoldProcess());
+		turnManager.ToVictoryPhase(folder);
 	}
 }
 
 public class _StayedPhase : MonoBehaviour, IPhase {
-	public IEnumerator Phase() {
-		yield return null;
+	private TurnManager turnManager;
+
+    private void Awake() {
+		turnManager = GetComponent<TurnManager>();
+    }
+    public IEnumerator Phase() {
+		StartCoroutine(turnManager.player.StayedProcess());
+		yield return new WaitUntil(() => turnManager.PlayerDone);
+		turnManager.ToTurnPhase();
 	}
 }
 
 public class _ShowDownPhase : MonoBehaviour, IPhase {
+	private TurnManager turnManager;
+
+	private void Awake() {
+		turnManager = GetComponent<TurnManager>();
+	}
+
 	public IEnumerator Phase() {
-		yield return null;
+		turnManager.player.ShowDownPhase();
+		yield return new WaitUntil( () => turnManager.PlayerDone);
+		turnManager.enemy.ShowDownPhase();
+		yield return new WaitUntil( () => turnManager.EnemyDone);
+
+		if (turnManager.player.GetHandTotal < turnManager.enemy.GetHandTotal) {
+			turnManager.ToVictoryPhase(turnManager.enemy);
+		}
+		else if (turnManager.player.GetHandTotal > turnManager.enemy.GetHandTotal) {
+			turnManager.ToVictoryPhase(turnManager.player);
+		}
+		else {
+			turnManager.ToVictoryPhase();
+		}
 	}
 }
 
 public class _VictoryPhase : MonoBehaviour, IPhase {
-	public IEnumerator Phase() {
-		yield return null;
-	}
+	private TurnManager turnManager;
+
+    private void Awake() {
+		turnManager = GetComponent<TurnManager>();
+    }
+
+    public IEnumerator Phase() {
+		PlayerTC loser = turnManager.loser;
+		PlayerTC winner = turnManager.winner;
+		if (loser != null) {
+            yield return StartCoroutine(winner.WinProcess());
+            yield return StartCoroutine(loser.LoseProcess());
+        }
+        turnManager.ToStartPhase();
+    }
 }

@@ -985,7 +985,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 798737306}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 5, y: 4, z: 0}
+  m_LocalPosition: {x: 17.34, y: 3.71, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -1143,6 +1143,7 @@ MonoBehaviour:
   enemy: {fileID: 2049369907}
   PlayerDone: 0
   EnemyDone: 0
+  loser: {fileID: 0}
 --- !u!4 &852678631
 Transform:
   m_ObjectHideFlags: 0
@@ -1520,7 +1521,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1405640728}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 5, y: -4, z: 0}
+  m_LocalPosition: {x: 15.91, y: -4.29, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -1811,6 +1812,7 @@ GameObject:
   - component: {fileID: 2049369905}
   - component: {fileID: 2049369903}
   - component: {fileID: 2049369902}
+  - component: {fileID: 2049369911}
   - component: {fileID: 2049369907}
   - component: {fileID: 2049369908}
   - component: {fileID: 2049369910}
@@ -1917,6 +1919,19 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   minSnapConsiderTime: 7
   maxSnapConsiderTime: 8
+--- !u!114 &2049369911
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2049369901}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: be861fdd26f34f745aeb98eb28cab44d, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  discardsParent: {fileID: 798737306}
 --- !u!1 &2056854969
 GameObject:
   m_ObjectHideFlags: 0

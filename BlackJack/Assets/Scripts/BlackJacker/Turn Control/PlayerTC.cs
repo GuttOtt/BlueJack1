@@ -6,16 +6,21 @@ using UnityEngine.UI;
 public enum HitDecision { Hit, Stay, None };
 
 public class PlayerTC : MonoBehaviour, ITurnControl {
+	[SerializeField] Button nextButton;
 	private BlackJacker blackjacker;
+	private Hand hand;
 	private IHitInput hitInput;
-	private bool isStayed = false;
 	private HitDecision hitDecision;
 	private ISnapControl snapControl;
+	private bool isStayed = false;
+	private bool isNextPushed;
 	public bool IsStayed { get => isStayed; }
 	public bool IsBursted { get => blackjacker.IsBursted; }
+	public int GetHandTotal { get => hand.GetTotal(); }
 	
 	private void Awake() {
 		blackjacker = GetComponent<BlackJacker>();
+		hand = GetComponent<Hand>();
 		hitInput = GetComponent<IHitInput>();
 		snapControl = GetComponent<ISnapControl>();
 		hitDecision = HitDecision.None;
@@ -62,6 +67,12 @@ public class PlayerTC : MonoBehaviour, ITurnControl {
 		yield return null;
 	}
 
+	private IEnumerator ShowDownPhaseCR() {
+		yield return StartCoroutine(hand.OpenHiddens());
+		yield return StartCoroutine(hand.ActivateAllIcon(EffectSituation.OnShowDown));
+		PublishEnd();
+	}
+
 	private void PublishEnd() {
 		if (gameObject.CompareTag("Player")) {
 			TurnEventBus.Publish(TurnEventType.PLAYER_END);
@@ -83,8 +94,32 @@ public class PlayerTC : MonoBehaviour, ITurnControl {
 		StartCoroutine(IntervalPhaseCR());
 	}
 
-	public void EndPhase() {
+	public void ShowDownPhase() {
+		StartCoroutine(ShowDownPhaseCR());
+	}
 
+	public IEnumerator BurstProcess() {
+		hand.ShowHiddens();
+		yield return StartCoroutine(hand.ActivateAllField(EffectSituation.OnBurst));
+	}
+
+	public IEnumerator FoldProcess() {
+		yield return StartCoroutine(hand.ActivateAllHidden(EffectSituation.OnFold));
+	}
+
+	public IEnumerator WinProcess() {
+		yield return StartCoroutine(hand.ActivateAllField(EffectSituation.OnWin));
+	}
+
+	public IEnumerator LoseProcess() {
+		yield return StartCoroutine(hand.ActivateAllField(EffectSituation.OnLose));
+		blackjacker.TakeDamage(SnapManager.pot);
+	}
+
+	public IEnumerator StayedProcess() {
+		isNextPushed = false;
+		yield return new WaitUntil(() => isNextPushed);
+		PublishEnd();
 	}
 
 	public void TakeHit() { hitDecision = HitDecision.Hit; }

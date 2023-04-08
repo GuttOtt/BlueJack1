@@ -2,17 +2,26 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class HP : MonoBehaviour
-{
-    // Start is called before the first frame update
-    void Start()
-    {
-        
+public class HP {
+    private int amount;
+
+    public HP(int amount) {
+        this.amount = amount;
     }
 
-    // Update is called once per frame
-    void Update()
-    {
-        
+    public HP Zero {
+        get => new HP(0);
+    }
+
+    public int ToInt() {
+        return amount;
+    }
+
+    public void TakeDamage(int damage) {
+        amount -= damage;
+    }
+
+    public void Heal(int healAmount) {
+        amount += healAmount;
     }
 }

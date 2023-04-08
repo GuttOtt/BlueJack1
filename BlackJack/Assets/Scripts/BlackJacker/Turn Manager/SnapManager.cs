@@ -5,7 +5,7 @@ using UnityEngine.UI;
 
 public class SnapManager : MonoBehaviour {
 	[SerializeField] Text potText;
-	private int pot = 1;
+	public static int pot = 1;
 	public static bool isPlayerSnaped = false;
 	public static bool isEnemySnaped = false;
 

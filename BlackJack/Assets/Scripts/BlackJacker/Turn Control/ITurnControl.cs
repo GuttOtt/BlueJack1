@@ -6,7 +6,6 @@ public interface ITurnControl {
 	void StartPhase();
 	void TurnPhase();
 	void IntervalPhase();
-	void EndPhase();
 	void Fold();
 	void Snap();
 	void TakeHit();

@@ -116,9 +116,9 @@ public class Gambler : MonoBehaviour {
 		yield return new WaitForSeconds(1f);
 	}
 
-	public void ShowDown() {
+	public IEnumerator ShowDown() {
 		OpenHiddens();
-		hand.ActivateAllIcon(EffectSituation.OnShowDown);
+		yield return StartCoroutine(hand.ActivateAllIcon(EffectSituation.OnShowDown));
 	}
 
 	public void OpenHiddens() {

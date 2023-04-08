@@ -81,10 +81,10 @@ public class Hand : MonoBehaviour {
 		}
 	}
 
-	public void OpenHiddens() {
+	public IEnumerator OpenHiddens() {
 		ShowHiddens();
-		ActivateAllHidden(EffectSituation.OnOpen);
-		ActivateAllHidden(EffectSituation.OnShowDown);
+		yield return StartCoroutine(ActivateAllHidden(EffectSituation.OnOpen));
+		yield return StartCoroutine(ActivateAllHidden(EffectSituation.OnHiddenOpen));
 		foreach (Card card in hiddens) {
 			field.Add(card);
 		}
