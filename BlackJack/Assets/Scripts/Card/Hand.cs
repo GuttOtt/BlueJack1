@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using UnityEngine;
 using UnityEngine.UI;
+using static UnityEngine.UI.Image;
 
 public class Hand : MonoBehaviour {
 	[SerializeField] private GameObject handParent;
@@ -24,18 +25,37 @@ public class Hand : MonoBehaviour {
 		discards = GetComponent<Discards>();
 	}
 
+	private void ArrangeField() {
+		int q = field.Count / 2;
+		int r = field.Count % 2;
+
+		Vector3 origin;
+
+		if (r == 0) {
+			origin = handParent.transform.position + Vector3.left * (q - 0.5f) * 2;
+		}
+		else {
+			origin = handParent.transform.position + Vector3.left * q * 2;
+		}
+
+        for (int i = 0; i < field.Count; i++) {
+            field[i].MoveTo(origin + Vector3.right * i * 2);
+        }
+    }
+
 	public void AddCard(Card card) {
 		field.Add(card);
 		card.transform.SetParent(handParent.transform);
-		card.MoveTo(handParent.transform.position + Vector3.right * (field.Count) * 2);
 		card.IsFront = true;
+		ArrangeField();
 		card.ActivateIcon(EffectSituation.OnOpen);
 	}
 
 	public void AddHidden(Card card) {
 		hiddens.Add(card);
 		card.transform.SetParent(hiddenParent.transform);
-		card.MoveTo(hiddenParent.transform.position + Vector3.right * (hiddens.Count -1) * 2);
+		card.MoveTo(hiddenParent.transform.position + Vector3.right 
+					* (hiddens.Count - 1.5f) * 2);
 
 		if (isPlayerHand) {
 			card.IsFront = true;
@@ -131,9 +151,5 @@ public class Hand : MonoBehaviour {
 		if (fieldExcept.Count == 0)
 			return card;
 		return fieldExcept[Random.Range(0, fieldExcept.Count)];
-	}
-
-	public int GetNumberOfField() {
-		return field.Count;
 	}
 }

@@ -3,15 +3,16 @@ using System.Collections.Generic;
 using UnityEngine;
 
 public class BlackJacker : MonoBehaviour {
+	[SerializeField] private HPGraphic hpGraphic;
 	private HP hp;
 	private Hand hand;
 	private Deck deck;
-	public bool IsBursted { get => hand.IsBursted();	}
 
 	private void Awake() {
 		hp = new HP(100);
 		hand = GetComponent<Hand>();
 		deck = GetComponent<Deck>();
+		hpGraphic.SetHP(hp);
 	}
 
 	public void StartSetting() {

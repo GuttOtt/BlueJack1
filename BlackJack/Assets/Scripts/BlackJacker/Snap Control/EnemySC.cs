@@ -20,14 +20,14 @@ public class EnemySC : MonoBehaviour, ISnapControl {
 
 	public IEnumerator DecideSnap() {
 		if (TurnManager.Instance.currentPhase != TurnManager.Instance.turn 
-			&& TurnManager.Instance.currentPhase != TurnManager.Instance.stayed) {
+			&& TurnManager.Instance.currentPhase != TurnManager.Instance.stayed
+			|| SnapManager.isEnemySnaped) {
 			yield break;
 		}
 
 		isConsidering = true;
 
-		float considerTime = Random.Range(minSnapConsiderTime, maxSnapConsiderTime);
-		yield return new WaitForSeconds(considerTime);
+		yield return null;
 		
 		SnapDecision decision = ai.Decide();
 

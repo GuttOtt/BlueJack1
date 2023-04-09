@@ -5,6 +5,7 @@ using UnityEngine.Events;
 
 public enum TurnEventType {
 	PLAYER_END, ENEMY_END, PLAYER_SNAP, ENEMY_SNAP, PLAYER_FOLD, ENEMY_FOLD
+	, NEW_ROUND, TURN_END, VICTORY_PHASE
 }
 
 public class TurnEventBus {

@@ -13,9 +13,9 @@ public class PlayerTC : MonoBehaviour, ITurnControl {
 	private HitDecision hitDecision;
 	private ISnapControl snapControl;
 	private bool isStayed = false;
-	private bool isNextPushed;
+	private bool isNextPushed = false;
 	public bool IsStayed { get => isStayed; }
-	public bool IsBursted { get => blackjacker.IsBursted; }
+	public bool IsBursted { get => hand.IsBursted(); }
 	public int GetHandTotal { get => hand.GetTotal(); }
 	
 	private void Awake() {
@@ -24,6 +24,14 @@ public class PlayerTC : MonoBehaviour, ITurnControl {
 		hitInput = GetComponent<IHitInput>();
 		snapControl = GetComponent<ISnapControl>();
 		hitDecision = HitDecision.None;
+
+		if (gameObject.CompareTag("Player")) {
+			nextButton.onClick.AddListener( () => isNextPushed = true );
+		}
+
+		if (nextButton) {
+			nextButton.gameObject.SetActive(false);
+		}
 	}
 
 	private IEnumerator StartPhaseCR() {
@@ -117,19 +125,21 @@ public class PlayerTC : MonoBehaviour, ITurnControl {
 	}
 
 	public IEnumerator StayedProcess() {
+		yield return new WaitWhile(() => snapControl.IsConsidering());
+
+		if (gameObject.CompareTag("Opponent")) {
+			PublishEnd();
+			yield break;
+		}
+
+        nextButton.gameObject.SetActive(true);
 		isNextPushed = false;
 		yield return new WaitUntil(() => isNextPushed);
+		nextButton.gameObject.SetActive(false);
+		isNextPushed = false;
 		PublishEnd();
 	}
 
 	public void TakeHit() { hitDecision = HitDecision.Hit; }
 	public void TakeStay() { hitDecision = HitDecision.Stay; }
-
-	public void Snap() {
-
-	}
-
-	public void Fold() {
-
-	}
 }
