@@ -11,8 +11,9 @@ GameObject:
   - component: {fileID: 6782245597186082809}
   - component: {fileID: 5789209689852664396}
   - component: {fileID: 1569368689856750402}
+  - component: {fileID: -4099572290723160596}
   m_Layer: 0
-  m_Name: None Icon
+  m_Name: Icon3_Chaos
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -46,9 +47,9 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   owner: {fileID: 0}
-  situation: 0
+  situation: 1
   activateAnimation: {fileID: 2129466798422591636, guid: 16a01088662df474d9bf529cc9628f3b, type: 3}
-  id: 0
+  id: 3
 --- !u!212 &1569368689856750402
 SpriteRenderer:
   m_ObjectHideFlags: 0
@@ -90,7 +91,7 @@ SpriteRenderer:
   m_SortingLayerID: 0
   m_SortingLayer: 0
   m_SortingOrder: 0
-  m_Sprite: {fileID: 21300000, guid: dd65b7db323c68b44923e106a99e46fe, type: 3}
+  m_Sprite: {fileID: 21300000, guid: 08f04931835ac4445aa78952961c44d0, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_FlipX: 0
   m_FlipY: 0
@@ -101,3 +102,15 @@ SpriteRenderer:
   m_WasSpriteAssigned: 1
   m_MaskInteraction: 0
   m_SpriteSortPoint: 0
+--- !u!114 &-4099572290723160596
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3901589311124014931}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: f13e96dfd98f5e548a051da0be64be2a, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 

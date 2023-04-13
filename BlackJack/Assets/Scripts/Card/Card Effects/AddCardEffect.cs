@@ -3,12 +3,14 @@ using System.Collections.Generic;
 using UnityEngine;
 
 public class AddCardEffect : MonoBehaviour, ICardEffect{
-	[SerializeField] Card newCard;
+	[SerializeField] Card newCardPrefab;
 
 	public void Activate() {
 		Card card = transform.parent.GetComponent<Card>();
 		Hand hand = card.owner.GetComponent<Hand>();
 
-		hand.AddCard(newCard);
-	}
+        Card newCard = Instantiate(newCardPrefab);
+        newCard.owner = card.owner;
+        hand.AddCard(newCard);
+    }
 }

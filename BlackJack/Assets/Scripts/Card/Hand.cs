@@ -20,9 +20,11 @@ public class Hand : MonoBehaviour {
 	}
 	private List<Card> hiddens = new List<Card>();
 	private List<Card> field = new List<Card>();
+	private bool isForcedToBlackjack = false;
 
 	private void Awake() {
 		discards = GetComponent<Discards>();
+		TurnEventBus.Subscribe(TurnEventType.NEW_ROUND, UnforceBlackjack);
 	}
 
 	private void ArrangeField() {
@@ -66,6 +68,8 @@ public class Hand : MonoBehaviour {
 	}
 
 	public int GetTotal() {
+		if (isForcedToBlackjack) { return 21; }
+
 		int total = 0;
 		foreach (Card card in cards) {
 			total += card.GetNumber();
@@ -151,5 +155,13 @@ public class Hand : MonoBehaviour {
 		if (fieldExcept.Count == 0)
 			return card;
 		return fieldExcept[Random.Range(0, fieldExcept.Count)];
+	}
+
+	public void UnforceBlackjack() {
+		isForcedToBlackjack= false;
+	}
+
+	public void ForceToBlackjack() {
+		isForcedToBlackjack= true;
 	}
 }

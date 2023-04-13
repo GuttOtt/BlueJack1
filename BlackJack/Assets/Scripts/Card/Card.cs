@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 
 public class Card: MonoBehaviour {
-	public Gambler owner;
+	public BlackJacker owner;
 	private CardIcon icon;
 	private CardIcon iconPrefab;
 	private int number;
@@ -149,7 +149,6 @@ public class Card: MonoBehaviour {
 		this.iconPrefab = iconPrefab;
 		icon = Instantiate(iconPrefab, this.transform);
 		icon.transform.localPosition = Vector3.zero + Vector3.back * 0.1f;
-		icon.Initialize(this);
 	}
 
 	public bool ActivateIcon(EffectSituation situation) {

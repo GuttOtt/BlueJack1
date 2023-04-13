@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 
 public class TestClient : MonoBehaviour {
+	/*
 	[SerializeField] private Gambler player;
 	[SerializeField] private Gambler opponent;
 	[SerializeField] private TurnSystem turnSystem;
@@ -44,4 +45,5 @@ public class TestClient : MonoBehaviour {
 
 		deck.Shuffle();
 	}
+	*/
 }

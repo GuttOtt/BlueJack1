@@ -200,6 +200,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   hpGraphic: {fileID: 145053665}
+  opponent: {fileID: 0}
 --- !u!4 &34008861
 Transform:
   m_ObjectHideFlags: 0
@@ -2379,6 +2380,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   hpGraphic: {fileID: 704203300}
+  opponent: {fileID: 0}
 --- !u!4 &2049369906
 Transform:
   m_ObjectHideFlags: 0

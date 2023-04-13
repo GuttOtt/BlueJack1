@@ -50,7 +50,7 @@ public class SandboxManager : Singleton<SandboxManager> {
 		List<CardData> deckData = isPlayers ? playerDeck : opponentDeck;
 		foreach (CardData data in deckData) {
 			Card card = data.InstantiateAsCard();
-			card.owner = deck.GetComponent<Gambler>();
+			card.owner = deck.GetComponent<BlackJacker>();
 			deck.AddCard(card);
 		}
 		deck.Shuffle();

@@ -7,7 +7,7 @@ public class SpyEffect : MonoBehaviour, ICardEffect {
 
 	public void Activate() {
 		Card card = transform.parent.GetComponent<Card>();
-		Gambler opponent = card.owner.opponent;
+		BlackJacker opponent = card.owner.opponent;
 		Hand opponentHand = opponent.GetComponent<Hand>();//this is a train wreck..
 
 		GameObject obj = new GameObject("Card");

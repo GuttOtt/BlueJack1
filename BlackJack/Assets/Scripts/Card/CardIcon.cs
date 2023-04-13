@@ -8,16 +8,17 @@ public enum EffectSituation {
 }
 
 public class CardIcon : MonoBehaviour {
-	private Card card;
-	public Gambler owner;
 	private SpriteRenderer spr;
 	private ICardEffect effect;
 	[SerializeField] EffectSituation situation;
 	[SerializeField] GameObject activateAnimation;
 	[SerializeField] private int id;
 	public int ID { get => id; }
+    public BlackJacker Owner { 
+		get => transform.parent.GetComponent<Card>().owner;
+	}
 
-	private void Awake() {
+    private void Awake() {
 		spr = GetComponent<SpriteRenderer>();
 		effect = GetComponent<ICardEffect>();
 	}
@@ -43,8 +44,4 @@ public class CardIcon : MonoBehaviour {
 		return false;
 	}
 
-	public void Initialize(Card card) {
-		this.card = card;
-		this.owner = card.owner;
-	}
 }
