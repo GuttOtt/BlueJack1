@@ -35,7 +35,7 @@ public class PlayerTC : MonoBehaviour, ITurnControl {
 	}
 
 	private IEnumerator StartPhaseCR() {
-		blackjacker.StartSetting();
+		yield return StartCoroutine(blackjacker.StartSetting());
 		isStayed = false;
 
 		PublishEnd();

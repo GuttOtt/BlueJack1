@@ -21,6 +21,7 @@ public class Hand : MonoBehaviour {
 	private List<Card> hiddens = new List<Card>();
 	private List<Card> field = new List<Card>();
 	private bool isForcedToBlackjack = false;
+	public bool IsHiddenOpen { get => hiddens.Count == 0; }
 
 	private void Awake() {
 		discards = GetComponent<Discards>();
@@ -78,6 +79,14 @@ public class Hand : MonoBehaviour {
 		return total;
 	}
 
+	public int GetFieldTotal() {
+		int total = 0;
+        foreach (Card card in field) {
+            total += card.GetNumber();
+        }
+        return total;
+    }
+
 	public bool IsBursted() {
 		if (GetTotal() > 21)
 			return true;
@@ -104,6 +113,7 @@ public class Hand : MonoBehaviour {
 		else if (hiddens.Contains(card)) {
 			hiddens.Remove(card);
 		}
+		StartCoroutine(card.ActivateIcon(EffectSituation.OnDiscard));
 	}
 
 	public IEnumerator OpenHiddens() {
@@ -125,22 +135,25 @@ public class Hand : MonoBehaviour {
 	}
 
 	public IEnumerator ActivateAllIcon(EffectSituation situation) {
-		foreach (Card card in cards) {
-			yield return StartCoroutine(card.ActivateIcon(situation));
-		}
-	}
+        for (int i = 0; i < cards.Count; i++) {
+            Card card = cards[i];
+            yield return StartCoroutine(card.ActivateIcon(situation));
+        }
+    }
 
 	public IEnumerator ActivateAllField(EffectSituation situation) {
-		foreach (Card card in field) {
+		for (int i = 0; i < field.Count; i++) {
+			Card card = field[i];
             yield return StartCoroutine(card.ActivateIcon(situation));
         }
 	}
 
 	public IEnumerator ActivateAllHidden(EffectSituation situation) {
-		foreach (Card card in hiddens) {
+        for (int i = 0; i < hiddens.Count; i++) {
+            Card card = hiddens[i];
             yield return StartCoroutine(card.ActivateIcon(situation));
         }
-	}
+    }
 
 	public Card GetRandomField() {
 		return field[Random.Range(0, field.Count)];

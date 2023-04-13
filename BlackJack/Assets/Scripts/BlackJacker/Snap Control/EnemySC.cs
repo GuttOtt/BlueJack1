@@ -35,6 +35,7 @@ public class EnemySC : MonoBehaviour, ISnapControl {
 			Hand hand = GetComponent<Hand>();
 			yield return StartCoroutine(hand.ActivateAllField(EffectSituation.OnRaise));
             TurnEventBus.Publish(TurnEventType.ENEMY_SNAP);
+			Debug.Log("EnemySnaped " + Time.time);
         }
 
 		isConsidering = false;
@@ -53,11 +54,12 @@ public class EnemySC : MonoBehaviour, ISnapControl {
 		
 		SnapDecision decision = ai.Decide();
 
-		if (decision == SnapDecision.Snap) {
+		if (decision == SnapDecision.Snap && !SnapManager.isEnemySnaped) {
 			Hand hand = GetComponent<Hand>();
 			yield return StartCoroutine(hand.ActivateAllField(EffectSituation.OnRaise));
 			TurnEventBus.Publish(TurnEventType.ENEMY_SNAP);
-		}
+            Debug.Log("EnemySnaped " + Time.time);
+        }
 		else if (decision == SnapDecision.Fold) {
             Hand hand = GetComponent<Hand>();
             yield return StartCoroutine(hand.ActivateAllField(EffectSituation.OnFold));

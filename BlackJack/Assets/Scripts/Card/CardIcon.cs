@@ -40,6 +40,7 @@ public class CardIcon : MonoBehaviour {
 	}
 
 	private void ActivateAnimation() {
-		Instantiate(activateAnimation, transform);
+		if (activateAnimation)
+			Instantiate(activateAnimation, transform);
 	}
 }

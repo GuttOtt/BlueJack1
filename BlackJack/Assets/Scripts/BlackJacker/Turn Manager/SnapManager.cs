@@ -36,6 +36,7 @@ public class SnapManager : MonoBehaviour {
 	}
 
 	private void RaiseTempPot() {
+		Debug.Log("RaiseTempPot");
 		tempPot *= 2;
 		potSize += 0.7f;
 		ResizePotImage(tempPotImg);

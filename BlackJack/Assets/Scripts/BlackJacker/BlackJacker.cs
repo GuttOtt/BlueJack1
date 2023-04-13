@@ -34,8 +34,9 @@ public class BlackJacker : MonoBehaviour {
 			: GameObject.FindWithTag("Player").GetComponent<BlackJacker>();
 	}
 
-	public void StartSetting() {
+	public IEnumerator StartSetting() {
 		hand.DiscardAll();
+		yield return new WaitForSeconds(1.5f);
 		deck.ClosedHit();
 		deck.ClosedHit();
 		deck.OpenHit();
