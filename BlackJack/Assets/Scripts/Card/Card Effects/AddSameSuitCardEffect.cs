@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 
 public class AddSameSuitCardEffect : MonoBehaviour, ICardEffect {
-    [SerializeField] CardIcon newCardPrefab;
+    [SerializeField] CardIcon newIconPrefab;
 
     public void Activate() {
         Card card = transform.parent.GetComponent<Card>();
@@ -11,7 +11,7 @@ public class AddSameSuitCardEffect : MonoBehaviour, ICardEffect {
 
         GameObject obj = new GameObject("Card");
         Card newCard = obj.AddComponent<Card>() as Card;
-        newCard.AddIcon(newCardPrefab);
+        newCard.AddIcon(newIconPrefab);
         newCard.Initialize(0, card.GetSuit());
         newCard.owner = card.owner;
         newCard.IsFront = true;

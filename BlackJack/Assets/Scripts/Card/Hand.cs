@@ -49,8 +49,9 @@ public class Hand : MonoBehaviour {
 		field.Add(card);
 		card.transform.SetParent(handParent.transform);
 		card.IsFront = true;
-		ArrangeField();
-		card.ActivateIcon(EffectSituation.OnOpen);
+        StartCoroutine(card.ActivateIcon(EffectSituation.OnOpen));
+		StartCoroutine(ActivateAllField(EffectSituation.OnEveryHit));
+        ArrangeField();
 	}
 
 	public void AddHidden(Card card) {
@@ -125,23 +126,20 @@ public class Hand : MonoBehaviour {
 
 	public IEnumerator ActivateAllIcon(EffectSituation situation) {
 		foreach (Card card in cards) {
-			if (card.ActivateIcon(situation))
-				yield return new WaitForSeconds(0.5f);
+			yield return StartCoroutine(card.ActivateIcon(situation));
 		}
 	}
 
 	public IEnumerator ActivateAllField(EffectSituation situation) {
 		foreach (Card card in field) {
-			if (card.ActivateIcon(situation))
-				yield return new WaitForSeconds(0.5f);
-		}
+            yield return StartCoroutine(card.ActivateIcon(situation));
+        }
 	}
 
 	public IEnumerator ActivateAllHidden(EffectSituation situation) {
 		foreach (Card card in hiddens) {
-			if (card.ActivateIcon(situation))
-				yield return new WaitForSeconds(0.5f);
-		}
+            yield return StartCoroutine(card.ActivateIcon(situation));
+        }
 	}
 
 	public Card GetRandomField() {

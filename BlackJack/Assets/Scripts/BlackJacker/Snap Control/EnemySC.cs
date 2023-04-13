@@ -31,8 +31,11 @@ public class EnemySC : MonoBehaviour, ISnapControl {
 		
 		SnapDecision decision = ai.Decide();
 
-		if (decision == SnapDecision.Snap)
-			TurnEventBus.Publish(TurnEventType.ENEMY_SNAP);
+		if (decision == SnapDecision.Snap) {
+			Hand hand = GetComponent<Hand>();
+			yield return StartCoroutine(hand.ActivateAllField(EffectSituation.OnRaise));
+            TurnEventBus.Publish(TurnEventType.ENEMY_SNAP);
+        }
 
 		isConsidering = false;
 	}
@@ -50,10 +53,16 @@ public class EnemySC : MonoBehaviour, ISnapControl {
 		
 		SnapDecision decision = ai.Decide();
 
-		if (decision == SnapDecision.Snap)
+		if (decision == SnapDecision.Snap) {
+			Hand hand = GetComponent<Hand>();
+			yield return StartCoroutine(hand.ActivateAllField(EffectSituation.OnRaise));
 			TurnEventBus.Publish(TurnEventType.ENEMY_SNAP);
-		else if (decision == SnapDecision.Fold) 
-			TurnEventBus.Publish(TurnEventType.ENEMY_FOLD);
+		}
+		else if (decision == SnapDecision.Fold) {
+            Hand hand = GetComponent<Hand>();
+            yield return StartCoroutine(hand.ActivateAllField(EffectSituation.OnFold));
+            TurnEventBus.Publish(TurnEventType.ENEMY_FOLD);
+		}
 
 		isConsidering = false;
 		Debug.Log("Considering Ends");

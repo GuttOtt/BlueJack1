@@ -207,7 +207,7 @@ public class _BurstPhase : MonoBehaviour, IPhase {
 	public IEnumerator Phase() {
 		PlayerTC burster = turnManager.loser;
 		yield return StartCoroutine(burster.BurstProcess());
-		yield return new WaitForSeconds(2f);
+		yield return new WaitForSeconds(1f);
 		turnManager.ToVictoryPhase(burster);
 	}
 }
@@ -221,8 +221,7 @@ public class _FoldPhase : MonoBehaviour, IPhase {
 
     public IEnumerator Phase() {
 		PlayerTC folder = turnManager.loser;
-		yield return StartCoroutine(folder.FoldProcess());
-		yield return new WaitForSeconds(2f);
+		yield return new WaitForSeconds(1f);
 		turnManager.ToVictoryPhase(folder);
 	}
 }

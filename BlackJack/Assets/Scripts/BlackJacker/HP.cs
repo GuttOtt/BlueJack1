@@ -2,8 +2,9 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
+[System.Serializable]
 public class HP {
-    private int amount;
+    [SerializeField] private int amount;
 
     public HP(int amount) {
         this.amount = amount;

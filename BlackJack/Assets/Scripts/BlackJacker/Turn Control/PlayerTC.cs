@@ -112,7 +112,7 @@ public class PlayerTC : MonoBehaviour, ITurnControl {
 	}
 
 	public IEnumerator FoldProcess() {
-		yield return StartCoroutine(hand.ActivateAllHidden(EffectSituation.OnFold));
+		yield return StartCoroutine(hand.ActivateAllField(EffectSituation.OnFold));
 	}
 
 	public IEnumerator WinProcess() {

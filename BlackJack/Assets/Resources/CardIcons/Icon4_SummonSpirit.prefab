@@ -11,7 +11,7 @@ GameObject:
   - component: {fileID: 6782245597186082809}
   - component: {fileID: 5789209689852664396}
   - component: {fileID: 1569368689856750402}
-  - component: {fileID: 2030212888581450617}
+  - component: {fileID: -774556048529405418}
   m_Layer: 0
   m_Name: Icon4_SummonSpirit
   m_TagString: Untagged
@@ -46,10 +46,13 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 68405d44285a5db4b941505f4a4f2fa3, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  owner: {fileID: 0}
-  situation: 1
   activateAnimation: {fileID: 2129466798422591636, guid: 16a01088662df474d9bf529cc9628f3b, type: 3}
   id: 4
+  situationEffectArrayDict:
+    m_keys: 01000000
+    m_values:
+    - data:
+      - {fileID: -774556048529405418}
 --- !u!212 &1569368689856750402
 SpriteRenderer:
   m_ObjectHideFlags: 0
@@ -102,7 +105,7 @@ SpriteRenderer:
   m_WasSpriteAssigned: 1
   m_MaskInteraction: 0
   m_SpriteSortPoint: 0
---- !u!114 &2030212888581450617
+--- !u!114 &-774556048529405418
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -111,7 +114,7 @@ MonoBehaviour:
   m_GameObject: {fileID: 3901589311124014931}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: c2a16b52a15fa064c837615d9f9ed1a4, type: 3}
+  m_Script: {fileID: 11500000, guid: c2650d1830114dc4a8240db0f2693be8, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  newCardPrefab: {fileID: 105310540999294614, guid: 1ca2a74f25be6a0449286fb15f907f7c, type: 3}
+  newIconPrefab: {fileID: 5142928273389736067, guid: 6c023327a64021447bec1852df561bd6, type: 3}

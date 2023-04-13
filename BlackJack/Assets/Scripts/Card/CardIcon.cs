@@ -1,47 +1,45 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEditor;
 
 public enum EffectSituation {
 	None, OnOpen, OnEveryHit, OnWin, OnLose, OnFold, OnBurst,
 	OnRaise, OnBlackJack, OnShowDown, OnDiscard, OnHiddenOpen
 }
 
+
+[System.Serializable]
+public class ComponentStorage : SerializableDictionary.Storage<Component[]> { }
+[System.Serializable]
+public class SituationComponentDictionary 
+	: SerializableDictionary<EffectSituation, Component[], ComponentStorage> { }
+
 public class CardIcon : MonoBehaviour {
-	private SpriteRenderer spr;
-	private ICardEffect effect;
-	[SerializeField] EffectSituation situation;
 	[SerializeField] GameObject activateAnimation;
 	[SerializeField] private int id;
+	[SerializeField] private SituationComponentDictionary situationEffectArrayDict;
 	public int ID { get => id; }
     public BlackJacker Owner { 
 		get => transform.parent.GetComponent<Card>().owner;
 	}
 
-    private void Awake() {
-		spr = GetComponent<SpriteRenderer>();
-		effect = GetComponent<ICardEffect>();
-	}
 
-	public void TryToActivate(EffectSituation situation) {
-		if (IsSatisfiedBy(situation)) {
-			StartCoroutine(ActivateCoroutine());
+	public IEnumerator TryToActivate(EffectSituation situation) {
+		foreach (EffectSituation key in situationEffectArrayDict.Keys) {
+			if (key == situation) {
+				Component[] components = situationEffectArrayDict[key];
+				foreach (Component component in components) {
+                    ActivateAnimation();
+                    yield return new WaitForSeconds(1f);
+                    ICardEffect effect = component as ICardEffect;
+					effect.Activate();
+				}
+			}
 		}
-	}
-
-	private IEnumerator ActivateCoroutine() {
-		if (activateAnimation) ActivateAnimation();
-		yield return new WaitForSeconds(1f);
-		effect.Activate();
 	}
 
 	private void ActivateAnimation() {
 		Instantiate(activateAnimation, transform);
 	}
-
-	public bool IsSatisfiedBy(EffectSituation situation) {
-		if (this.situation == situation) return true;
-		return false;
-	}
-
 }

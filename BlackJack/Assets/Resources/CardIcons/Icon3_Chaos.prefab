@@ -46,10 +46,14 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 68405d44285a5db4b941505f4a4f2fa3, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  owner: {fileID: 0}
   situation: 1
   activateAnimation: {fileID: 2129466798422591636, guid: 16a01088662df474d9bf529cc9628f3b, type: 3}
   id: 3
+  situationEffectArrayDict:
+    m_keys: 01000000
+    m_values:
+    - data:
+      - {fileID: -4099572290723160596}
 --- !u!212 &1569368689856750402
 SpriteRenderer:
   m_ObjectHideFlags: 0

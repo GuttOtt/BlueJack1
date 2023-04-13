@@ -42,6 +42,7 @@ public class Card: MonoBehaviour {
 	private void Awake() {
 		BoxCollider2D col = gameObject.AddComponent<BoxCollider2D>();
 		col.size = new Vector2(2f, 110/40f);
+		spriteRenderer = GetComponent<SpriteRenderer>();
 	}
 
 	private void Update() {
@@ -66,7 +67,8 @@ public class Card: MonoBehaviour {
 		this.suit = suit;
 		numberObj = new GameObject("CardNumber");
 		suitObj = new GameObject("CardSuit");
-		spriteRenderer = gameObject.AddComponent<SpriteRenderer>() as SpriteRenderer;
+		if (!spriteRenderer)
+			spriteRenderer = gameObject.AddComponent<SpriteRenderer>() as SpriteRenderer;
 		MakeNumberObj();
 		MakeSuitObj();
 		DrawBack();
@@ -151,11 +153,8 @@ public class Card: MonoBehaviour {
 		icon.transform.localPosition = Vector3.zero + Vector3.back * 0.1f;
 	}
 
-	public bool ActivateIcon(EffectSituation situation) {
-		if (!icon.IsSatisfiedBy(situation))
-			return false;
-		icon.TryToActivate(situation);
-		return true;
+	public IEnumerator ActivateIcon(EffectSituation situation) {
+		yield return StartCoroutine(icon.TryToActivate(situation));
 	}
 
 	public void ChangeSuit(Suit suit) {
@@ -175,5 +174,5 @@ public class Card: MonoBehaviour {
 }
 
 public enum Suit {
-		Spade, Heart, Diamond, Club
+		Spade, Heart, Diamond, Club, None
 }

@@ -7,25 +7,30 @@ public class PlayerSC : MonoBehaviour, ISnapControl {
 	[SerializeField] private Button snapButton, foldButton; // Buttonized·Î ¹Ù²Ü °Í
 
 	private void Awake() {
-		snapButton.onClick.AddListener(DecideSnap);
-		foldButton.onClick.AddListener(DecideFold);
+		snapButton.onClick.AddListener(() => StartCoroutine(DecideSnap()));
+		foldButton.onClick.AddListener(() => StartCoroutine(DecideFold()));
 	}
 
-	public void DecideSnap() {
+	public IEnumerator DecideSnap() {
 		if (!(TurnManager.Instance.currentPhase == TurnManager.Instance.turn
 			|| TurnManager.Instance.currentPhase == TurnManager.Instance.stayed)) {
-			return;
+			yield break;
 		}
 		if (!SnapManager.isPlayerSnaped) {
-			TurnEventBus.Publish(TurnEventType.PLAYER_SNAP);
-		}
+			Hand hand = GetComponent<Hand>();
+			yield return StartCoroutine(hand.ActivateAllField(EffectSituation.OnRaise));
+            TurnEventBus.Publish(TurnEventType.PLAYER_SNAP);
+        }
 	}
 
-	public void DecideFold() {
+	public IEnumerator DecideFold() {
 		if (!(TurnManager.Instance.currentPhase == TurnManager.Instance.turn
 			|| TurnManager.Instance.currentPhase == TurnManager.Instance.stayed)) {
-			return;
+			yield break;
 		}
+
+        Hand hand = GetComponent<Hand>();
+		yield return StartCoroutine(hand.ActivateAllField(EffectSituation.OnFold));
 		TurnEventBus.Publish(TurnEventType.PLAYER_FOLD);
 	}
 

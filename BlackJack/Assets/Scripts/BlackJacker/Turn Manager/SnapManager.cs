@@ -7,9 +7,9 @@ public class SnapManager : MonoBehaviour {
 	[SerializeField] Text potText;
 	[SerializeField] Image tempPotImg;
 	[SerializeField] Image potImg;
-	public static int defaultPot = 5;
-	public static int tempPot = 5;
-	public static int pot = 5;
+	public static int ante = 10;
+	public static int tempPot = 10;
+	public static int pot = 10;
 	public static float potSize = 1;
 	public static bool isPlayerSnaped = false;
 	public static bool isEnemySnaped = false;
@@ -47,7 +47,7 @@ public class SnapManager : MonoBehaviour {
     }
 
     private void ResetPot() {
-		pot = defaultPot;
+		pot = ante;
 		tempPot = pot;
 		potSize = 1;
 		isPlayerSnaped = false;

@@ -4,6 +4,8 @@ using UnityEngine;
 
 public class AddCardEffect : MonoBehaviour, ICardEffect{
 	[SerializeField] Card newCardPrefab;
+    [SerializeField] int cardNumber;
+    [SerializeField] Suit suit;
 
 	public void Activate() {
 		Card card = transform.parent.GetComponent<Card>();

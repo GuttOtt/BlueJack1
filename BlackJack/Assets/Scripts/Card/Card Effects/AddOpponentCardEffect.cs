@@ -3,16 +3,21 @@ using System.Collections.Generic;
 using UnityEngine;
 
 public class AddOpponentCardEffect : MonoBehaviour, ICardEffect {
-    [SerializeField] Card newCardPrefab;
+    [SerializeField] CardIcon newIconPrefab;
+    [SerializeField] int cardNumber;
 
     public void Activate() {
         Card card = transform.parent.GetComponent<Card>();
         BlackJacker opponent = card.owner.opponent;
-        Hand hand = opponent.GetComponent<Hand>();
+        Hand opponentHand = opponent.GetComponent<Hand>();//this is a train wreck..
 
-        Card newCard = Instantiate(newCardPrefab);
+        GameObject obj = new GameObject("Card");
+        Card newCard = obj.AddComponent<Card>() as Card;
+        newCard.AddIcon(newIconPrefab);
+        newCard.Initialize(cardNumber, (Suit)Random.Range(0, 4));
         newCard.owner = opponent;
-        hand.AddCard(newCard);
-    }
+        newCard.IsFront = true;
 
+        opponentHand.AddCard(newCard);
+    }
 }

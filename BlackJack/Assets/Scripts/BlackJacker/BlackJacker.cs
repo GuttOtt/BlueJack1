@@ -4,10 +4,10 @@ using UnityEngine;
 
 public class BlackJacker : MonoBehaviour {
 	[SerializeField] private HPGraphic hpGraphic;
-	private HP hp;
+	[SerializeField] private HP hp;
 	private Hand hand;
 	private Deck deck;
-	private int armour;
+	private int armour = 0;
 	private int _damageDealtBeforeShowdown;
 	public int DamageDealtBeforeShowdown {
 		get => _damageDealtBeforeShowdown;
@@ -23,11 +23,15 @@ public class BlackJacker : MonoBehaviour {
 	public BlackJacker opponent;
 
 	private void Awake() {
-		hp = new HP(100);
+		hp = new HP(0);
 		hand = GetComponent<Hand>();
 		deck = GetComponent<Deck>();
 		hpGraphic.SetHP(hp);
 		TurnEventBus.Subscribe(TurnEventType.NEW_ROUND, NewRoundInitialize);
+
+		opponent = gameObject.CompareTag("Player")
+			? GameObject.FindWithTag("Opponent").GetComponent<BlackJacker>()
+			: GameObject.FindWithTag("Player").GetComponent<BlackJacker>();
 	}
 
 	public void StartSetting() {
@@ -44,10 +48,12 @@ public class BlackJacker : MonoBehaviour {
 	public void TakeDamage(int damage) {
 		int amount = damage - armour;
 		hp.TakeDamage(amount);
+		Debug.Log("TakeDamage");
 	}
 
 	public void DealDamage( int damage) {
 		opponent.TakeDamage(damage);
+		Debug.Log("DealDamage");
 	}
 
 	public void Heal(int amount) {
