@@ -2,6 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEditor;
+using Unity.VisualScripting;
 
 public enum EffectSituation {
 	None, OnOpen, OnEveryHit, OnWin, OnLose, OnFold, OnBurst,
@@ -19,13 +20,22 @@ public class CardIcon : MonoBehaviour {
 	[SerializeField] GameObject activateAnimation;
 	[SerializeField] private int id;
 	[SerializeField] private SituationComponentDictionary situationEffectArrayDict;
+	[SerializeField] private IEffectCondition effectCondition;
 	public int ID { get => id; }
     public BlackJacker Owner { 
 		get => transform.parent.GetComponent<Card>().owner;
 	}
 
 
-	public IEnumerator TryToActivate(EffectSituation situation) {
+    private void Awake() {
+		effectCondition = GetComponent<IEffectCondition>();
+    }
+
+    public IEnumerator TryToActivate(EffectSituation situation) {
+		if (effectCondition != null && !effectCondition.IsSatisfied()) {
+			yield break;
+		}
+
 		foreach (EffectSituation key in situationEffectArrayDict.Keys) {
 			if (key == situation) {
 				Component[] components = situationEffectArrayDict[key];

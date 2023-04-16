@@ -39,8 +39,6 @@ public class PlayerTC : MonoBehaviour, ITurnControl {
 		isStayed = false;
 
 		PublishEnd();
-
-		yield return null;
 	}
 
 	private IEnumerator TurnPhaseCR() {
@@ -142,4 +140,8 @@ public class PlayerTC : MonoBehaviour, ITurnControl {
 
 	public void TakeHit() { hitDecision = HitDecision.Hit; }
 	public void TakeStay() { hitDecision = HitDecision.Stay; }
+
+	public void ForceToStay() {
+		isStayed = true;
+	}
 }

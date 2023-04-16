@@ -16,6 +16,7 @@ public class TurnManager : Singleton<TurnManager> {
 	public PlayerTC winner {
 		get => loser == null ? null : loser == player ? enemy : player;
 	}
+	public bool isShowdowned = false;
 
 	protected override void Awake() {
 		context = gameObject.AddComponent<PhaseContext>();
@@ -132,9 +133,12 @@ public class _StartPhase : MonoBehaviour, IPhase {
 	}
 
 	public IEnumerator Phase() {
+		turnManager.isShowdowned = false;
+
 		TurnEventBus.Publish(TurnEventType.NEW_ROUND);
 
 		turnManager.player.StartPhase();
+		yield return new WaitUntil(() => turnManager.PlayerDone);
 		turnManager.enemy.StartPhase();
 		yield return new WaitUntil(() => turnManager.BothDone);
 		yield return new WaitForSeconds(1f);
@@ -173,6 +177,7 @@ public class _IntervalPhase : MonoBehaviour, IPhase {
 	public IEnumerator Phase() {
 		turnManager.player.IntervalPhase();
 		yield return new WaitUntil(() => turnManager.PlayerDone);
+		yield return new WaitForSeconds(1f);
 		turnManager.enemy.IntervalPhase();
 		yield return new WaitUntil(() => turnManager.BothDone);
 
@@ -181,7 +186,6 @@ public class _IntervalPhase : MonoBehaviour, IPhase {
 		}
 		else if (turnManager.enemy.IsBursted) {
 			turnManager.ToBurstPhase(turnManager.enemy);
-			Debug.Log("Enemy Bursted");
 		}
 		else if (turnManager.player.IsStayed) {
 			if (turnManager.enemy.IsStayed) {
@@ -250,6 +254,8 @@ public class _ShowDownPhase : MonoBehaviour, IPhase {
 	}
 
 	public IEnumerator Phase() {
+		turnManager.isShowdowned = true;
+
 		TurnEventBus.Publish(TurnEventType.VICTORY_PHASE);
 
 		turnManager.player.ShowDownPhase();

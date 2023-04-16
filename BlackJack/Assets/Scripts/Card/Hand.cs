@@ -70,13 +70,16 @@ public class Hand : MonoBehaviour {
 	}
 
 	public int GetTotal() {
-		if (isForcedToBlackjack) { return 21; }
 
 		int total = 0;
 		foreach (Card card in cards) {
 			total += card.GetNumber();
 		}
-		return total;
+
+		//ForcedBlackjack 상태이더라도 버스트는 감지해야함. 따라서 total <= 21
+		if (isForcedToBlackjack && total <= 21 ) { return 21; }
+
+        return total;
 	}
 
 	public int GetFieldTotal() {
@@ -117,13 +120,23 @@ public class Hand : MonoBehaviour {
 	}
 
 	public IEnumerator OpenHiddens() {
-		ShowHiddens();
-		yield return StartCoroutine(ActivateAllHidden(EffectSituation.OnOpen));
-		yield return StartCoroutine(ActivateAllHidden(EffectSituation.OnHiddenOpen));
+		//히든 캐싱
+		List<Card> tempHiddens = new List<Card>();
+		for (int i = 0; i < hiddens.Count; i++) tempHiddens.Add(hiddens[i]);
+        
+		//히든을 필드로 옮기고 앞면으로
 		foreach (Card card in hiddens) {
-			field.Add(card);
-		}
-		hiddens.Clear();
+            field.Add(card);
+        }
+        hiddens.Clear();
+        ShowHiddens();
+
+        //캐싱한 히든에 대해 OnOpen, OnHiddenOpen
+        for (int i = 0; i < tempHiddens.Count; i++) {
+			Card card = tempHiddens[i];
+            yield return StartCoroutine(card.ActivateIcon(EffectSituation.OnOpen));
+            yield return StartCoroutine(card.ActivateIcon(EffectSituation.OnHiddenOpen));
+        }
 	}
 
 	//Open과는 달리, 카드의 효과를 발동하지 않고 상대에게 보여주기만 함.
@@ -174,5 +187,20 @@ public class Hand : MonoBehaviour {
 
 	public void ForceToBlackjack() {
 		isForcedToBlackjack= true;
+	}
+
+	public int GetNumberOfSuitInField(Suit suit) {
+		int n = 0;
+
+		foreach(Card card in field) {
+			if (card.GetSuit() == suit) n++;
+		}
+
+		return n;
+	}
+
+	public int GetNumberOfCard() {
+		Debug.Log("Number of Card is " + cards.Count);
+		return cards.Count;
 	}
 }

@@ -36,10 +36,11 @@ public class BlackJacker : MonoBehaviour {
 
 	public IEnumerator StartSetting() {
 		hand.DiscardAll();
-		yield return new WaitForSeconds(1.5f);
+		yield return new WaitForSeconds(1f);
 		deck.ClosedHit();
 		deck.ClosedHit();
 		deck.OpenHit();
+		yield return new WaitForSeconds(0.1f);
 	}
 
 	public void Hit() {
@@ -49,12 +50,11 @@ public class BlackJacker : MonoBehaviour {
 	public void TakeDamage(int damage) {
 		int amount = damage - armour;
 		hp.TakeDamage(amount);
-		Debug.Log("TakeDamage");
 	}
 
 	public void DealDamage( int damage) {
 		opponent.TakeDamage(damage);
-		Debug.Log("DealDamage");
+        DamageDealtBeforeShowdown += damage;
 	}
 
 	public void Heal(int amount) {
