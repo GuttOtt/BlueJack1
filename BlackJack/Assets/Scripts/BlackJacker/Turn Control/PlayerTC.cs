@@ -65,7 +65,7 @@ public class PlayerTC : MonoBehaviour, ITurnControl {
 			blackjacker.Hit();
 		}
 		else {
-			//Stay 그래픽 처리
+			hand.PutHiddenOnBoard();
 		}
 
 		PublishEnd();

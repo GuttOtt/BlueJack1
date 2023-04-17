@@ -1467,6 +1467,7 @@ MonoBehaviour:
   PlayerDone: 0
   EnemyDone: 0
   loser: {fileID: 0}
+  isShowdowned: 0
 --- !u!4 &852678631
 Transform:
   m_ObjectHideFlags: 0
@@ -1743,6 +1744,8 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 1282972779}
+  - component: {fileID: 1282972781}
+  - component: {fileID: 1282972780}
   m_Layer: 0
   m_Name: Deck Parent
   m_TagString: Untagged
@@ -1765,6 +1768,45 @@ Transform:
   m_Father: {fileID: 34008861}
   m_RootOrder: 1
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!61 &1282972780
+BoxCollider2D:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1282972778}
+  m_Enabled: 1
+  m_Density: 1
+  m_Material: {fileID: 0}
+  m_IsTrigger: 0
+  m_UsedByEffector: 0
+  m_UsedByComposite: 0
+  m_Offset: {x: 0, y: 0}
+  m_SpriteTilingProperty:
+    border: {x: 0, y: 0, z: 0, w: 0}
+    pivot: {x: 0, y: 0}
+    oldSize: {x: 0, y: 0}
+    newSize: {x: 0, y: 0}
+    adaptiveTilingThreshold: 0
+    drawMode: 0
+    adaptiveTiling: 0
+  m_AutoTiling: 0
+  serializedVersion: 2
+  m_Size: {x: 2, y: 2.7}
+  m_EdgeRadius: 0
+--- !u!114 &1282972781
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1282972778}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 93ec385ced4333942bf48077c17cf0d5, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  deck: {fileID: 34008857}
 --- !u!1 &1290749699
 GameObject:
   m_ObjectHideFlags: 0

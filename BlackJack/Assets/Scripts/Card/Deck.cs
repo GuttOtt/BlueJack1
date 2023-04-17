@@ -13,9 +13,6 @@ public class Deck : MonoBehaviour {
 	private void Awake() {
 		hand = transform.GetComponent<Hand>();
 		discards = transform.GetComponent<Discards>();
-
-		DeckCover deckCover = deckParent.AddComponent<DeckCover>();
-		deckCover.SetDeck(this);
 	}
 
 	private Card Draw() {

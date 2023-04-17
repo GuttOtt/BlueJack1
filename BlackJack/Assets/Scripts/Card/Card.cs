@@ -12,6 +12,8 @@ public class Card: MonoBehaviour {
 	private GameObject suitObj;
 	private SpriteRenderer spriteRenderer;
 	private bool isFront = false;
+	private GameObject cardBackMask;
+	private Sprite cardBackSprite;
 	public bool IsFront {
 		get => isFront;
 		set {
@@ -43,7 +45,9 @@ public class Card: MonoBehaviour {
 		BoxCollider2D col = gameObject.AddComponent<BoxCollider2D>();
 		col.size = new Vector2(2f, 110/40f);
 		spriteRenderer = GetComponent<SpriteRenderer>();
-	}
+
+		cardBackSprite = Resources.Load<Sprite>("Sprites/CardBack");
+    }
 
 	private void Update() {
 		if (movePosition != null) {
@@ -171,6 +175,18 @@ public class Card: MonoBehaviour {
 	public CardData GetData() {
 		return new CardData(number, suit, iconPrefab);
 	}
+
+	public void SetActiveCardBackMask(bool b) {
+		if (!cardBackMask) {
+            cardBackMask = new GameObject("Back Mask");
+            cardBackMask.transform.SetParent(transform);
+			cardBackMask.transform.localPosition = Vector3.back;
+            cardBackMask.AddComponent<SpriteRenderer>().sprite = cardBackSprite;
+            cardBackMask.GetComponent<SpriteRenderer>().color = new Color(1, 1, 1, 0.3f);
+        }
+
+		cardBackMask.SetActive(b);
+    }
 }
 
 public enum Suit {

@@ -138,12 +138,11 @@ public class _StartPhase : MonoBehaviour, IPhase {
 		TurnEventBus.Publish(TurnEventType.NEW_ROUND);
 
 		turnManager.player.StartPhase();
-		yield return new WaitUntil(() => turnManager.PlayerDone);
 		turnManager.enemy.StartPhase();
 		yield return new WaitUntil(() => turnManager.BothDone);
 		yield return new WaitForSeconds(1f);
 
-		turnManager.ToTurnPhase();
+		turnManager.ToIntervalPhase();
 	}
 }
 

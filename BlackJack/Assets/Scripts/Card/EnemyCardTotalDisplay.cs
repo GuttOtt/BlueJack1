@@ -9,7 +9,7 @@ public class EnemyCardTotalDisplay : MonoBehaviour, ICardTotalDisplay {
     [SerializeField] private Image hiddenCardIcon;
 
     public void Update() {
-        if (hand.IsHiddenOpen) {
+        if (hand.IsHiddenShown) {
             DisplayTotal(hand.GetTotal());
             hiddenCardIcon.gameObject.SetActive(false);
         }

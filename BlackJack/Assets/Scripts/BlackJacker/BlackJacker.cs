@@ -27,7 +27,6 @@ public class BlackJacker : MonoBehaviour {
 		hand = GetComponent<Hand>();
 		deck = GetComponent<Deck>();
 		hpGraphic.SetHP(hp);
-		TurnEventBus.Subscribe(TurnEventType.NEW_ROUND, NewRoundInitialize);
 
 		opponent = gameObject.CompareTag("Player")
 			? GameObject.FindWithTag("Opponent").GetComponent<BlackJacker>()
@@ -35,12 +34,13 @@ public class BlackJacker : MonoBehaviour {
 	}
 
 	public IEnumerator StartSetting() {
-		hand.DiscardAll();
+        ResetArmour();
+        DamageDealtBeforeShowdown = 0;
+
+        hand.DiscardAll();
 		yield return new WaitForSeconds(1f);
 		deck.ClosedHit();
 		deck.ClosedHit();
-		deck.OpenHit();
-		yield return new WaitForSeconds(0.1f);
 	}
 
 	public void Hit() {
@@ -67,10 +67,5 @@ public class BlackJacker : MonoBehaviour {
 
 	public void ResetArmour() {
 		armour = 0;
-	}
-
-	public void NewRoundInitialize() {
-		ResetArmour();
-		DamageDealtBeforeShowdown = 0;
 	}
 }

@@ -21,7 +21,15 @@ public class Hand : MonoBehaviour {
 	private List<Card> hiddens = new List<Card>();
 	private List<Card> field = new List<Card>();
 	private bool isForcedToBlackjack = false;
-	public bool IsHiddenOpen { get => hiddens.Count == 0; }
+	public bool IsHiddenShown {
+		get {
+			bool isAllFront = true;
+			foreach (Card card in hiddens) {
+				if (!card.IsFront) isAllFront = false;
+			}
+			return isAllFront;
+		}
+	}
 
 	private void Awake() {
 		discards = GetComponent<Discards>();
@@ -110,12 +118,15 @@ public class Hand : MonoBehaviour {
 
 	public void Discard(Card card) {
 		discards.AddCard(card);
+		card.SetActiveCardBackMask(false);
+
 		if (field.Contains(card)) {
 			field.Remove(card);
 		}
 		else if (hiddens.Contains(card)) {
 			hiddens.Remove(card);
 		}
+
 		StartCoroutine(card.ActivateIcon(EffectSituation.OnDiscard));
 	}
 
@@ -127,9 +138,13 @@ public class Hand : MonoBehaviour {
 		//히든을 필드로 옮기고 앞면으로
 		foreach (Card card in hiddens) {
             field.Add(card);
+			card.SetActiveCardBackMask(false);
         }
+		ShowHiddens();
+		ArrangeField();
         hiddens.Clear();
-        ShowHiddens();
+
+		yield return new WaitForSeconds(0.3f);
 
         //캐싱한 히든에 대해 OnOpen, OnHiddenOpen
         for (int i = 0; i < tempHiddens.Count; i++) {
@@ -146,6 +161,34 @@ public class Hand : MonoBehaviour {
 			card.IsFront = true;
 		}
 	}
+
+	public void PutHiddenOnBoard() {
+        List<Card> cardList = cards;
+
+        int q = cardList.Count / 2;
+        int r = cardList.Count % 2;
+
+        Vector3 origin;
+
+        if (r == 0) {
+            origin = handParent.transform.position + Vector3.left * (q - 0.5f) * 2;
+        }
+        else {
+            origin = handParent.transform.position + Vector3.left * q * 2;
+        }
+
+        for (int i = 0; i < cardList.Count; i++) {
+			Vector3 movePos = origin + Vector3.right * i * 2;
+			if (hiddens.Contains(cardList[i])) {
+				movePos += Vector3.right * 0.5f;
+				
+				if (isPlayerHand) {
+					cardList[i].SetActiveCardBackMask(true);
+                }
+			}
+            cardList[i].MoveTo(movePos);
+        }
+    }
 
 	public IEnumerator ActivateAllIcon(EffectSituation situation) {
         for (int i = 0; i < cards.Count; i++) {
