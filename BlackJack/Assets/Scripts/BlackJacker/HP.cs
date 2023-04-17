@@ -10,7 +10,7 @@ public class HP {
         this.amount = amount;
     }
 
-    public HP Zero {
+    public static HP Zero {
         get => new HP(0);
     }
 

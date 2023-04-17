@@ -13,15 +13,15 @@ public class HPGraphic : MonoBehaviour, IPointerEnterHandler, IPointerExitHandle
     private void Awake() {
         img = GetComponent<Image>();
     }
+    private void Update() {
+        if (hp != null && !pointerOn)
+            numberText.text = hp.ToInt().ToString();
+    }
 
     public void SetHP(HP hp) {
         this.hp = hp;
     }
 
-    public void Update() {
-        if (hp != null && !pointerOn) 
-            numberText.text = hp.ToInt().ToString();
-    }
 
     public void OnPointerEnter(PointerEventData eventData) {
         pointerOn = true;

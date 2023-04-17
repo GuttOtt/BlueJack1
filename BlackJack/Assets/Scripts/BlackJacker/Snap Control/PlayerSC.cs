@@ -20,7 +20,6 @@ public class PlayerSC : MonoBehaviour, ISnapControl {
 			Hand hand = GetComponent<Hand>();
 			yield return StartCoroutine(hand.ActivateAllField(EffectSituation.OnRaise));
             TurnEventBus.Publish(TurnEventType.PLAYER_SNAP);
-			Debug.Log("PlayerSnaped " + Time.time);
         }
 	}
 
@@ -31,7 +30,10 @@ public class PlayerSC : MonoBehaviour, ISnapControl {
 		}
 
         Hand hand = GetComponent<Hand>();
+		hand.PutHiddenOnBoard();
+		hand.SetHiddensBack();
 		yield return StartCoroutine(hand.ActivateAllField(EffectSituation.OnFold));
+
 		TurnEventBus.Publish(TurnEventType.PLAYER_FOLD);
 	}
 

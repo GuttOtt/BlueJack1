@@ -159,6 +159,7 @@ public class Hand : MonoBehaviour {
 	public void ShowHiddens() {
 		foreach (Card card in hiddens) {
 			card.IsFront = true;
+			card.SetActiveCardBackMask(false);
 		}
 	}
 
@@ -181,10 +182,6 @@ public class Hand : MonoBehaviour {
 			Vector3 movePos = origin + Vector3.right * i * 2;
 			if (hiddens.Contains(cardList[i])) {
 				movePos += Vector3.right * 0.5f;
-				
-				if (isPlayerHand) {
-					cardList[i].SetActiveCardBackMask(true);
-                }
 			}
             cardList[i].MoveTo(movePos);
         }
@@ -245,5 +242,17 @@ public class Hand : MonoBehaviour {
 	public int GetNumberOfCard() {
 		Debug.Log("Number of Card is " + cards.Count);
 		return cards.Count;
+	}
+
+	public void SetActiveCardBackMaskOnHidden() {
+		foreach (Card card in hiddens) {
+			card.SetActiveCardBackMask(true);
+		}
+	}
+
+	public void SetHiddensBack() {
+		foreach( Card card in hiddens) {
+			card.IsFront = false;
+		}
 	}
 }

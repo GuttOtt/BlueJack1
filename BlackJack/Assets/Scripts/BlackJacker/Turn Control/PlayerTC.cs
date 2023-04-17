@@ -66,6 +66,7 @@ public class PlayerTC : MonoBehaviour, ITurnControl {
 		}
 		else {
 			hand.PutHiddenOnBoard();
+			hand.SetActiveCardBackMaskOnHidden();
 		}
 
 		PublishEnd();
@@ -105,11 +106,13 @@ public class PlayerTC : MonoBehaviour, ITurnControl {
 	}
 
 	public IEnumerator BurstProcess() {
+		hand.PutHiddenOnBoard();
 		hand.ShowHiddens();
 		yield return StartCoroutine(hand.ActivateAllField(EffectSituation.OnBurst));
 	}
 
 	public IEnumerator FoldProcess() {
+		hand.PutHiddenOnBoard();
 		yield return StartCoroutine(hand.ActivateAllField(EffectSituation.OnFold));
 	}
 
