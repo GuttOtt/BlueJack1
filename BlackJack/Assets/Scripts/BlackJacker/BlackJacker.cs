@@ -53,6 +53,7 @@ public class BlackJacker : MonoBehaviour {
 	public void TakeDamage(int damage) {
 		int amount = armour.Loss(damage);
 		hp.TakeDamage(amount);
+		hpGraphic.DrawDamageGraphic(damage);
 	}
 
 	public void DealDamage( int damage) {
@@ -62,10 +63,12 @@ public class BlackJacker : MonoBehaviour {
 
 	public void Heal(int amount) {
 		hp.Heal(amount);
+		hpGraphic.DrawHealGraphic(amount);
 	}
 
 	public void GainArmour(int amount) {
 		armour.Gain(amount);
+		armourGraphic.DrawGainGraphic(amount);
 	}
 
 	public void ResetArmour() {
