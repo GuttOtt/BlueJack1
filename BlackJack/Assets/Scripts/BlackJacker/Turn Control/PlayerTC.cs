@@ -122,6 +122,7 @@ public class PlayerTC : MonoBehaviour, ITurnControl {
 
 	public IEnumerator LoseProcess() {
 		yield return StartCoroutine(hand.ActivateAllField(EffectSituation.OnLose));
+		yield return new WaitForSeconds(1f);
 		blackjacker.TakeDamage(SnapManager.pot);
 	}
 

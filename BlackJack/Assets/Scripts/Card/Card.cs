@@ -1,5 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
+using System.Runtime.CompilerServices;
 using UnityEngine;
 
 public class Card: MonoBehaviour {
@@ -47,6 +48,8 @@ public class Card: MonoBehaviour {
 		spriteRenderer = GetComponent<SpriteRenderer>();
 
 		cardBackSprite = Resources.Load<Sprite>("Sprites/CardBack");
+
+		gameObject.AddComponent<CardDescriptor>();
     }
 
 	private void Update() {
@@ -54,16 +57,6 @@ public class Card: MonoBehaviour {
 			transform.position = Vector3.MoveTowards(transform.position, movePosition, moveSpeed);
 			transform.localRotation = Quaternion.Euler(0, 0, 0);
 		}
-	}
-
-	private void OnMouseEnter() {
-		if (!isFront || DeckListUI.IsTurnedOn) return;
-		CardDescriptionManager.DrawDescription(GetData());
-	}
-
-	private void OnMouseExit() {
-		if (DeckListUI.IsTurnedOn) return;
-		CardDescriptionManager.ClosePanel();
 	}
 
 	public void Initialize(int number, Suit suit) {
