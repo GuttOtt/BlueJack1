@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Runtime.CompilerServices;
 using UnityEngine;
 using UnityEngine.UI;
+using UnityEngine.UIElements;
 
 public class TurnManager : Singleton<TurnManager> { 
 	public IPhase start, turn, interval, burst, fold, showdown, victory, stayed;
@@ -179,6 +180,7 @@ public class _IntervalPhase : MonoBehaviour, IPhase {
 		yield return new WaitForSeconds(1f);
 		turnManager.enemy.IntervalPhase();
 		yield return new WaitUntil(() => turnManager.BothDone);
+		yield return new WaitForSeconds(1f);
 
 		if (turnManager.player.IsBursted) {
 			turnManager.ToBurstPhase(turnManager.player);

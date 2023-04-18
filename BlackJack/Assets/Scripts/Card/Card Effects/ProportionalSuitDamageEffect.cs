@@ -10,7 +10,7 @@ public class ProportionalSuitDamageEffect : MonoBehaviour, ICardEffect {
         Hand hand = owner.GetComponent<Hand>();
 
         int numberOfSuit = hand.GetNumberOfSuitInField(card.GetSuit());
-        float damage = numberOfSuit * ratio;
+        float damage = (float) SnapManager.pot * numberOfSuit * ratio;
 
         owner.DealDamage( (int) damage);
     }

@@ -41,7 +41,7 @@ public class CardIcon : MonoBehaviour {
 				Component[] components = situationEffectArrayDict[key];
 				foreach (Component component in components) {
                     ActivateAnimation();
-                    yield return new WaitForSeconds(1f);
+                    yield return new WaitForSeconds(1.5f);
                     ICardEffect effect = component as ICardEffect;
 					effect.Activate();
 				}

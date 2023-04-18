@@ -7,6 +7,7 @@ public class BlackJacker : MonoBehaviour {
 	[SerializeField] private ArmourGraphic armourGraphic;
 	[SerializeField] private HP hp;
     [SerializeField] private Armour armour;
+	[SerializeField] private PortraitControl portraitControl;
     private Hand hand;
 	private Deck deck;
 	private int _damageDealtBeforeShowdown;
@@ -30,6 +31,7 @@ public class BlackJacker : MonoBehaviour {
 		deck = GetComponent<Deck>();
 		hpGraphic.SetHP(hp);
 		armourGraphic.SetArmour(armour);
+		portraitControl = GetComponent<PortraitControl>();
 
 		opponent = gameObject.CompareTag("Player")
 			? GameObject.FindWithTag("Opponent").GetComponent<BlackJacker>()
@@ -53,12 +55,13 @@ public class BlackJacker : MonoBehaviour {
 	public void TakeDamage(int damage) {
 		int amount = armour.Loss(damage);
 		hp.TakeDamage(amount);
-		hpGraphic.DrawDamageGraphic(damage);
+		hpGraphic.DrawDamageGraphic(amount);
+		portraitControl.AnimateDamageTaken();
 	}
 
 	public void DealDamage( int damage) {
 		opponent.TakeDamage(damage);
-        DamageDealtBeforeShowdown += damage;
+		DamageDealtBeforeShowdown += damage;
 	}
 
 	public void Heal(int amount) {

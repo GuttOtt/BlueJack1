@@ -7,6 +7,7 @@ using UnityEngine.UIElements;
 public class CardDescriptor : MonoBehaviour {
     private Card card;
     private bool IsFront { get => card ? card.IsFront : false; }
+    private bool isCursorOn = false;
 
     private void Awake() {
         card = GetComponent<Card>();
@@ -14,22 +15,21 @@ public class CardDescriptor : MonoBehaviour {
 
     private void OnMouseEnter() {
         if (!IsFront || DeckListUI.IsTurnedOn) return;
-        Debug.Log("OnMouseEnter" + Time.time);
+        isCursorOn = true;
         StartCoroutine(DrawDescription());
 
     }
 
     private void OnMouseExit() {
         if (DeckListUI.IsTurnedOn) return;
-        Debug.Log("OnMouseExit" + Time.time);
+        isCursorOn = false;
         StartCoroutine(CloseDescription());
     }
 
     private IEnumerator DrawDescription() {
         if (!CardDescriptionManager.Instance.isPanelOn) {
-            Debug.Log("Delay" + Time.time);
             yield return new WaitForSeconds(0.3f);
-            Debug.Log("Delay Over" + Time.time);
+            if (!isCursorOn) yield break;
         }
 
         CardDescriptionManager.DrawDescription(card.GetData(), card.transform.position);
