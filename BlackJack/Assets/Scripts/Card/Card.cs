@@ -44,7 +44,7 @@ public class Card: MonoBehaviour {
 
 	private void Awake() {
 		BoxCollider2D col = gameObject.AddComponent<BoxCollider2D>();
-		col.size = new Vector2(2f, 110/40f);
+		col.size = new Vector2(160f, 220f);
 		spriteRenderer = GetComponent<SpriteRenderer>();
 
 		cardBackSprite = Resources.Load<Sprite>("Sprites/CardBack");

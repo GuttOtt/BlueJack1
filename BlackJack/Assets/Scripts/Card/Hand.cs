@@ -33,6 +33,9 @@ public class Hand : MonoBehaviour {
 
 	private void Awake() {
 		discards = GetComponent<Discards>();
+
+		Sprite blankCard = Resources.Load<Sprite>("Sprites/BlankCard");
+
 		TurnEventBus.Subscribe(TurnEventType.NEW_ROUND, UnforceBlackjack);
 	}
 
@@ -41,16 +44,19 @@ public class Hand : MonoBehaviour {
 		int r = field.Count % 2;
 
 		Vector3 origin;
+		Vector2 cardSize = BlackJackSceneManager.cardSize;
 
 		if (r == 0) {
-			origin = handParent.transform.position + Vector3.left * (q - 0.5f) * 2;
+			origin = handParent.transform.position 
+				+ Vector3.left * (q - 0.5f) * cardSize.x;
 		}
 		else {
-			origin = handParent.transform.position + Vector3.left * q * 2;
+			origin = handParent.transform.position 
+				+ Vector3.left * q * cardSize.x;
 		}
 
         for (int i = 0; i < field.Count; i++) {
-            field[i].MoveTo(origin + Vector3.right * i * 2);
+            field[i].MoveTo(origin + Vector3.right * i * cardSize.x);
         }
     }
 
@@ -58,16 +64,21 @@ public class Hand : MonoBehaviour {
 		field.Add(card);
 		card.transform.SetParent(handParent.transform);
 		card.IsFront = true;
-        StartCoroutine(card.ActivateIcon(EffectSituation.OnOpen));
-		StartCoroutine(ActivateAllField(EffectSituation.OnEveryHit));
         ArrangeField();
+
+		StartCoroutine(AddCardCR(card));
 	}
+
+	public IEnumerator AddCardCR(Card card) {
+        yield return StartCoroutine(card.ActivateIcon(EffectSituation.OnOpen));
+        yield return StartCoroutine(ActivateAllField(EffectSituation.OnEveryHit));
+    }
 
 	public void AddHidden(Card card) {
 		hiddens.Add(card);
 		card.transform.SetParent(hiddenParent.transform);
-		card.MoveTo(hiddenParent.transform.position + Vector3.right 
-					* (hiddens.Count - 1.5f) * 2);
+		card.MoveTo(hiddenParent.transform.position 
+			+ Vector3.right * (hiddens.Count - 1.5f) * BlackJackSceneManager.cardSize.x);
 
 		if (isPlayerHand) {
 			card.IsFront = true;
@@ -170,18 +181,21 @@ public class Hand : MonoBehaviour {
         int r = cardList.Count % 2;
 
         Vector3 origin;
+		Vector2 cardSize = BlackJackSceneManager.cardSize;
 
         if (r == 0) {
-            origin = handParent.transform.position + Vector3.left * (q - 0.5f) * 2;
+            origin = handParent.transform.position 
+				+ Vector3.left * (q - 0.5f) * cardSize.x;
         }
         else {
-            origin = handParent.transform.position + Vector3.left * q * 2;
+            origin = handParent.transform.position 
+				+ Vector3.left * q * cardSize.x;
         }
 
         for (int i = 0; i < cardList.Count; i++) {
-			Vector3 movePos = origin + Vector3.right * i * 2;
+			Vector3 movePos = origin + Vector3.right * i * cardSize.x;
 			if (hiddens.Contains(cardList[i])) {
-				movePos += Vector3.right * 0.5f;
+				movePos += Vector3.right * 0.5f * cardSize.x;
 			}
             cardList[i].MoveTo(movePos);
         }

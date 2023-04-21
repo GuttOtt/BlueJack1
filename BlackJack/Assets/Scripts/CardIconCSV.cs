@@ -4,9 +4,14 @@ using System.Collections.Generic;
 using UnityEngine;
 
 public class CardIconCSV : Singleton<CardIconCSV> {
-	public static List<Dictionary<string, object>> data = CSVReader.Read("CardIconCSV");
+	public static List<Dictionary<string, object>> data;
 
-	public static string GetNameByID(int id) {
+    protected override void Awake() {
+        base.Awake();
+		data = CSVReader.Read("CardIconCSV");
+    }
+
+    public static string GetNameByID(int id) {
 		for (int i = 0; i < data.Count; i++) {
 			if (Convert.ToInt32(data[i]["ID"]) == id) {
 				return data[i]["Name"].ToString();

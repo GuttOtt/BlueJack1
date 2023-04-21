@@ -18,8 +18,8 @@ public class PlayerSC : MonoBehaviour, ISnapControl {
 		}
 		if (!SnapManager.isPlayerSnaped) {
 			Hand hand = GetComponent<Hand>();
-			yield return StartCoroutine(hand.ActivateAllField(EffectSituation.OnRaise));
             TurnEventBus.Publish(TurnEventType.PLAYER_SNAP);
+            yield return StartCoroutine(hand.ActivateAllField(EffectSituation.OnRaise));
         }
 	}
 

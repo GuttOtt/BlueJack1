@@ -4,8 +4,7 @@ using System.Collections;
 using System.Collections.Generic;
 using System.Text.RegularExpressions;
  
-public class CSVReader
-{
+public class CSVReader: Singleton<CSVReader> {
     static string SPLIT_RE = @",(?=(?:[^""]*""[^""]*"")*(?![^""]*""))";
     static string LINE_SPLIT_RE = @"\r\n|\n\r|\n|\r";
     static char[] TRIM_CHARS = { '\"' };

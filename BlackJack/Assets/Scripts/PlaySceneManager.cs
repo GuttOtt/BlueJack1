@@ -7,7 +7,8 @@ public class PlaySceneManager : MonoBehaviour {
 	[SerializeField] private TurnSystem turnSystem;
 	public static MoneySettings moneySettings;
 
-	private void Start() {
+
+    private void Start() {
 		MGContainer.Initialize();
 
 		SandboxManager.Instance.DeckSetting(player.GetComponent<Deck>(), true);

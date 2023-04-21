@@ -6,10 +6,10 @@ using UnityEngine.UI;
 public class DeckEditor : MonoBehaviour {
 	[SerializeField] private List<EditingCard> deck;
 	[SerializeField] private Button addButton, deleteButton, editButton, completeButton, r1To7Button, r1To77Button, randomIconButton;
-	[SerializeField] private float cardWidth, cardHeight;
 	[SerializeField] private Vector2 cardOrigin;
 	private CardEditor cardEditor;
 	private EditingCard selectedCard;
+	private Vector2 cardSize;
 
 	private void Awake() {
 		cardEditor = GetComponent<CardEditor>(); 
@@ -24,7 +24,10 @@ public class DeckEditor : MonoBehaviour {
 
 	private void Update() {
 		SelectCard();
-	}
+
+        Sprite cardSprite = Resources.Load<Sprite>("Sprites/BlankCard");
+        cardSize = cardSprite.bounds.size;
+    }
 
 	public void AddNewCard() {
 		GameObject obj = new GameObject("Editing Card");
@@ -51,7 +54,8 @@ public class DeckEditor : MonoBehaviour {
 			column =8 < column ? 8 : column;
 			for (int j = 0; j < column; j++) {
 				EditingCard card = deck[i*8 + j];
-				card.transform.position = cardOrigin + new Vector2(j * cardWidth, -i * cardHeight);
+				card.transform.position = cardOrigin 
+					+ new Vector2(j * cardSize.x, -i * cardSize.y);
 			}
 		}
 	}
