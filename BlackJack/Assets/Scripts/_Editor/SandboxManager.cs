@@ -24,7 +24,7 @@ public class SandboxManager : Singleton<SandboxManager> {
 		}
 		else {
 			opponentDeck = deckData.ToList();
-			StartMoneyEditing();
+			ToPlayScene();
 		}
 	}
 

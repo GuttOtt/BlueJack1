@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 
-public class DeckBuildingManager : MonoBehaviour {
+public class AcquireCardManager : MonoBehaviour {
 	[SerializeField] CardChoices cardChoicesPrefab;
 	[SerializeField] CardChoiceUI cardChoiceUI;
 	[SerializeField] private List<CardChoices> choicesList = new List<CardChoices>();
@@ -13,9 +13,6 @@ public class DeckBuildingManager : MonoBehaviour {
 		cardChoiceUI = transform.Find("Card Choice UI").GetComponent<CardChoiceUI>();
 		cardChoiceUI.ClosePanel();
 		panel = transform.Find("Panel").gameObject;
-
-		//Debug
-		StartDeckBuilding(3);
 	}
 
 	public void StartDeckBuilding(int number) {
@@ -55,6 +52,8 @@ public class DeckBuildingManager : MonoBehaviour {
 		for (int i = choicesList.Count - 1; i >= 0; i--) {
 			DeleteCardChoices(choicesList[i]);
 		}
+
+		DeckBuildingSceneManager.Instance.StartDeckManipulation();
 
 		gameObject.SetActive(false);
 	}

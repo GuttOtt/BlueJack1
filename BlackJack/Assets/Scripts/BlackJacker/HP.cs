@@ -18,6 +18,10 @@ public class HP {
         return amount;
     }
 
+    public override string ToString() {
+        return amount.ToString();
+    }
+
     public void TakeDamage(int damage) {
         amount -= damage;
     }
