@@ -17,8 +17,8 @@ public class BlackJackSceneManager : Singleton<BlackJackSceneManager> {
     }
 
     private void Start() {
-		SandboxManager.Instance.DeckSetting(player.GetComponent<Deck>(), true);
-		SandboxManager.Instance.DeckSetting(opponent.GetComponent<Deck>(), false);
+		DeckSetting(player.GetComponent<Deck>(), true);
+		DeckSetting(opponent.GetComponent<Deck>(), false);
 
 		player.Heal(startHP);
 		opponent.Heal(startHP);
@@ -27,4 +27,15 @@ public class BlackJackSceneManager : Singleton<BlackJackSceneManager> {
 
 		turnManager.ToStartPhase();
 	}
+
+    public void DeckSetting(Deck deck, bool isPlayers) {
+        List<CardData> deckData = 
+			isPlayers ? GameManager.playerDeck : GameManager.currentEnemyData.deckData;
+        foreach (CardData data in deckData) {
+            Card card = data.InstantiateAsCard();
+            card.owner = deck.GetComponent<BlackJacker>();
+            deck.AddCard(card);
+        }
+        deck.Shuffle();
+    }
 }

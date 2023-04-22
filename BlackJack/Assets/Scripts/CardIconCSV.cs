@@ -6,12 +6,13 @@ using UnityEngine;
 public class CardIconCSV : Singleton<CardIconCSV> {
 	public static List<Dictionary<string, object>> data;
 
-    protected override void Awake() {
-        base.Awake();
+    protected void Start() {
 		data = CSVReader.Read("CardIconCSV");
+		Debug.Log("Data is " + data);
     }
 
     public static string GetNameByID(int id) {
+		Debug.Log(data);
 		for (int i = 0; i < data.Count; i++) {
 			if (Convert.ToInt32(data[i]["ID"]) == id) {
 				return data[i]["Name"].ToString();

@@ -5,6 +5,7 @@ using UnityEngine;
 using UnityEngine.UI;
 
 public class DeckListDisplay : MonoBehaviour {
+    [SerializeField] private Vector2 boundGap;
     [SerializeField] private Vector2 gap;
     [SerializeField] private CopyCardImage cardImagePrefab;
     [SerializeField] private Button closeButton;
@@ -35,8 +36,8 @@ public class DeckListDisplay : MonoBehaviour {
             int x = i % numberOfColumn;
             int y = i / numberOfColumn;
 
-            cards[i].transform.localPosition =
-                new Vector2((cardWidth + gap.x) * x, -(cardHeight + gap.y) * y);
+            cards[i].transform.localPosition = 
+                boundGap + new Vector2((cardWidth + gap.x) * x, -(cardHeight + gap.y) * y);
         }
     }
 

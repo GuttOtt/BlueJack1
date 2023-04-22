@@ -9,26 +9,38 @@ public class EnemyDataDisplayManager : MonoBehaviour {
     [SerializeField] Text nameText;
     [SerializeField] Image portraitImage;
     [SerializeField] Text hpText;
+    [SerializeField] Button selectButton, closeButton;
     private GameObject panel;
+    private ChooseEnemySceneManager sceneManager;
+    private EnemyData enemyData;
 
     private void Awake() {
         panel = transform.Find("Panel").gameObject;
         panel.SetActive(false);
+        selectButton.onClick.AddListener(SelectEnemy);
+        closeButton.onClick.AddListener(ClosePanel);
+        
+        sceneManager = FindObjectOfType<ChooseEnemySceneManager>();
     }
 
-    public void DrawEnemyData(string enemyName, Sprite portrait
-        , HP hp, List<CardData> deckData) {
+    public void DrawEnemyData(EnemyData enemyData) {
         panel.SetActive(true);
         deckListDisplay.gameObject.SetActive(true);
 
-        nameText.text = enemyName;
-        portraitImage.sprite = portrait;
-        hpText.text = hp.ToString();
-        deckListDisplay.DrawDeckList(deckData);
+        nameText.text = enemyData.enemyName;
+        portraitImage.sprite = enemyData.portrait;
+        hpText.text = enemyData.hp.ToString();
+        deckListDisplay.DrawDeckList(enemyData.deckData);
+
+        this.enemyData = enemyData;
     }
 
     public void ClosePanel() {
-        panel.SetActive(true);
+        panel.SetActive(false);
         deckListDisplay.ClosePanel();
+    }
+
+    public void SelectEnemy() {
+        sceneManager.EndEnemyChoiceScene(enemyData);
     }
 }

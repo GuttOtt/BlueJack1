@@ -5,19 +5,22 @@ using UnityEngine.UI;
 
 public class DeckBuildingSceneManager : Singleton<DeckBuildingSceneManager> {
     [SerializeField] AcquireCardManager acquireCardManager;
-    [SerializeField] GameObject deckManipulationObejct;
+    [SerializeField] GameObject deckManipulationParent;
     [SerializeField] Button[] deckManipulationButtons = new Button[3];
+    [SerializeField] Button toNextSceneButton;
 
     private void Start() {
-        deckManipulationObejct.SetActive(false);
+        deckManipulationParent.SetActive(false);
         acquireCardManager.StartDeckBuilding(3);
+
+        toNextSceneButton.onClick.AddListener(EndDeckBuildingScene);
     }
 
     public void StartDeckManipulation() {
-        deckManipulationObejct.SetActive(true);
+        deckManipulationParent.SetActive(true);
     }
 
     public void EndDeckBuildingScene() {
-
+        GameManager.ToChooseEnemyScene();
     }
 }
