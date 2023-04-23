@@ -1261,6 +1261,7 @@ MonoBehaviour:
   cardImagePrefab: {fileID: 1391820346212207681, guid: 354af481a0841a845a40c65b287b709a, type: 3}
   closeButton: {fileID: 0}
   numberOfColumn: 6
+  panel: {fileID: 1175629937}
 --- !u!114 &1423035927
 MonoBehaviour:
   m_ObjectHideFlags: 0

@@ -14,14 +14,13 @@ public class CardDescriptor : MonoBehaviour {
     }
 
     private void OnMouseEnter() {
-        if (!IsFront || DeckListUI.IsTurnedOn) return;
+        if (!IsFront) return;
         isCursorOn = true;
         StartCoroutine(DrawDescription());
 
     }
 
     private void OnMouseExit() {
-        if (DeckListUI.IsTurnedOn) return;
         isCursorOn = false;
         StartCoroutine(CloseDescription());
     }

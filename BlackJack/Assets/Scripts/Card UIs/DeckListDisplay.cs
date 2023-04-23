@@ -7,13 +7,14 @@ using UnityEngine.UI;
 public class DeckListDisplay : MonoBehaviour {
     [SerializeField] private Vector2 boundGap;
     [SerializeField] private Vector2 gap;
+    [SerializeField] private Vector2 cardSize = new Vector2(160, 220);
     [SerializeField] private CopyCardImage cardImagePrefab;
     [SerializeField] private Button closeButton;
     [SerializeField] private int numberOfColumn = 7;
-    private GameObject panel;
+    [SerializeField] private GameObject panel;
     private List<CopyCardImage> cards = new List<CopyCardImage>();
 
-    private void Start() {
+    private void Awake() {
         panel = transform.Find("Panel").gameObject;
         if (closeButton) closeButton.onClick.AddListener(ClosePanel);
         ClosePanel();
@@ -69,6 +70,8 @@ public class DeckListDisplay : MonoBehaviour {
         foreach (CardData data in deckData) {
             CopyCardImage card = Instantiate(cardImagePrefab, panel.transform);
             card.Draw(data);
+            card.GetComponent<RectTransform>().sizeDelta = cardSize;
+
             cards.Add(card);
         }
 

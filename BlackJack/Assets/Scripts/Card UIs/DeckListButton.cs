@@ -8,6 +8,6 @@ public class DeckListButton : MonoBehaviour {
 
 	private void Awake() {
 		button = GetComponent<Button>();
-		button.onClick.AddListener(() => DeckListUI.DrawDeckList(GameManager.playerDeck));
+		button.onClick.AddListener(() => DeckListDisplayManager.DrawPlayerAllDeckList());
 	}
 }

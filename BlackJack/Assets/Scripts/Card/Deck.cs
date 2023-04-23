@@ -52,7 +52,7 @@ public class Deck : MonoBehaviour {
 		foreach(Card card in cards) {
 			data.Add(card.GetData());
 		}
-		DeckListUI.DrawDeckList(data);
+		DeckListDisplayManager.DrawDeckInBlackjackScene(data);
 	}
 }
 
