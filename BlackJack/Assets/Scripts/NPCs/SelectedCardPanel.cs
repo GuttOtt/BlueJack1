@@ -6,6 +6,7 @@ using UnityEngine.UI;
 public class SelectedCardPanel : MonoBehaviour {
 	[SerializeField] private Text nameText, descText;
 	[SerializeField] private CardImage image;
+	[SerializeField] private Vector2 cardSize;
 	private CardData data;
 	private GameObject panel;
 	public CardData Data { get => data; }
@@ -29,6 +30,7 @@ public class SelectedCardPanel : MonoBehaviour {
 
 	public void SetCardData(CardData data) {
 		this.data = data;
+		image.ImageSize = cardSize;
 		image.Draw(data);
 
 		nameText.text = image.Name;

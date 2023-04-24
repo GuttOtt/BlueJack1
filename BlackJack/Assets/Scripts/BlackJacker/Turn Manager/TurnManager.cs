@@ -8,6 +8,7 @@ using UnityEngine.UIElements;
 public class TurnManager : Singleton<TurnManager> { 
 	public IPhase start, turn, interval, burst, fold, showdown, victory, stayed;
 	private PhaseContext context;
+	private BlackJackSceneManager blackjackSceneManager;
 	public IPhase currentPhase { get => context.CurrentPhase; }
 	public PlayerTC player;
 	public PlayerTC enemy;
@@ -30,6 +31,8 @@ public class TurnManager : Singleton<TurnManager> {
 		showdown = gameObject.AddComponent<_ShowDownPhase>();
 		victory = gameObject.AddComponent<_VictoryPhase>();
 		stayed = gameObject.AddComponent<_StayedPhase>();
+
+		blackjackSceneManager = FindObjectOfType<BlackJackSceneManager>();
 	}
 
 	private void OnEnable() {
@@ -37,6 +40,8 @@ public class TurnManager : Singleton<TurnManager> {
 		TurnEventBus.Subscribe(TurnEventType.ENEMY_END, EnemyEnd);
 		TurnEventBus.Subscribe(TurnEventType.PLAYER_FOLD, () => ToFoldPhase(player));
         TurnEventBus.Subscribe(TurnEventType.ENEMY_FOLD, () => ToFoldPhase(enemy));
+		TurnEventBus.Subscribe(TurnEventType.PLAYER_LOSE, () => PlayerLose());
+		TurnEventBus.Subscribe(TurnEventType.ENEMY_LOSE, () => EnemyLose());
     }
 
 	private void OnDisable() {
@@ -93,6 +98,16 @@ public class TurnManager : Singleton<TurnManager> {
 		PlayerDone = false;
 		EnemyDone = false;
 	}
+
+	public IEnumerator PlayerLose() {
+		context.StopCurrentCoroutine();
+		yield return new WaitForSeconds(3f);
+		blackjackSceneManager.EndBlackjackSceneByLose();
+	}
+
+	public void EnemyLose() {
+		blackjackSceneManager.EndBlackjackSceneByWin();
+	}
 }
 
 public class PhaseContext : MonoBehaviour {
@@ -119,6 +134,10 @@ public class PhaseContext : MonoBehaviour {
 
 		CurrentPhase = phase;
 		coroutine = StartCoroutine(CurrentPhase.Phase());
+	}
+	
+	public void StopCurrentCoroutine() {
+		if (coroutine != null) StopCoroutine(coroutine);
 	}
 }
 

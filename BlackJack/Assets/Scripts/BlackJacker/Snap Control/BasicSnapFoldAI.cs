@@ -18,16 +18,16 @@ public class BasicSnapFoldAI : MonoBehaviour, ISnapFoldAI {
         }
         else if (total <= 16) {
             if (!SnapManager.isPlayerSnaped) {
-                if (r < 50) return SnapDecision.Snap;
-                else if (r < 15) return SnapDecision.Fold;
+                if (r < 15) return SnapDecision.Fold;
+                else if (r < 50) return SnapDecision.Snap;
             }
             else {
-                if (r < 25) return SnapDecision.Snap;
+                if (r < 50) return SnapDecision.Snap;
             }
         }
         else if (total <= 17) {
             if (!SnapManager.isPlayerSnaped) {
-                if (r < 100) return SnapDecision.Snap;
+                if (r < 80) return SnapDecision.Snap;
             }
             else {
                 if (r < 20) return SnapDecision.Snap;
@@ -38,11 +38,17 @@ public class BasicSnapFoldAI : MonoBehaviour, ISnapFoldAI {
                 if (r < 5) return SnapDecision.Snap;
                 else if (r < 55) return SnapDecision.Fold;
             }
+            else {
+                if (r < 90) return SnapDecision.Fold;
+            }
         }
         else if (total <= 19) {
             if (!SnapManager.isPlayerSnaped) {
                 if (r < 5) return SnapDecision.Snap;
                 else if (r < 55) return SnapDecision.Fold;
+            }
+            else {
+                if (r < 90) return SnapDecision.Fold;
             }
         }
         else if (total <= 21) {

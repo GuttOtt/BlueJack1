@@ -74,6 +74,6 @@ public class CardImage : MonoBehaviour, IPointerClickHandler {
     }
 
     public void OnPointerClick(PointerEventData eventData) {
-        onClick.Invoke();
+        if (onClick != null) onClick.Invoke();
     }
 }

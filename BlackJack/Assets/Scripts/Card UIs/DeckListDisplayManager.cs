@@ -20,12 +20,14 @@ public class DeckListDisplayManager : Singleton<DeckListDisplayManager> {
             playerAllDeckDisplay =
                 Instantiate(Resources.Load<DeckListDisplay>("UIs/Player All Deck Display"));
             playerAllDeckDisplay.ClosePanel();
+            DontDestroyOnLoad(playerAllDeckDisplay.gameObject);
         }
 
         if (!blackjackSceneDeckDisplay) {
             blackjackSceneDeckDisplay =
                 Instantiate(Resources.Load<DeckListDisplay>("UIs/Blackjack Scene Deck Display"));
             blackjackSceneDeckDisplay.ClosePanel();
+            DontDestroyOnLoad(blackjackSceneDeckDisplay.gameObject);
         }
     }
 

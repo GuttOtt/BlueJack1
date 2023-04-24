@@ -10,11 +10,12 @@ public class SandboxManager : Singleton<SandboxManager> {
 	private List<CardData> playerDeck;
 	private List<CardData> opponentDeck;
 	private List<CardData> presentEditing;
-	private MoneySettings moneySettings;
+	private Sprite sandboxEnemyPortrait;
 
 	private void Start() {
 		startButton.onClick.AddListener(delegate { StartEditing(playerDeck); });
 		presentEditing = playerDeck;
+		sandboxEnemyPortrait = Resources.Load<Sprite>("Sprites/BasicPortrait");
 	}
 
 	public void EndDeckEditing(List<CardData> deckData) {
@@ -37,13 +38,16 @@ public class SandboxManager : Singleton<SandboxManager> {
 		SceneManager.LoadScene("Money Editing Scene");
 	}
 
-	public void EndMoneyEditing(MoneySettings moneySettings) {
-		this.moneySettings = moneySettings;
-		ToPlayScene();
-	}
-
 	private void ToPlayScene() {
-		SceneManager.LoadScene("BlackJack Scene");
+		EnemyData enemyData = EnemyData.CreateInstance<EnemyData>();
+		enemyData.enemyName = "Sandbox Enemy";
+		enemyData.hp = new HP(200);
+		enemyData.portrait = sandboxEnemyPortrait;
+		enemyData.deckData = opponentDeck;
+
+		GameManager.playerDeck = playerDeck;
+
+		GameManager.ToBlackjackScene(enemyData);
 	}
 
 	public void DeckSetting(Deck deck, bool isPlayers) {
@@ -54,9 +58,5 @@ public class SandboxManager : Singleton<SandboxManager> {
 			deck.AddCard(card);
 		}
 		deck.Shuffle();
-	}
-
-	public MoneySettings GetMoneySettings() {
-		return moneySettings;
 	}
 }

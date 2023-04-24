@@ -21,6 +21,7 @@ public class Hand : MonoBehaviour {
 	private List<Card> hiddens = new List<Card>();
 	private List<Card> field = new List<Card>();
 	private bool isForcedToBlackjack = false;
+	private Vector2 cardSize;
 	public bool IsHiddenShown {
 		get {
 			bool isAllFront = true;
@@ -37,14 +38,16 @@ public class Hand : MonoBehaviour {
 		Sprite blankCard = Resources.Load<Sprite>("Sprites/BlankCard");
 
 		TurnEventBus.Subscribe(TurnEventType.NEW_ROUND, UnforceBlackjack);
-	}
+
+        Sprite cardSprite = Resources.Load<Sprite>("Sprites/BlankCard");
+        cardSize = cardSprite.bounds.size;
+    }
 
 	private void ArrangeField() {
 		int q = field.Count / 2;
 		int r = field.Count % 2;
 
 		Vector3 origin;
-		Vector2 cardSize = BlackJackSceneManager.cardSize;
 
 		if (r == 0) {
 			origin = handParent.transform.position 
@@ -78,7 +81,7 @@ public class Hand : MonoBehaviour {
 		hiddens.Add(card);
 		card.transform.SetParent(hiddenParent.transform);
 		card.MoveTo(hiddenParent.transform.position 
-			+ Vector3.right * (hiddens.Count - 1.5f) * BlackJackSceneManager.cardSize.x);
+			+ Vector3.right * (hiddens.Count - 1.5f) * cardSize.x);
 
 		if (isPlayerHand) {
 			card.IsFront = true;
@@ -181,7 +184,6 @@ public class Hand : MonoBehaviour {
         int r = cardList.Count % 2;
 
         Vector3 origin;
-		Vector2 cardSize = BlackJackSceneManager.cardSize;
 
         if (r == 0) {
             origin = handParent.transform.position 

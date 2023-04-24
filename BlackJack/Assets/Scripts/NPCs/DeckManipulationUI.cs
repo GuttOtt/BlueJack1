@@ -5,13 +5,12 @@ using UnityEngine;
 using UnityEngine.UI;
 
 public class DeckManipulationUI : MonoBehaviour {
-	[SerializeField] private CardImage cardPrefab;
+	[SerializeField] private DeckListDisplay deckListDisplay;
 	[SerializeField] private Vector2 gap;
 	[SerializeField] private SelectedCardPanel selectedCardPanel;
 	private List<CardImage> cards = new List<CardImage>();
 	private ICardManipulation delete, changeNumber, changeSuit, none;
 	private ICardManipulation currentManipulation;
-	private GameObject deckListPanel;
 	private CardImage selectedCard;
 
 	private void Awake() {
@@ -19,12 +18,10 @@ public class DeckManipulationUI : MonoBehaviour {
 		changeNumber = GetComponent<NumberManipulation>();
 		changeSuit = GetComponent<SuitManipulation>();
 		none = gameObject.AddComponent<NoneManipulation>();
-
-		deckListPanel = transform.Find("Panel").gameObject;
 	}
 
 	private void Start() {
-		deckListPanel.SetActive(false);
+		deckListDisplay.gameObject.SetActive(false);
 		selectedCardPanel.ClosePanel();
 
 	}
@@ -45,58 +42,37 @@ public class DeckManipulationUI : MonoBehaviour {
 
 	public void StartChangeNumber() {
 		currentManipulation = changeNumber;
-		deckListPanel.SetActive(true);
+		deckListDisplay.gameObject.SetActive(true);
 		UpdateDeckList();
 	}
 
 	public void StartChangeSuit() {
 		currentManipulation = changeSuit;
-		deckListPanel.SetActive(true);
+		deckListDisplay.gameObject.SetActive(true);
 		UpdateDeckList();
 	}
 
 	public void StartDelete() {
 		currentManipulation = delete;
-		deckListPanel.SetActive(true);
+		deckListDisplay.gameObject.SetActive(true);
 		UpdateDeckList();
 	}
 
 	public void EndManipulation() {
 		currentManipulation = none;
 		selectedCardPanel.ClosePanel();
-		deckListPanel.SetActive(false);
+		deckListDisplay.gameObject.SetActive(false);
 		//NextButton?
 	}
 
 	public void UpdateDeckList() {
-		ClearDeckList();
+		deckListDisplay.ClosePanel();
+		deckListDisplay.DrawDeckList(GameManager.playerDeck);
+		List<CardImage> cards = deckListDisplay.GetCards;
 
-		List<CardData> deck = GameManager.playerDeck;
-
-		foreach (CardData data in deck) {
-			CardImage newCard = Instantiate(cardPrefab, deckListPanel.transform);
-			newCard.Draw(data);
-			newCard.onClick = null;
-			newCard.onClick += () => Select(newCard);
-			cards.Add(newCard);
-		}
-
-		Arrange();
-	}
-
-	public void Arrange() {
-		cards = ExtensionsClass.SortAscending(cards);
-
-		Rect rect = cardPrefab.GetComponent<RectTransform>().rect;
-		float cardWidth = rect.width;
-		float cardHeight = rect.height;
-
-		for (int i = 0; i < cards.Count; i++) {
-			int x = i % 7;
-			int y = i / 7;
-
-			cards[i].GetComponent<RectTransform>().localPosition = new Vector2((cardWidth + gap.x) * x, -(cardHeight + gap.y) * y)
-																	+ new Vector2(cardWidth / 2f, -cardHeight / 2f) + gap;
+		foreach (CardImage card in cards) {
+			card.onClick = null;
+			card.onClick += () => Select(card);
 		}
 	}
 }

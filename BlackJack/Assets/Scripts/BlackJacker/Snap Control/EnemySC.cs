@@ -61,6 +61,7 @@ public class EnemySC : MonoBehaviour, ISnapControl {
             Debug.Log("EnemySnaped " + Time.time);
         }
 		else if (decision == SnapDecision.Fold) {
+			Debug.Log("EnemyFold");
             Hand hand = GetComponent<Hand>();
             yield return StartCoroutine(hand.ActivateAllField(EffectSituation.OnFold));
             TurnEventBus.Publish(TurnEventType.ENEMY_FOLD);

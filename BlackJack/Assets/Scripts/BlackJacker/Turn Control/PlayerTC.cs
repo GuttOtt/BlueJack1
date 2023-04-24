@@ -17,6 +17,7 @@ public class PlayerTC : MonoBehaviour, ITurnControl {
 	public bool IsStayed { get => isStayed; }
 	public bool IsBursted { get => hand.IsBursted(); }
 	public int GetHandTotal { get => hand.GetTotal(); }
+	public bool IsDead { get => blackjacker.IsDead; }
 	
 	private void Awake() {
 		blackjacker = GetComponent<BlackJacker>();
@@ -34,7 +35,18 @@ public class PlayerTC : MonoBehaviour, ITurnControl {
 		}
 	}
 
-	private IEnumerator StartPhaseCR() {
+    private void Update() {
+        if (IsDead) {
+			if (gameObject.CompareTag("Player")) {
+				TurnEventBus.Publish(TurnEventType.PLAYER_LOSE);
+			}
+			else {
+				TurnEventBus.Publish(TurnEventType.ENEMY_LOSE);
+			}
+		}
+    }
+
+    private IEnumerator StartPhaseCR() {
 		yield return StartCoroutine(blackjacker.StartSetting());
 		isStayed = false;
 

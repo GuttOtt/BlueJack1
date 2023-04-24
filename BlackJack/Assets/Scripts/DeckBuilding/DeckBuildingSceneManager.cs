@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 
-public class DeckBuildingSceneManager : Singleton<DeckBuildingSceneManager> {
+public class DeckBuildingSceneManager : MonoBehaviour {
     [SerializeField] AcquireCardManager acquireCardManager;
     [SerializeField] GameObject deckManipulationParent;
     [SerializeField] Button[] deckManipulationButtons = new Button[3];

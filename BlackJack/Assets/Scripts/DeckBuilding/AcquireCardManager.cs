@@ -8,11 +8,13 @@ public class AcquireCardManager : MonoBehaviour {
 	[SerializeField] CardChoiceUI cardChoiceUI;
 	[SerializeField] private List<CardChoices> choicesList = new List<CardChoices>();
 	private GameObject panel;
+	private DeckBuildingSceneManager deckBuildingSceneManager;
 	
 	private void Awake() {
 		cardChoiceUI = transform.Find("Card Choice UI").GetComponent<CardChoiceUI>();
 		cardChoiceUI.ClosePanel();
 		panel = transform.Find("Panel").gameObject;
+		deckBuildingSceneManager = FindObjectOfType<DeckBuildingSceneManager>();
 	}
 
 	public void StartDeckBuilding(int number) {
@@ -53,7 +55,7 @@ public class AcquireCardManager : MonoBehaviour {
 			DeleteCardChoices(choicesList[i]);
 		}
 
-		DeckBuildingSceneManager.Instance.StartDeckManipulation();
+		deckBuildingSceneManager.StartDeckManipulation();
 
 		gameObject.SetActive(false);
 	}

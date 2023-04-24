@@ -13,15 +13,10 @@ public class EnemyChoice : MonoBehaviour, IPointerClickHandler {
     private EnemyDataDisplayManager enemyDisplay;
     private ChooseEnemySceneManager sceneManager;
 
-    [SerializeField] EnemyArchetype testEnemyData;
-
     private void Awake() {
         noneIcon = Resources.Load<CardIcon>("CardIcons/None Icon");
         enemyDisplay = FindObjectOfType<EnemyDataDisplayManager>();
         enemyData = EnemyData.CreateInstance<EnemyData>();
-
-        //For debug
-        Initialize(testEnemyData, 1);
     }
 
     private List<CardData> SetDeck(CardIcon[] cardIcons) {

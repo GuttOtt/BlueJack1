@@ -10,7 +10,7 @@ public class ChooseEnemySceneManager : MonoBehaviour {
     [SerializeField] EnemyChoice[] enemyChoices = new EnemyChoice[3];
     private EnemyArchetype[] normalEnemyTypes;
     private EnemyArchetype randomNormalEnemy {
-        get => normalEnemyTypes[Random.Range(0, normalEnemyTypes.Length - 1)];
+        get => normalEnemyTypes[Random.Range(0, normalEnemyTypes.Length)];
     }
 
     private void Awake() {

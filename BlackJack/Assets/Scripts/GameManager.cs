@@ -7,7 +7,7 @@ using UnityEngine.UI;
 public class GameManager : Singleton<GameManager> {
 	[SerializeField] public static List<CardData> playerDeck = new List<CardData>();
 	[SerializeField] private Button normalModeButton;
-	public static int currentFloor = 1;
+	public static int currentFloor = 0;
 	public static EnemyData currentEnemyData;
 
 
@@ -37,6 +37,7 @@ public class GameManager : Singleton<GameManager> {
 	}
 
 	public static void ToChooseEnemyScene() {
+		currentFloor++;
         SceneManager.LoadScene("Choose Enemy Scene");
     }
 

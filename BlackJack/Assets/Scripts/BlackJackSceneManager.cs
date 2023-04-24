@@ -2,18 +2,16 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class BlackJackSceneManager : Singleton<BlackJackSceneManager> {
+public class BlackJackSceneManager : MonoBehaviour {
 	[SerializeField] private BlackJacker player, opponent;
 	[SerializeField] private TurnManager turnManager;
 	[SerializeField] private int startHP;
 	[SerializeField] private int ante;
 	public static Vector2 cardSize;
 
-    protected override void Awake() {
-		base.Awake();
+    private void Awake() {
 
-		Sprite cardSprite = Resources.Load<Sprite>("Sprites/BlankCard");
-		cardSize = cardSprite.bounds.size;
+		
     }
 
     private void Start() {
@@ -21,7 +19,7 @@ public class BlackJackSceneManager : Singleton<BlackJackSceneManager> {
 		DeckSetting(opponent.GetComponent<Deck>(), false);
 
 		player.Heal(startHP);
-		opponent.Heal(startHP);
+		opponent.Heal(GameManager.currentEnemyData.hp.ToInt());
 
 		SnapManager.ante = this.ante;
 
@@ -29,7 +27,7 @@ public class BlackJackSceneManager : Singleton<BlackJackSceneManager> {
 	}
 
     public void DeckSetting(Deck deck, bool isPlayers) {
-        List<CardData> deckData = 
+        List<CardData> deckData =
 			isPlayers ? GameManager.playerDeck : GameManager.currentEnemyData.deckData;
         foreach (CardData data in deckData) {
             Card card = data.InstantiateAsCard();
@@ -38,4 +36,12 @@ public class BlackJackSceneManager : Singleton<BlackJackSceneManager> {
         }
         deck.Shuffle();
     }
+
+	public void EndBlackjackSceneByWin() {
+		GameManager.ToDeckBuildingScene();
+	}
+
+	public void EndBlackjackSceneByLose() {
+		Debug.Log("Game Over");
+	}
 }

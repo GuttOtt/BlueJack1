@@ -23,6 +23,7 @@ public class BlackJacker : MonoBehaviour {
 		}
 	}
 	public BlackJacker opponent;
+	public bool IsDead { get => hp.ToInt() <= 0; }
 
 	private void Awake() {
 		hp = HP.Zero;
