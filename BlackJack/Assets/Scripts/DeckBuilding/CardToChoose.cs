@@ -5,12 +5,12 @@ using UnityEngine;
 using UnityEngine.UI;
 
 public class CardToChoose : MonoBehaviour {
-	private CopyCardImage cardImage;
+	private CardImage cardImage;
 	private Text nameText, descText;
 	private CardImageClicker clicker;
 
 	private void Awake() {
-		cardImage = gameObject.AddComponent<CopyCardImage>();
+		cardImage = gameObject.AddComponent<CardImage>();
 		nameText = transform.Find("Name Text BG").Find("Name Text").GetComponent<Text>();
 		descText = transform.Find("Description Text BG").Find("Description Text").GetComponent<Text>();
 		clicker = gameObject.AddComponent<CardImageClicker>();

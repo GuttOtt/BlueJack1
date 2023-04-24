@@ -88,7 +88,7 @@ GameObject:
   - component: {fileID: 6076563664126196917}
   - component: {fileID: 6076563664126196912}
   - component: {fileID: 6076563664126196919}
-  - component: {fileID: 6076563664126196918}
+  - component: {fileID: 6205542346571633740}
   m_Layer: 5
   m_Name: Card Image
   m_TagString: Untagged
@@ -154,7 +154,7 @@ MonoBehaviour:
   m_FillOrigin: 0
   m_UseSpriteMesh: 0
   m_PixelsPerUnitMultiplier: 1
---- !u!114 &6076563664126196918
+--- !u!114 &6205542346571633740
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -163,12 +163,13 @@ MonoBehaviour:
   m_GameObject: {fileID: 6076563664126196916}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 6422d12656b612f45a3e062b30e3e09b, type: 3}
+  m_Script: {fileID: 11500000, guid: cfc86ea8db8b04d46bf775de61b0701c, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  numberImg: {fileID: 0}
-  suitImg: {fileID: 0}
-  iconImg: {fileID: 0}
+  numberImage: {fileID: 0}
+  suitImage: {fileID: 0}
+  iconImage: {fileID: 6076563664050188767}
+  cardImage: {fileID: 6076563664126196919}
 --- !u!1 &6076563664588659821
 GameObject:
   m_ObjectHideFlags: 0
@@ -285,7 +286,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   nameText: {fileID: 6076563664757752564}
   descText: {fileID: 6076563665193728493}
-  image: {fileID: 6076563664126196918}
+  image: {fileID: 0}
 --- !u!1 &6076563664757752570
 GameObject:
   m_ObjectHideFlags: 0

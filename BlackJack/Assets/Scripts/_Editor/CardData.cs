@@ -23,10 +23,6 @@ public class CardData {
 		card.ChangeIcon(iconPrefab);
 	}
 
-	public void PasteTo(CopyCardImage img) {
-		img.Draw(this);
-	}
-
 	public Card InstantiateAsCard() {
 		return CardGenerator.CreateCard(number, suit, iconPrefab);
 	}

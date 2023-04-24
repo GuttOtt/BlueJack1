@@ -60,9 +60,11 @@ public class MoneyEditor : MonoBehaviour {
 		UpdateText();
 	}
 
+	/*
 	private void CompleteEditing() {
 		SandboxManager.Instance.EndMoneyEditing(moneySettings);
 	}
+	*/
 
 	private void UpdateText() {
 		maxRaiseCountText.text = "최대 레이즈 회수: " + moneySettings.maxRaiseCount;

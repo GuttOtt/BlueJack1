@@ -5,14 +5,14 @@ using UnityEngine;
 using UnityEngine.UI;
 
 public class DeckManipulationUI : MonoBehaviour {
-	[SerializeField] private ClickableCardImage cardPrefab;
+	[SerializeField] private CardImage cardPrefab;
 	[SerializeField] private Vector2 gap;
 	[SerializeField] private SelectedCardPanel selectedCardPanel;
-	private List<ClickableCardImage> cards = new List<ClickableCardImage>();
+	private List<CardImage> cards = new List<CardImage>();
 	private ICardManipulation delete, changeNumber, changeSuit, none;
 	private ICardManipulation currentManipulation;
 	private GameObject deckListPanel;
-	private ClickableCardImage selectedCard;
+	private CardImage selectedCard;
 
 	private void Awake() {
 		delete = GetComponent<DeleteManipulation>();
@@ -30,17 +30,17 @@ public class DeckManipulationUI : MonoBehaviour {
 	}
 
 	private void ClearDeckList() {
-		foreach (ClickableCardImage card in cards) {
+		foreach (CardImage card in cards) {
 			Destroy(card.gameObject);
 		}
 
 		cards.Clear();
 	}
 
-	private void Select(ClickableCardImage card) {
+	private void Select(CardImage card) {
 		selectedCard = card;
-		selectedCardPanel.OpenPanel(card.Data);
-		currentManipulation.StartManipulation(card.Data);
+		selectedCardPanel.OpenPanel(card.GetData);
+		currentManipulation.StartManipulation(card.GetData);
 	}
 
 	public void StartChangeNumber() {
@@ -74,7 +74,7 @@ public class DeckManipulationUI : MonoBehaviour {
 		List<CardData> deck = GameManager.playerDeck;
 
 		foreach (CardData data in deck) {
-			ClickableCardImage newCard = Instantiate(cardPrefab, deckListPanel.transform);
+			CardImage newCard = Instantiate(cardPrefab, deckListPanel.transform);
 			newCard.Draw(data);
 			newCard.onClick = null;
 			newCard.onClick += () => Select(newCard);

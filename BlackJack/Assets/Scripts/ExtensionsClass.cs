@@ -19,19 +19,19 @@ static class ExtensionsClass {
 		}
 	}
 
-	public static List<CopyCardImage> SortAscending(List<CopyCardImage> cards) {
-		CopyCardImage[] sorted = cards.ToArray();
+	public static List<CardImage> SortAscending(List<CardImage> cards) {
+		CardImage[] sorted = cards.ToArray();
 
 		//Selection Sort
 		for (int i = 0; i < sorted.Length - 1; i++) {
 			int index = i;
 			for (int j = i + 1; j < sorted.Length; j++) {
-				if (sorted[j].GetData().number < sorted[index].GetData().number) {
+				if (sorted[j].GetData.number < sorted[index].GetData.number) {
 					index = j;
 				}
 			}
 			if (index != i) {
-				CopyCardImage temp = sorted[i];
+				CardImage temp = sorted[i];
 				sorted[i] = sorted[index];
 				sorted[index] = temp;
 			}
@@ -40,24 +40,4 @@ static class ExtensionsClass {
 		return sorted.ToList();
 	}
 
-	public static List<ClickableCardImage> SortAscending(List<ClickableCardImage> cards) {
-		ClickableCardImage[] sorted = cards.ToArray();
-
-		//Selection Sort
-		for (int i = 0; i < sorted.Length - 1; i++) {
-			int index = i;
-			for (int j = i + 1; j < sorted.Length; j++) {
-				if (sorted[j].Data.number < sorted[index].Data.number) {
-					index = j;
-				}
-			}
-			if (index != i) {
-				ClickableCardImage temp = sorted[i];
-				sorted[i] = sorted[index];
-				sorted[index] = temp;
-			}
-		}
-
-		return sorted.ToList();
-	}
 }

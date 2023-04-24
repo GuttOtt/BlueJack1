@@ -5,7 +5,7 @@ using UnityEngine.UI;
 
 public class SelectedCardPanel : MonoBehaviour {
 	[SerializeField] private Text nameText, descText;
-	[SerializeField] private CopyCardImage image;
+	[SerializeField] private CardImage image;
 	private CardData data;
 	private GameObject panel;
 	public CardData Data { get => data; }

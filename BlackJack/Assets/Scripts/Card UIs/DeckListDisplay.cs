@@ -8,11 +8,11 @@ public class DeckListDisplay : MonoBehaviour {
     [SerializeField] private Vector2 boundGap;
     [SerializeField] private Vector2 gap;
     [SerializeField] private Vector2 cardSize = new Vector2(160, 220);
-    [SerializeField] private CopyCardImage cardImagePrefab;
+    [SerializeField] private CardImage cardImagePrefab;
     [SerializeField] private Button closeButton;
     [SerializeField] private int numberOfColumn = 7;
     [SerializeField] private GameObject panel;
-    private List<CopyCardImage> cards = new List<CopyCardImage>();
+    private List<CardImage> cards = new List<CardImage>();
 
     private void Awake() {
         panel = transform.Find("Panel").gameObject;
@@ -22,7 +22,7 @@ public class DeckListDisplay : MonoBehaviour {
 
 
     private void ClearCards() {
-        foreach (CopyCardImage card in cards) {
+        foreach (CardImage card in cards) {
             Destroy(card.gameObject);
         }
         cards.Clear();
@@ -42,40 +42,19 @@ public class DeckListDisplay : MonoBehaviour {
         }
     }
 
-    private void SortAscending() {
-        CopyCardImage[] sorted = cards.ToArray();
-
-        //Selection Sort
-        for (int i = 0; i < sorted.Length - 1; i++) {
-            int index = i;
-            for (int j = i + 1; j < sorted.Length; j++) {
-                if (sorted[j].GetData().number < sorted[index].GetData().number) {
-                    index = j;
-                }
-            }
-            if (index != i) {
-                CopyCardImage temp = sorted[i];
-                sorted[i] = sorted[index];
-                sorted[index] = temp;
-            }
-        }
-
-        cards = sorted.ToList();
-    }
-
     public void DrawDeckList(List<CardData> deckData) {
         panel.gameObject.SetActive(true);
         ClearCards();
 
         foreach (CardData data in deckData) {
-            CopyCardImage card = Instantiate(cardImagePrefab, panel.transform);
+            CardImage card = Instantiate(cardImagePrefab, panel.transform);
             card.Draw(data);
             card.GetComponent<RectTransform>().sizeDelta = cardSize;
 
             cards.Add(card);
         }
 
-        SortAscending();
+        ExtensionsClass.SortAscending(cards);
         Arrange();
     }
     public void ClosePanel() {
