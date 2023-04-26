@@ -1,0 +1,33 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: bef92b0c00288b8448dc8d1cba596c81, type: 3}
+  m_Name: Elite_Acceleration
+  m_EditorClassIdentifier: 
+  enemyName: 
+  portrait: {fileID: 0}
+  hpAmountForDifficulty:
+    m_keys: 0100000002000000030000000400000005000000060000000700000008000000090000000a000000
+    m_values: 64000000640000006400000064000000640000006400000064000000640000006400000064000000
+  iconsForDifficulty:
+    m_keys: ffffffff
+    m_values:
+    - data:
+      - {fileID: 5789209689852664396, guid: 978d69b3382a0ac45958c426b2f0223a, type: 3}
+      - {fileID: 5789209689852664396, guid: 978d69b3382a0ac45958c426b2f0223a, type: 3}
+      - {fileID: 5789209689852664396, guid: 978d69b3382a0ac45958c426b2f0223a, type: 3}
+      - {fileID: 5789209689852664396, guid: 978d69b3382a0ac45958c426b2f0223a, type: 3}
+      - {fileID: 5789209689852664396, guid: 978d69b3382a0ac45958c426b2f0223a, type: 3}
+      - {fileID: 5789209689852664396, guid: 978d69b3382a0ac45958c426b2f0223a, type: 3}
+      - {fileID: 5789209689852664396, guid: 978d69b3382a0ac45958c426b2f0223a, type: 3}
+      - {fileID: 5789209689852664396, guid: 978d69b3382a0ac45958c426b2f0223a, type: 3}
+      - {fileID: 5789209689852664396, guid: 978d69b3382a0ac45958c426b2f0223a, type: 3}
+      - {fileID: 5789209689852664396, guid: 978d69b3382a0ac45958c426b2f0223a, type: 3}

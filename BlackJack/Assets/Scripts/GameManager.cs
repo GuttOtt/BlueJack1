@@ -9,6 +9,7 @@ public class GameManager : Singleton<GameManager> {
 	[SerializeField] private Button normalModeButton;
 	public static int currentFloor = 0;
 	public static EnemyData currentEnemyData;
+	public static int act = 1;
 
 
 	private void Start() {

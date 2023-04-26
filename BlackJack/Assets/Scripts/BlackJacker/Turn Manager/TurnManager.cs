@@ -39,13 +39,18 @@ public class TurnManager : Singleton<TurnManager> {
 		blackjackSceneManager = FindObjectOfType<BlackJackSceneManager>();
 	}
 
-	private void OnEnable() {
+    private void Update() {
+		if (Input.GetKeyDown(KeyCode.V))
+			enemy.GetComponent<BlackJacker>().TakeDamage(200);
+    }
+
+    private void OnEnable() {
 		TurnEventBus.Subscribe(TurnEventType.PLAYER_END, PlayerEnd);
 		TurnEventBus.Subscribe(TurnEventType.ENEMY_END, EnemyEnd);
 		TurnEventBus.Subscribe(TurnEventType.PLAYER_FOLD, () => ToFoldPhase(player));
         TurnEventBus.Subscribe(TurnEventType.ENEMY_FOLD, () => ToFoldPhase(enemy));
-		TurnEventBus.Subscribe(TurnEventType.PLAYER_LOSE, () => PlayerLose());
-		TurnEventBus.Subscribe(TurnEventType.ENEMY_LOSE, () => EnemyLose());
+		TurnEventBus.Subscribe(TurnEventType.PLAYER_LOSE, () => StartCoroutine( PlayerLose() ));
+		TurnEventBus.Subscribe(TurnEventType.ENEMY_LOSE, () => StartCoroutine( EnemyLose() ));
     }
 
 	private void OnDisable() {
@@ -105,12 +110,13 @@ public class TurnManager : Singleton<TurnManager> {
 
 	public IEnumerator PlayerLose() {
 		context.StopCurrentCoroutine();
-		yield return new WaitForSeconds(3f);
+		yield return new WaitForSeconds(2f);
 		blackjackSceneManager.EndBlackjackSceneByLose();
 	}
 
-	public void EnemyLose() {
+	public IEnumerator EnemyLose() {
 		blackjackSceneManager.EndBlackjackSceneByWin();
+		yield return new WaitForSeconds(2f);
 	}
 
 	public void ChangePhaseText(string newPhaseText) {

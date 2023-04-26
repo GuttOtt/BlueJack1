@@ -62,6 +62,6 @@ public class SnapManager : MonoBehaviour {
 
 	private void ResizePotImage(Image img) {
         RectTransform rect = img.GetComponent<RectTransform>();
-        rect.sizeDelta = new Vector2(50f * potSize, 50f * potSize);
+        rect.sizeDelta = new Vector2(100f * potSize, 100f * potSize);
     }
 }

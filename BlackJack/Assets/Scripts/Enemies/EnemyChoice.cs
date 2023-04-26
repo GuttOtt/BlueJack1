@@ -47,7 +47,9 @@ public class EnemyChoice : MonoBehaviour, IPointerClickHandler {
         enemyData.enemyName = archetype.enemyName;
         enemyData.portrait = archetype.portrait;
         enemyData.hp = new HP(archetype.hpAmountForDifficulty[difficulty]);
-        enemyData.deckData = SetDeck(archetype.iconsForDifficulty[difficulty]);
+        enemyData.deckData = archetype.iconsForDifficulty.Keys.Contains(-1)
+            ? SetDeck(archetype.iconsForDifficulty[-1])
+            : SetDeck(archetype.iconsForDifficulty[difficulty]);
     }
 
     public void DisplayEnemyData() {

@@ -24,7 +24,7 @@ public class CardImageDescriptor : MonoBehaviour, IPointerEnterHandler, IPointer
         StartCoroutine(CloseDescription());
         Debug.Log("OnPointerExit");
     }
-
+    //
     private IEnumerator DrawDescription() {
         if (!CardDescriptionManager.Instance.isPanelOn) {
             yield return new WaitForSeconds(0.3f);

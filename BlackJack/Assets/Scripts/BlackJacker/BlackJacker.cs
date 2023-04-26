@@ -13,21 +13,24 @@ public class BlackJacker : MonoBehaviour {
     private Hand hand;
 	private Deck deck;
 	private int _damageDealtBeforeShowdown;
-	public int DamageDealtBeforeShowdown {
-		get => _damageDealtBeforeShowdown;
-		set {
-			if (TurnManager.Instance.currentPhase == TurnManager.Instance.showdown) {
-				return;
-			}
-			else {
-				_damageDealtBeforeShowdown = value;
-			}
-		}
-	}
 	public BlackJacker opponent;
 	public bool IsDead { get => hp.ToInt() <= 0; }
+	
+	//카드 효과와 관련된 public properties
+    public int DamageDealtBeforeShowdown {
+        get => _damageDealtBeforeShowdown;
+        set {
+            if (TurnManager.Instance.currentPhase == TurnManager.Instance.showdown) {
+                return;
+            }
+            else {
+                _damageDealtBeforeShowdown = value;
+            }
+        }
+    }
+	public int NumberOfAcceleration = 0;
 
-	private void Awake() {
+    private void Awake() {
 		hp = HP.Zero;
 		armour = Armour.Zero;
 		hand = GetComponent<Hand>();
@@ -39,6 +42,8 @@ public class BlackJacker : MonoBehaviour {
 		opponent = gameObject.CompareTag("Player")
 			? GameObject.FindWithTag("Opponent").GetComponent<BlackJacker>()
 			: GameObject.FindWithTag("Player").GetComponent<BlackJacker>();
+
+		NumberOfAcceleration = 0;
 	}
 
 	public IEnumerator StartSetting() {
