@@ -77,6 +77,7 @@ public class PlayerTC : MonoBehaviour, ITurnControl {
 			blackjacker.Hit();
 		}
 		else {
+			blackjacker.DrawStayText();
 			hand.PutHiddenOnBoard();
 			hand.SetActiveCardBackMaskOnHidden();
 		}
@@ -118,13 +119,16 @@ public class PlayerTC : MonoBehaviour, ITurnControl {
 	}
 
 	public IEnumerator BurstProcess() {
+		blackjacker.DrawBurstText();
 		hand.PutHiddenOnBoard();
-		hand.ShowHiddens();
+		yield return StartCoroutine(hand.OpenHiddens());
 		yield return StartCoroutine(hand.ActivateAllField(EffectSituation.OnBurst));
 	}
 
 	public IEnumerator FoldProcess() {
+		blackjacker.DrawFoldText();
 		hand.PutHiddenOnBoard();
+		yield return StartCoroutine(hand.OpenHiddens());
 		yield return StartCoroutine(hand.ActivateAllField(EffectSituation.OnFold));
 	}
 

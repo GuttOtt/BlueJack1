@@ -13,6 +13,7 @@ GameObject:
   - component: {fileID: 1569368689856750402}
   - component: {fileID: 5208561181457967431}
   - component: {fileID: 7415898377564793140}
+  - component: {fileID: -637453301182127245}
   m_Layer: 0
   m_Name: Icon18_Doom
   m_TagString: Untagged
@@ -134,3 +135,15 @@ MonoBehaviour:
   isLessThanCondition: 0
   isOpponentHandCondition: 1
   number: 6
+--- !u!114 &-637453301182127245
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3901589311124014931}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: c43477d61469d6b4eba2a8b3f5d7fe10, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 

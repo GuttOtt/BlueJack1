@@ -1,29 +1,28 @@
 using System.Collections;
 using System.Collections.Generic;
-using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.EventSystems;
-using UnityEngine.UIElements;
+using UnityEngine.UI;
 
-public class CardDescriptor : MonoBehaviour, IPointerEnterHandler, IPointerExitHandler {
-    private Card card;
-    private bool IsFront { get => card ? card.IsFront : false; }
-    private bool isCursorOn = false;
+public class CardImageDescriptor : MonoBehaviour, IPointerEnterHandler, IPointerExitHandler {
+    private CardImage cardImage;
+    private bool isCursorOn = true;
 
     private void Awake() {
-        card = GetComponent<Card>();
+        cardImage = GetComponent<CardImage>();
     }
 
     public void OnPointerEnter(PointerEventData eventData) {
-        if (!IsFront) return;
         isCursorOn = true;
         StartCoroutine(DrawDescription());
+        Debug.Log("OnPointerEnter");
 
     }
 
     public void OnPointerExit(PointerEventData eventData) {
         isCursorOn = false;
         StartCoroutine(CloseDescription());
+        Debug.Log("OnPointerExit");
     }
 
     private IEnumerator DrawDescription() {
@@ -32,13 +31,16 @@ public class CardDescriptor : MonoBehaviour, IPointerEnterHandler, IPointerExitH
             if (!isCursorOn) yield break;
         }
 
-        CardDescriptionManager.DrawDescription(card.GetData(), card.transform.position);
-        card.GetComponent<SpriteRenderer>().color = new Color(0.8f, 0.8f, 1f);
+        CardData data = cardImage.GetData;
+        RectTransform cardImageRect = cardImage.GetComponent<RectTransform>();
+        CardDescriptionManager.DrawCardImageDescription(data, cardImageRect);
+
+        cardImage.GetComponent<Image>().color = new Color(0.8f, 0.8f, 1f);
     }
 
     private IEnumerator CloseDescription() {
         CardDescriptionManager.ClosePanel();
-        card.GetComponent<SpriteRenderer>().color = Color.white;
+        cardImage.GetComponent<Image>().color = Color.white;
 
         //카드 설명을 보다가 바로 옆에 놓인 카드로 커서를 옮겼을 때,
         //딜레이 없이 바로 Description을 띄우기 위함.

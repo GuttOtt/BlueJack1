@@ -1,11 +1,14 @@
 using System.Collections;
 using System.Collections.Generic;
 using System.Runtime.CompilerServices;
+using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.UI;
 using UnityEngine.UIElements;
 
-public class TurnManager : Singleton<TurnManager> { 
+public class TurnManager : Singleton<TurnManager> {
+	[SerializeField] private Text phaseText;
+	[SerializeField] public readonly int maxTurnPhaseCount = 3;
 	public IPhase start, turn, interval, burst, fold, showdown, victory, stayed;
 	private PhaseContext context;
 	private BlackJackSceneManager blackjackSceneManager;
@@ -19,8 +22,9 @@ public class TurnManager : Singleton<TurnManager> {
 		get => loser == null ? null : loser == player ? enemy : player;
 	}
 	public bool isShowdowned = false;
+    public int turnPhaseCount = 0;
 
-	protected override void Awake() {
+    protected override void Awake() {
 		context = gameObject.AddComponent<PhaseContext>();
 
 		start = gameObject.AddComponent<_StartPhase>();
@@ -49,7 +53,7 @@ public class TurnManager : Singleton<TurnManager> {
 		TurnEventBus.Unsubscribe(TurnEventType.ENEMY_END, EnemyEnd);
 	}
 
-	private void PlayerEnd() { PlayerDone = true; }
+    private void PlayerEnd() { PlayerDone = true; }
 	private void EnemyEnd() { EnemyDone = true; }
 
 
@@ -108,6 +112,10 @@ public class TurnManager : Singleton<TurnManager> {
 	public void EnemyLose() {
 		blackjackSceneManager.EndBlackjackSceneByWin();
 	}
+
+	public void ChangePhaseText(string newPhaseText) {
+		phaseText.text = newPhaseText;
+	}
 }
 
 public class PhaseContext : MonoBehaviour {
@@ -153,6 +161,9 @@ public class _StartPhase : MonoBehaviour, IPhase {
 	}
 
 	public IEnumerator Phase() {
+		turnManager.ChangePhaseText("New Round");
+
+		turnManager.turnPhaseCount = 0;
 		turnManager.isShowdowned = false;
 
 		TurnEventBus.Publish(TurnEventType.NEW_ROUND);
@@ -174,6 +185,15 @@ public class _TurnPhase : MonoBehaviour, IPhase {
 	}
 
 	public IEnumerator Phase() {
+		if (turnManager.turnPhaseCount == turnManager.maxTurnPhaseCount) {
+			turnManager.ToShowDownPhase();
+			yield break;
+		}
+		turnManager.turnPhaseCount++;
+
+		turnManager.ChangePhaseText("Main Phase " + turnManager.turnPhaseCount 
+			+ "/" + turnManager.maxTurnPhaseCount);
+
 		yield return StartCoroutine(turnManager.enemy.GetComponent<EnemySC>().DecideSnap());
 
 		turnManager.player.TurnPhase();
@@ -208,13 +228,14 @@ public class _IntervalPhase : MonoBehaviour, IPhase {
 			turnManager.ToBurstPhase(turnManager.enemy);
 		}
 		else if (turnManager.player.IsStayed) {
-			if (turnManager.enemy.IsStayed) {
+            /*if (turnManager.enemy.IsStayed) {
 				turnManager.ToShowDownPhase();
 			}
 			else {
 				turnManager.ToStayedPhase();
-			}
-		}
+			}*/
+            turnManager.ToStayedPhase();
+        }
 		else {
 			turnManager.ToTurnPhase();
 		}
@@ -274,6 +295,7 @@ public class _ShowDownPhase : MonoBehaviour, IPhase {
 	}
 
 	public IEnumerator Phase() {
+		turnManager.ChangePhaseText("Showdown!");
 		turnManager.isShowdowned = true;
 
 		TurnEventBus.Publish(TurnEventType.VICTORY_PHASE);
@@ -308,11 +330,17 @@ public class _VictoryPhase : MonoBehaviour, IPhase {
 		PlayerTC loser = turnManager.loser;
 		PlayerTC winner = turnManager.winner;
 		if (loser != null) {
+			if (winner == turnManager.player) turnManager.ChangePhaseText("Player Win");
+			else turnManager.ChangePhaseText("Opponent Win");
+
             yield return StartCoroutine(winner.WinProcess());
 			yield return new WaitForSeconds(1f);
             yield return StartCoroutine(loser.LoseProcess());
 			yield return new WaitForSeconds(1f);
         }
+		else {
+			turnManager.ChangePhaseText("Draw");
+		}
         turnManager.ToStartPhase();
     }
 }

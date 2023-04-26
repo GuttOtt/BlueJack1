@@ -55,6 +55,7 @@ public class DeckListDisplay : MonoBehaviour {
             card.GetComponent<RectTransform>().pivot = new Vector2(0, 1);
             card.Draw(data);
             card.ImageSize = cardSize;
+            card.gameObject.AddComponent<CardImageDescriptor>();
 
             cards.Add(card);
         }

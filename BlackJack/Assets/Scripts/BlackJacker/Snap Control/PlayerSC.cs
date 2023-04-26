@@ -29,11 +29,7 @@ public class PlayerSC : MonoBehaviour, ISnapControl {
 			yield break;
 		}
 
-        Hand hand = GetComponent<Hand>();
-		hand.PutHiddenOnBoard();
-		hand.SetHiddensBack();
-		yield return StartCoroutine(hand.ActivateAllField(EffectSituation.OnFold));
-
+		yield return StartCoroutine(GetComponent<BlackJacker>().FoldCR());
 		TurnEventBus.Publish(TurnEventType.PLAYER_FOLD);
 	}
 

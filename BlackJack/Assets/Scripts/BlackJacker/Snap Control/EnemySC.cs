@@ -35,7 +35,6 @@ public class EnemySC : MonoBehaviour, ISnapControl {
 			Hand hand = GetComponent<Hand>();
 			yield return StartCoroutine(hand.ActivateAllField(EffectSituation.OnRaise));
             TurnEventBus.Publish(TurnEventType.ENEMY_SNAP);
-			Debug.Log("EnemySnaped " + Time.time);
         }
 
 		isConsidering = false;
@@ -58,12 +57,9 @@ public class EnemySC : MonoBehaviour, ISnapControl {
 			Hand hand = GetComponent<Hand>();
 			yield return StartCoroutine(hand.ActivateAllField(EffectSituation.OnRaise));
 			TurnEventBus.Publish(TurnEventType.ENEMY_SNAP);
-            Debug.Log("EnemySnaped " + Time.time);
         }
 		else if (decision == SnapDecision.Fold) {
-			Debug.Log("EnemyFold");
-            Hand hand = GetComponent<Hand>();
-            yield return StartCoroutine(hand.ActivateAllField(EffectSituation.OnFold));
+            yield return StartCoroutine(GetComponent<BlackJacker>().FoldCR());
             TurnEventBus.Publish(TurnEventType.ENEMY_FOLD);
 		}
 

@@ -168,7 +168,7 @@ public class Hand : MonoBehaviour {
         }
 	}
 
-	//Open과는 달리, 카드의 효과를 발동하지 않고 상대에게 보여주기만 함.
+	//Open과는 달리, 카드의 OnHiddenOpen 은 발동하지 않음 상대에게 보여주기만 함.
 	//Burst를 했다면, Hidden 카드는 Open이 아닌 Show가 된다.
 	public void ShowHiddens() {
 		foreach (Card card in hiddens) {

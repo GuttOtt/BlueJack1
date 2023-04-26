@@ -25,6 +25,7 @@ public class CardDescriptionManager : Singleton<CardDescriptionManager> {
         ClosePanel();
 	}
 
+	//Description Panel이 화면 밖으로 나가는 경우, 그 위치를 화면 안으로 재조정한다
 	private void AdjustPanelPosition() {
 		RectTransform panelRect = Instance.panel.GetComponent<RectTransform>();
 		Vector2 panelPos = panelRect.position;
@@ -50,6 +51,7 @@ public class CardDescriptionManager : Singleton<CardDescriptionManager> {
 	public static void DrawDescription(CardData data, Vector2 cardPosition) {
 		DrawDescription(data);
 
+		//Card의 위치를 기준으로 Description Panel의 위치를 변경
 		Vector2 cardScreenPos = Camera.main.WorldToScreenPoint(cardPosition);
         RectTransform panelRect = Instance.panel.GetComponent<RectTransform>();
 		panelRect.position = cardScreenPos;
@@ -59,10 +61,27 @@ public class CardDescriptionManager : Singleton<CardDescriptionManager> {
         panelRect.position += new Vector3(panelSize.x, -panelSize.y, 0) / 2f;
 		panelRect.anchoredPosition += new Vector2(Instance.cardSize.x, 0) / 2f;
 
-		Debug.Log(Instance.cardSize.x / 2f);
-
 		Instance.AdjustPanelPosition();
 	}
+
+	public static void DrawCardImageDescription(CardData data, RectTransform imageRect) {
+		DrawDescription(data);
+
+		Vector2 imagePos = imageRect.position;
+		Vector2 imageSize = imageRect.sizeDelta;
+		Vector2 imagePivot = imageRect.pivot;
+
+		RectTransform panelRect = Instance.panel.GetComponent<RectTransform>();
+		panelRect.position = imagePos;
+		panelRect.anchoredPosition += imageSize * (new Vector2(0.5f, 0.5f) - imagePivot);
+        Debug.Log(imageSize * (new Vector2(0.5f, 0.5f) - imagePivot));
+
+        Vector2 panelSize = panelRect.sizeDelta * panelRect.localScale;
+        panelRect.anchoredPosition += new Vector2(panelSize.x, -panelSize.y) / 2f;
+        panelRect.anchoredPosition += new Vector2(imageSize.x, 0) / 2f;
+
+		Debug.Log(panelRect.localScale);
+    }
 
 	public static void ClosePanel() {
 		Instance.panel.gameObject.SetActive(false);
